@@ -280,7 +280,6 @@ h1, Header {
     .header-container {
         margin-top: 60px;
     }
-
     .floating-buttons {
         left: 0;
         right: 0;
@@ -295,7 +294,6 @@ h1, Header {
         height: 60px;
         align-items: center;
     }
-
     .floating-button {
         width: auto;
         height: auto;
@@ -303,28 +301,23 @@ h1, Header {
         border-radius: 20px;
         flex-direction: row;
     }
-
     .floating-button i {
         font-size: 1.2rem;
         margin-right: 8px;
     }
-
     .floating-button span {
         opacity: 1;
         width: auto;
         padding: 0;
         font-size: 0.9rem;
     }
-
     .floating-button:hover {
         transform: none;
         background-color: #3a3a3a;
     }
-
     .floating-buttons.scrolled {
         animation: none;
     }
-
     h1, Header {
         font-size: 2.5rem;
     }
@@ -347,23 +340,19 @@ h1, Header {
     .header-container {
         margin-top: 50px;
     }
-
     .floating-buttons {
         padding: 8px 5px;
         gap: 5px;
         height: 50px;
     }
-
     .floating-button {
         padding: 6px 10px;
         font-size: 0.8rem;
     }
-
     .floating-button i {
         font-size: 1rem;
         margin-right: 5px;
     }
-
     h1, Header {
         font-size: 2rem;
     }

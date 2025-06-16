@@ -1,36 +1,126 @@
-<script>
-    // Handle Contact & Appointment Forms
-    document.getElementById('contactForm')?.addEventListener('submit', handleSubmit);
-    document.getElementById('appointmentForm')?.addEventListener('submit', handleSubmit);
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us | Crowned Mobile</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="floating-buttons">
+        <a href="appointment.html" class="floating-button">
+            <i class="fas fa-calendar-alt"></i>
+            <span>Book Now</span>
+        </a>
+        <a href="contact.html" class="floating-button">
+            <i class="fas fa-phone-alt"></i>
+            <span>Call Us</span>
+        </a>
+        <a href="#subscription" class="floating-button">
+            <i class="fas fa-star"></i>
+            <span>Subscribe</span>
+        </a>
+    </div>
 
-    async function handleSubmit(e) {
-        e.preventDefault();
-        const form = e.target;
-        const submitBtn = form.querySelector('button[type="submit"]');
+    <div class="header-container">
+        <img src="logo.jpg" alt="Crowned Mobile Logo" class="header-logo">
+        <Header>Contact Us</Header>
+    </div>
+
+    <div class="container">
+        <h1 class="section-title">Get In Touch</h1>
         
-        // Disable button to prevent multiple submissions
-        submitBtn.disabled = true;
-        submitBtn.textContent = 'Sending...';
+        <div class="contact-info">
+            <div class="contact-card">
+                <h3><i class="fas fa-phone"></i> Phone</h3>
+                <p><a href="tel:+1234567890">(123) 456-7890</a></p>
+                <p>Monday-Friday: 9am-6pm</p>
+                <p>Saturday: 10am-4pm</p>
+            </div>
+            
+            <div class="contact-card">
+                <h3><i class="fas fa-envelope"></i> Email</h3>
+                <p><a href="mailto:crownedmobile2025@gmail.com">crownedmobile2025@gmail.com</a></p>
+                <p>Response within 24 hours</p>
+            </div>
+            
+            <div class="contact-card">
+                <h3><i class="fas fa-map-marker-alt"></i> Location</h3>
+                <p>123 Auto Service Lane</p>
+                <p>Detailing City, DC 12345</p>
+                <p>Mobile service area: 30 mile radius</p>
+            </div>
+        </div>
 
-        try {
-            const response = await fetch(form.action, {
-                method: 'POST',
-                body: new FormData(form),
-                headers: { 'Accept': 'application/json' }
-            });
+        <h2 class="section-title">Send Us a Message</h2>
+        <form id="contactForm" action="https://formspree.io/f/crownedmobile2025@gmail.com" method="POST">
+            <input type="hidden" name="_subject" value="New Contact Message - Crowned Mobile">
+            <input type="hidden" name="_replyto" value="%email%">
+            <input type="text" name="_gotcha" style="display:none">
 
-            if (response.ok) {
-                // Redirect to thank-you page
-                window.location.href = 'thank-you.html';
-            } else {
-                throw new Error('Failed to send message');
+            <div class="form-group">
+                <label for="name" class="required">Your Name</label>
+                <input type="text" id="name" name="name" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="email" class="required">Email Address</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="subject" class="required">Subject</label>
+                <input type="text" id="subject" name="subject" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="message" class="required">Message</label>
+                <textarea id="message" name="message" required></textarea>
+            </div>
+            
+            <button type="submit">Send Message</button>
+        </form>
+    </div>
+
+    <script>
+        const floatingButtons = document.querySelector('.floating-buttons');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 100) {
+                floatingButtons.classList.add('scrolled');
+                setTimeout(() => {
+                    floatingButtons.classList.remove('scrolled');
+                }, 500);
             }
-        } catch (error) {
-            alert('Oops! Something went wrong. Please try again.');
-            console.error(error);
-        } finally {
-            submitBtn.disabled = false;
-            submitBtn.textContent = form.id.includes('contact') ? 'Send Message' : 'Schedule Appointment';
-        }
-    }
-</script>
+        });
+
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const submitBtn = this.querySelector('button[type="submit"]');
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Sending...';
+            
+            fetch(this.action, {
+                method: 'POST',
+                body: new FormData(this),
+                headers: {
+                    'Accept': 'application/json'
+                }
+            })
+            .then(response => {
+                if (response.ok) {
+                    window.location.href = 'thank-you.html';
+                } else {
+                    throw new Error('Form submission failed');
+                }
+            })
+            .catch(error => {
+                alert('Error sending message. Please try again or call us directly.');
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Send Message';
+            });
+        });
+    </script>
+</body>
+</html>

@@ -3,114 +3,130 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Schedule an Appointment | Crowned Mobile</title>
+    <title>Schedule Appointment | Crowned Mobile</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
-<script>
-    // Handle Contact & Appointment Forms
-    document.getElementById('contactForm')?.addEventListener('submit', handleSubmit);
-    document.getElementById('appointmentForm')?.addEventListener('submit', handleSubmit);
-
-    async function handleSubmit(e) {
-        e.preventDefault();
-        const form = e.target;
-        const submitBtn = form.querySelector('button[type="submit"]');
-        
-        // Disable button to prevent multiple submissions
-        submitBtn.disabled = true;
-        submitBtn.textContent = 'Sending...';
-
-        try {
-            const response = await fetch(form.action, {
-                method: 'POST',
-                body: new FormData(form),
-                headers: { 'Accept': 'application/json' }
-            });
-
-            if (response.ok) {
-                // Redirect to thank-you page
-                window.location.href = 'thank-you.html';
-            } else {
-                throw new Error('Failed to send message');
-            }
-        } catch (error) {
-            alert('Oops! Something went wrong. Please try again.');
-            console.error(error);
-        } finally {
-            submitBtn.disabled = false;
-            submitBtn.textContent = form.id.includes('contact') ? 'Send Message' : 'Schedule Appointment';
-        }
-    }
-</script>
 <body>
+    <div class="floating-buttons">
+        <a href="appointment.html" class="floating-button">
+            <i class="fas fa-calendar-alt"></i>
+            <span>Book Now</span>
+        </a>
+        <a href="contact.html" class="floating-button">
+            <i class="fas fa-phone-alt"></i>
+            <span>Call Us</span>
+        </a>
+        <a href="#subscription" class="floating-button">
+            <i class="fas fa-star"></i>
+            <span>Subscribe</span>
+        </a>
+    </div>
+
     <div class="header-container">
         <img src="logo.jpg" alt="Crowned Mobile Logo" class="header-logo">
         <Header>Schedule Service</Header>
     </div>
 
     <div class="container">
-        <h1>Book Your Appointment</h1>
-        <p>Fill out the form below to schedule your automotive service. We'll confirm your appointment within 24 hours.</p>
+        <h1 class="section-title">Book Your Appointment</h1>
+        <p class="centered-description">Fill out the form below to schedule your automotive detailing service. We'll confirm your appointment within 24 hours.</p>
         
-       <form id="appointmentForm" action="https://formspree.io/f/crownedmobile2025@gmail.com" method="POST">
-    <input type="hidden" name="_subject" value="New Appointment Request - Crowned Mobile">
-    <input type="hidden" name="_replyto" value="%email%">
-    <input type="text" name="_gotcha" style="display:none"> <!-- Anti-spam -->
+        <form id="appointmentForm" action="https://formspree.io/f/crownedmobile2025@gmail.com" method="POST">
+            <input type="hidden" name="_subject" value="New Appointment Request - Crowned Mobile">
+            <input type="hidden" name="_replyto" value="%email%">
+            <input type="text" name="_gotcha" style="display:none">
 
-    <div class="form-group">
-        <label for="name" class="required">Your Name</label>
-        <input type="text" id="name" name="name" required>
-    </div>
-    
-    <div class="form-group">
-        <label for="email" class="required">Email Address</label>
-        <input type="email" id="email" name="email" required>
-    </div>
-    
-    <div class="form-group">
-        <label for="phone">Phone Number</label>
-        <input type="tel" id="phone" name="phone">
-    </div>
-    
-    <div class="form-group">
-        <label for="service" class="required">Service Needed</label>
-        <select id="service" name="service" required>
-            <option value="">-- Select a Service --</option>
-            <option value="Basic Detailing">Basic Detailing</option>
-            <option value="Premium Detailing">Premium Detailing</option>
-            <option value="Ceramic Coating">Ceramic Coating</option>
-            <option value="Other">Other</option>
-        </select>
-    </div>
-    
-    <div class="form-group">
-        <label for="date" class="required">Preferred Date</label>
-        <input type="date" id="date" name="date" required>
-    </div>
-    
-    <div class="form-group">
-        <label for="time" class="required">Preferred Time</label>
-        <input type="time" id="time" name="time" required>
-    </div>
-    
-    <div class="form-group">
-        <label for="message">Special Requests</label>
-        <textarea id="message" name="message"></textarea>
-    </div>
-    
-    <button type="submit">Schedule Appointment</button>
-</form>
+            <div class="form-group">
+                <label for="name" class="required">Your Name</label>
+                <input type="text" id="name" name="name" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="email" class="required">Email Address</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="phone">Phone Number</label>
+                <input type="tel" id="phone" name="phone">
+            </div>
+            
+            <div class="form-group">
+                <label for="service" class="required">Service Needed</label>
+                <select id="service" name="service" required>
+                    <option value="">-- Select a Service --</option>
+                    <option value="Basic Detailing">Basic Detailing</option>
+                    <option value="Premium Detailing">Premium Detailing</option>
+                    <option value="Ceramic Coating">Ceramic Coating</option>
+                    <option value="Paint Correction">Paint Correction</option>
+                    <option value="Other">Other</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="vehicle">Vehicle Make/Model</label>
+                <input type="text" id="vehicle" name="vehicle">
+            </div>
+            
+            <div class="form-group">
+                <label for="date" class="required">Preferred Date</label>
+                <input type="date" id="date" name="date" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="time" class="required">Preferred Time</label>
+                <input type="time" id="time" name="time" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="message">Special Requests or Notes</label>
+                <textarea id="message" name="message"></textarea>
+            </div>
+            
+            <button type="submit">Schedule Appointment</button>
+        </form>
     </div>
 
     <script>
-        // Set minimum date to today
         document.getElementById('date').min = new Date().toISOString().split('T')[0];
         
-        // Form submission handling
+        const floatingButtons = document.querySelector('.floating-buttons');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 100) {
+                floatingButtons.classList.add('scrolled');
+                setTimeout(() => {
+                    floatingButtons.classList.remove('scrolled');
+                }, 500);
+            }
+        });
+
         document.getElementById('appointmentForm').addEventListener('submit', function(e) {
-            // Add any additional validation here
-            console.log('Form submitted');
+            e.preventDefault();
+            const submitBtn = this.querySelector('button[type="submit"]');
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Sending...';
+            
+            fetch(this.action, {
+                method: 'POST',
+                body: new FormData(this),
+                headers: {
+                    'Accept': 'application/json'
+                }
+            })
+            .then(response => {
+                if (response.ok) {
+                    window.location.href = 'thank-you.html';
+                } else {
+                    throw new Error('Form submission failed');
+                }
+            })
+            .catch(error => {
+                alert('Error submitting form. Please try again or call us directly.');
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Schedule Appointment';
+            });
         });
     </script>
 </body>
