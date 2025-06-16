@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crowned Mobile</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="floating-buttons">
+        <a href="appointment.html" class="floating-button">
+            <i class="fas fa-calendar-alt"></i>
+            <span>Book Now</span>
+        </a>
+        <a href="contact.html" class="floating-button">
+            <i class="fas fa-phone-alt"></i>
+            <span>Call Us</span>
+        </a>
+        <a href="#subscription" class="floating-button">
+            <i class="fas fa-star"></i>
+            <span>Subscribe</span>
+        </a>
+    </div>
+
+    <div class="header-container">
+        <img src="logo.jpg" alt="Crowned Mobile Logo" class="header-logo">
+        <Header>Crowned Mobile</Header>
+    </div>
+
+    <div class="subtitle-container">
+        <p class="subtitle">Mobile Automotive Detailing Service</p>
+        <p class="established">EST. 2025</p>
+    </div>
+
+    <div class="container">
+        <p class="centered-description">Welcome to Crowned Mobile, your premier mobile automotive detailing service. We bring the shine directly to you, using only the highest quality products and techniques to make your vehicle look its absolute best.</p>
+        
+        <div class="services-section">
+            <h2 class="section-title">Our Services</h2>
+            <ul class="service-list">
+                <li>
+                    <span class="service-name">Basic Detailing</span>
+                    <span class="service-desc">Complete exterior wash and interior vacuum</span>
+                </li>
+                <li>
+                    <span class="service-name">Premium Detailing</span>
+                    <span class="service-desc">Full exterior and interior deep cleaning</span>
+                </li>
+                <li>
+                    <span class="service-name">Ceramic Coating</span>
+                    <span class="service-desc">Professional-grade paint protection</span>
+                </li>
+            </ul>
+        </div>
+
+        <div class="pricing-section">
+            <h2 class="section-title">Pricing</h2>
+            <ul class="pricing-list">
+                <li><span class="price">$150</span> - Basic Detailing Package</li>
+                <li><span class="price">$300</span> - Premium Detailing Package</li>
+                <li><span class="price">$500+</span> - Ceramic Coating (varies by vehicle size)</li>
+            </ul>
+        </div>
+
+        <div class="subscription-section">
+            <h2 class="section-title">Subscription Plans</h2>
+            <div class="subscription-tiers">
+                <div class="subscription-tier">
+                    <h3>Monthly</h3>
+                    <div class="subscription-price">$120<span>/month</span></div>
+                    <ul class="subscription-features">
+                        <li>1 Basic Detailing per month</li>
+                        <li>10% off additional services</li>
+                        <li>Priority scheduling</li>
+                    </ul>
+                </div>
+                <div class="subscription-tier popular">
+                    <div class="popular-badge">Most Popular</div>
+                    <h3>3-Month</h3>
+                    <div class="subscription-price">$100<span>/month</span></div>
+                    <ul class="subscription-features">
+                        <li>1 Basic Detailing per month</li>
+                        <li>15% off additional services</li>
+                        <li>Free interior refresh between details</li>
+                        <li>Priority scheduling</li>
+                    </ul>
+                </div>
+                <div class="subscription-tier">
+                    <h3>6-Month</h3>
+                    <div class="subscription-price">$90<span>/month</span></div>
+                    <ul class="subscription-features">
+                        <li>1 Premium Detailing every 2 months</li>
+                        <li>20% off additional services</li>
+                        <li>Free interior refresh between details</li>
+                        <li>VIP scheduling</li>
+                        <li>Free wax application</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <ul class="nav-links">
+            <li><a href="contact.html">Contact Us</a></li>
+            <li><a href="#subscription">Subscription Service</a></li>
+            <li><a href="links.html">Helpful Links</a></li>
+        </ul>
+    </div>
+
+    <script>
+        const floatingButtons = document.querySelector('.floating-buttons');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 100) {
+                floatingButtons.classList.add('scrolled');
+                setTimeout(() => {
+                    floatingButtons.classList.remove('scrolled');
+                }, 500);
+            }
+        });
+    </script>
+</body>
+</html>
