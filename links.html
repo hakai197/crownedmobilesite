@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contact Us | Crowned Mobile</title>
+    <title>Helpful Links | Crowned Mobile</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -26,62 +26,82 @@
 
     <div class="header-container">
         <img src="logo.jpg" alt="Crowned Mobile Logo" class="header-logo">
-        <Header>Contact Us</Header>
+        <Header>Helpful Links</Header>
     </div>
 
     <div class="container">
-        <h1 class="section-title">Get In Touch</h1>
+        <h1 class="section-title">Our Social Media & Resources</h1>
         
-        <div class="contact-info">
-            <div class="contact-card">
-                <h3><i class="fas fa-phone"></i> Phone</h3>
-                <p><a href="tel:+1234567890">(123) 456-7890</a></p>
-                <p>Monday-Friday: 9am-6pm</p>
-                <p>Saturday: 10am-4pm</p>
+        <div class="links-grid">
+            <!-- Social Media Section -->
+            <div class="links-section">
+                <h2><i class="fas fa-share-alt"></i> Connect With Us</h2>
+                <div class="link-card">
+                    <a href="https://www.instagram.com/crownedmobile" target="_blank">
+                        <i class="fab fa-instagram"></i> Instagram
+                    </a>
+                    <p>See before/after photos and promotions</p>
+                </div>
+                <div class="link-card">
+                    <a href="https://www.tiktok.com/@crownedmobile" target="_blank">
+                        <i class="fab fa-tiktok"></i> TikTok
+                    </a>
+                    <p>Watch our detailing transformations</p>
+                </div>
+                <div class="link-card">
+                    <a href="https://www.facebook.com/crownedmobile" target="_blank">
+                        <i class="fab fa-facebook"></i> Facebook
+                    </a>
+                    <p>Join our community</p>
+                </div>
             </div>
-            
-            <div class="contact-card">
-                <h3><i class="fas fa-envelope"></i> Email</h3>
-                <p><a href="mailto:crownedmobile2025@gmail.com">crownedmobile2025@gmail.com</a></p>
-                <p>Response within 24 hours</p>
+
+            <!-- Resources Section -->
+            <div class="links-section">
+                <h2><i class="fas fa-book"></i> Detailing Resources</h2>
+                <div class="link-card">
+                    <a href="https://www.detailingwiki.org" target="_blank">
+                        <i class="fas fa-car"></i> Detailing Wiki
+                    </a>
+                    <p>Comprehensive detailing guides</p>
+                </div>
+                <div class="link-card">
+                    <a href="https://www.autogeek.net" target="_blank">
+                        <i class="fas fa-spray-can"></i> AutoGeek
+                    </a>
+                    <p>Products and how-to videos</p>
+                </div>
+                <div class="link-card">
+                    <a href="https://www.youtube.com/@AMMONYC" target="_blank">
+                        <i class="fab fa-youtube"></i> AMMO NYC
+                    </a>
+                    <p>Professional detailing tutorials</p>
+                </div>
             </div>
-            
-            <div class="contact-card">
-                <h3><i class="fas fa-map-marker-alt"></i> Location</h3>
-                <p>123 Auto Service Lane</p>
-                <p>Detailing City, DC 12345</p>
-                <p>Mobile service area: 30 mile radius</p>
+
+            <!-- Product Links -->
+            <div class="links-section">
+                <h2><i class="fas fa-shopping-cart"></i> Recommended Products</h2>
+                <div class="link-card">
+                    <a href="https://www.chemicalguys.com" target="_blank">
+                        <i class="fas fa-broom"></i> Chemical Guys
+                    </a>
+                    <p>Quality detailing supplies</p>
+                </div>
+                <div class="link-card">
+                    <a href="https://www.griotsgarage.com" target="_blank">
+                        <i class="fas fa-tools"></i> Griot's Garage
+                    </a>
+                    <p>Premium car care products</p>
+                </div>
+                <div class="link-card">
+                    <a href="https://www.adams polishes.com" target="_blank">
+                        <i class="fas fa-paint-roller"></i> Adam's Polishes
+                    </a>
+                    <p>Professional-grade materials</p>
+                </div>
             </div>
         </div>
-
-        <h2 class="section-title">Send Us a Message</h2>
-        <form id="contactForm" action="https://formspree.io/f/crownedmobile2025@gmail.com" method="POST">
-            <input type="hidden" name="_subject" value="New Contact Message - Crowned Mobile">
-            <input type="hidden" name="_replyto" value="%email%">
-            <input type="text" name="_gotcha" style="display:none">
-
-            <div class="form-group">
-                <label for="name" class="required">Your Name</label>
-                <input type="text" id="name" name="name" required>
-            </div>
-            
-            <div class="form-group">
-                <label for="email" class="required">Email Address</label>
-                <input type="email" id="email" name="email" required>
-            </div>
-            
-            <div class="form-group">
-                <label for="subject" class="required">Subject</label>
-                <input type="text" id="subject" name="subject" required>
-            </div>
-            
-            <div class="form-group">
-                <label for="message" class="required">Message</label>
-                <textarea id="message" name="message" required></textarea>
-            </div>
-            
-            <button type="submit">Send Message</button>
-        </form>
     </div>
 
     <script>
@@ -93,33 +113,6 @@
                     floatingButtons.classList.remove('scrolled');
                 }, 500);
             }
-        });
-
-        document.getElementById('contactForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const submitBtn = this.querySelector('button[type="submit"]');
-            submitBtn.disabled = true;
-            submitBtn.textContent = 'Sending...';
-            
-            fetch(this.action, {
-                method: 'POST',
-                body: new FormData(this),
-                headers: {
-                    'Accept': 'application/json'
-                }
-            })
-            .then(response => {
-                if (response.ok) {
-                    window.location.href = 'thank-you.html';
-                } else {
-                    throw new Error('Form submission failed');
-                }
-            })
-            .catch(error => {
-                alert('Error sending message. Please try again or call us directly.');
-                submitBtn.disabled = false;
-                submitBtn.textContent = 'Send Message';
-            });
         });
     </script>
 </body>
