@@ -7,9 +7,16 @@
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- PayPal SDK -->
+    <script src="https://www.paypal.com/sdk/js?client-id=YOUR_CLIENT_ID&vault=true&intent=subscription"></script>
 </head>
 <body>
+    <!-- Floating Buttons -->
     <div class="floating-buttons">
+        <a href="index.html" class="floating-button">
+            <i class="fas fa-home"></i>
+            <span>Home</span>
+        </a>
         <a href="appointment.html" class="floating-button">
             <i class="fas fa-calendar-alt"></i>
             <span>Book Now</span>
@@ -18,7 +25,7 @@
             <i class="fas fa-phone-alt"></i>
             <span>Call Us</span>
         </a>
-        <a href="#subscription" class="floating-button">
+        <a href="subscription.html" class="floating-button">
             <i class="fas fa-star"></i>
             <span>Subscribe</span>
         </a>
@@ -32,12 +39,15 @@
     <div class="container">
         <h1 class="section-title">Book Your Appointment</h1>
         <p class="centered-description">Fill out the form below to schedule your automotive detailing service. We'll confirm your appointment within 24 hours.</p>
-        
-        <form id="appointmentForm" action="https://formspree.io/f/crownedmobile2025@gmail.com" method="POST">
-            <input type="hidden" name="_subject" value="New Appointment Request - Crowned Mobile">
-            <input type="hidden" name="_replyto" value="%email%">
-            <input type="text" name="_gotcha" style="display:none">
 
+        <!-- Travel Fee Display (auto-added by JS) -->
+        <div id="autoTravelFeeDisplay"></div>
+
+        <form id="appointmentForm" action="https://formspree.io/f/crownedmobile2025@gmail.com" method="POST">
+            <input type="hidden" name="_subject" value="New Appointment Request">
+            <input type="hidden" name="_travel_fee" id="travelFeeField" value="0">
+            <input type="hidden" name="_distance_miles" id="distanceField" value="0">
+            
             <div class="form-group">
                 <label for="name" class="required">Your Name</label>
                 <input type="text" id="name" name="name" required>
@@ -54,20 +64,25 @@
             </div>
             
             <div class="form-group">
-                <label for="service" class="required">Service Needed</label>
-                <select id="service" name="service" required>
-                    <option value="">-- Select a Service --</option>
-                    <option value="Basic Detailing">Basic Detailing</option>
-                    <option value="Premium Detailing">Premium Detailing</option>
-                    <option value="Ceramic Coating">Ceramic Coating</option>
-                    <option value="Paint Correction">Paint Correction</option>
-                    <option value="Other">Other</option>
-                </select>
+                <label for="serviceZip">Service Location Zip Code</label>
+                <input type="text" id="serviceZip" name="service_zip" required 
+                       placeholder="Will auto-fill from calculator">
             </div>
             
             <div class="form-group">
                 <label for="vehicle">Vehicle Make/Model</label>
                 <input type="text" id="vehicle" name="vehicle">
+            </div>
+            
+            <div class="form-group">
+                <label for="service" class="required">Service Needed</label>
+                <select id="service" name="service" required>
+                    <option value="">-- Select a Service --</option>
+                    <option value="Basic Detailing">Basic Detailing ($150)</option>
+                    <option value="Premium Detailing">Premium Detailing ($300)</option>
+                    <option value="Ceramic Coating">Ceramic Coating ($500+)</option>
+                    <option value="Other">Other Service</option>
+                </select>
             </div>
             
             <div class="form-group">
@@ -81,52 +96,86 @@
             </div>
             
             <div class="form-group">
-                <label for="message">Special Requests or Notes</label>
+                <label for="message">Special Requests</label>
                 <textarea id="message" name="message"></textarea>
             </div>
+
+            <div class="payment-options">
+                <h3><i class="fas fa-credit-card"></i> Payment Options</h3>
+                <div class="options">
+                    <label>
+                        <input type="radio" name="payment_method" value="pay_on_site" checked> 
+                        Pay On Site (Cash/Card)
+                    </label>
+                    <label>
+                        <input type="radio" name="payment_method" value="paypal"> 
+                        PayPal Subscription
+                    </label>
+                </div>
+                
+                <div id="paypalSubscriptionContainer" class="hidden">
+                    <p>Select subscription plan:</p>
+                    <div id="paypal-buttons-container"></div>
+                </div>
+            </div>
             
-            <button type="submit">Schedule Appointment</button>
+            <button type="submit" id="submitBtn">Schedule Appointment</button>
         </form>
     </div>
 
+    <!-- Distance Calculator JS -->
+    <script src="distance-calculator.js"></script>
+    
     <script>
+        // Set minimum date to today
         document.getElementById('date').min = new Date().toISOString().split('T')[0];
         
-        const floatingButtons = document.querySelector('.floating-buttons');
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 100) {
-                floatingButtons.classList.add('scrolled');
-                setTimeout(() => {
-                    floatingButtons.classList.remove('scrolled');
-                }, 500);
-            }
+        // Handle payment method selection
+        document.querySelectorAll('input[name="payment_method"]').forEach(radio => {
+            radio.addEventListener('change', function() {
+                const paypalContainer = document.getElementById('paypalSubscriptionContainer');
+                if (this.value === 'paypal') {
+                    paypalContainer.classList.remove('hidden');
+                } else {
+                    paypalContainer.classList.add('hidden');
+                }
+            });
         });
 
+        // PayPal Subscription Integration
+        paypal.Buttons({
+            style: {
+                shape: 'pill',
+                color: 'gold',
+                layout: 'vertical',
+                label: 'subscribe'
+            },
+            createSubscription: function(data, actions) {
+                const service = document.getElementById('service').value;
+                let planId = '';
+                
+                // Map service to PayPal plan ID
+                if (service.includes('Basic')) planId = 'P-BASIC-PLAN-ID';
+                else if (service.includes('Premium')) planId = 'P-PREMIUM-PLAN-ID';
+                else if (service.includes('Ceramic')) planId = 'P-CERAMIC-PLAN-ID';
+                else planId = 'P-DEFAULT-PLAN-ID';
+                
+                return actions.subscription.create({
+                    'plan_id': planId
+                });
+            },
+            onApprove: function(data) {
+                document.getElementById('submitBtn').click();
+            }
+        }).render('#paypal-buttons-container');
+
+        // Form submission
         document.getElementById('appointmentForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const submitBtn = this.querySelector('button[type="submit"]');
+            const submitBtn = document.getElementById('submitBtn');
             submitBtn.disabled = true;
-            submitBtn.textContent = 'Sending...';
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Scheduling...';
             
-            fetch(this.action, {
-                method: 'POST',
-                body: new FormData(this),
-                headers: {
-                    'Accept': 'application/json'
-                }
-            })
-            .then(response => {
-                if (response.ok) {
-                    window.location.href = 'thank-you.html';
-                } else {
-                    throw new Error('Form submission failed');
-                }
-            })
-            .catch(error => {
-                alert('Error submitting form. Please try again or call us directly.');
-                submitBtn.disabled = false;
-                submitBtn.textContent = 'Schedule Appointment';
-            });
+            // Let Formspree handle the submission
         });
     </script>
 </body>

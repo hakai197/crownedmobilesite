@@ -444,3 +444,206 @@ h1, Header {
         grid-template-columns: 1fr;
     }
 }
+.subscription-plans {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin: 3rem 0;
+}
+
+.subscription-tier {
+    background: white;
+    border-radius: 10px;
+    padding: 2rem;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    position: relative;
+    transition: transform 0.3s ease;
+    border: 1px solid #eee;
+}
+
+.subscription-tier:hover {
+    transform: translateY(-5px);
+}
+
+.subscription-tier.popular {
+    border: 2px solid #ffd700;
+}
+
+.popular-badge {
+    position: absolute;
+    top: -12px;
+    right: 20px;
+    background: #ffd700;
+    color: #2a2a2a;
+    padding: 0.3rem 1rem;
+    border-radius: 20px;
+    font-weight: bold;
+    font-size: 0.8rem;
+}
+
+.subscription-tier h3 {
+    font-size: 1.5rem;
+    color: #2a2a2a;
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+.price {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #ffd700;
+    text-align: center;
+    margin: 1rem 0;
+}
+
+.price span {
+    font-size: 1rem;
+    color: #777;
+}
+
+.features {
+    list-style: none;
+    padding: 0;
+    margin: 1.5rem 0 2rem;
+}
+
+.features li {
+    padding: 0.5rem 0;
+    color: #555;
+    display: flex;
+    align-items: flex-start;
+}
+
+.features i {
+    color: #ffd700;
+    margin-right: 10px;
+    margin-top: 3px;
+}
+
+.paypal-button {
+    margin-top: 1rem;
+    min-height: 40px;
+}
+
+.subscription-info {
+    background: #f9f9f9;
+    padding: 1.5rem;
+    border-radius: 8px;
+    margin-top: 2rem;
+    border-left: 4px solid #ffd700;
+}
+
+.subscription-info h3 {
+    margin-top: 0;
+    color: #2a2a2a;
+    display: flex;
+    align-items: center;
+}
+
+.subscription-info h3 i {
+    margin-right: 10px;
+    color: #ffd700;
+}
+
+.subscription-info ul {
+    padding-left: 1.5rem;
+    color: #555;
+}
+
+@media (max-width: 768px) {
+    .subscription-plans {
+        grid-template-columns: 1fr;
+    }
+    
+    .price {
+        font-size: 2rem;
+    }
+}
+/* Ensure buttons stack properly on mobile */
+@media (max-width: 1024px) {
+    .floating-buttons {
+        flex-wrap: wrap;
+        padding: 10px 5px;
+    }
+    .floating-button {
+        flex: 1 0 45%;
+        margin: 5px;
+        padding: 8px 5px;
+    }
+}
+
+/* Smaller screens */
+@media (max-width: 480px) {
+    .floating-button {
+        flex: 1 0 100%;
+    }
+}
+.mileage-calculator {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 8px;
+    margin-bottom: 2rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.calculator-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.calculator-form label {
+    font-weight: bold;
+    color: #555;
+}
+
+.calculator-form input {
+    padding: 0.8rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 1rem;
+}
+
+#calculateBtn {
+    background-color: #2a2a2a;
+    color: #ffd700;
+    border: none;
+    padding: 0.8rem;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s;
+}
+
+#calculateBtn:hover {
+    background-color: #3a3a3a;
+}
+
+#distanceResult {
+    margin-top: 1rem;
+    padding: 1rem;
+    background: #f9f9f9;
+    border-radius: 4px;
+    border-left: 4px solid #ffd700;
+}
+
+#distanceResult p {
+    margin: 0.5rem 0;
+}
+
+.note {
+    font-size: 0.8rem;
+    color: #777;
+    font-style: italic;
+}
+
+.final-price {
+    display: block;
+    font-weight: bold;
+    color: #2a2a2a;
+    margin-top: 0.5rem;
+}
+
+.hidden {
+    display: none;
+}

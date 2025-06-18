@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Subscription Plans | Crowned Mobile</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="floating-buttons">
+           <a href="index.html" class="floating-button">
+        <i class="fas fa-home"></i>
+        <span>Home</span>
+    </a>
+        <a href="appointment.html" class="floating-button">
+            <i class="fas fa-calendar-alt"></i>
+            <span>Book Now</span>
+        </a>
+        <a href="contact.html" class="floating-button">
+            <i class="fas fa-phone-alt"></i>
+            <span>Call Us</span>
+        </a>
+
+    </div>
+
+    <div class="header-container">
+        <img src="logo.jpg" alt="Crowned Mobile Logo" class="header-logo">
+        <Header>Subscription Plans</Header>
+    </div>
+
+    <div class="container">
+        <h1 class="section-title">Monthly Detailing Memberships</h1>
+        <p class="centered-description">Get regular professional detailing at discounted rates with our subscription plans. Cancel anytime.</p>
+        
+        <div class="subscription-plans">
+            <!-- Basic Plan -->
+            <div class="subscription-tier">
+                <h3>Basic Care</h3>
+                <div class="price">$99<span>/month</span></div>
+                <ul class="features">
+                    <li><i class="fas fa-check"></i> Exterior Wash & Interior Vacuum</li>
+                    <li><i class="fas fa-check"></i> Window Cleaning</li>
+                    <li><i class="fas fa-check"></i> Tire Dressing</li>
+                    <li><i class="fas fa-check"></i> 10% Off Additional Services</li>
+                </ul>
+                <div class="paypal-button" id="basic-plan"></div>
+            </div>
+
+            <!-- Premium Plan -->
+            <div class="subscription-tier popular">
+                <div class="popular-badge">Most Popular</div>
+                <h3>Premium Care</h3>
+                <div class="price">$199<span>/month</span></div>
+                <ul class="features">
+                    <li><i class="fas fa-check"></i> Full Exterior/Interior Detailing</li>
+                    <li><i class="fas fa-check"></i> Leather Conditioning</li>
+                    <li><i class="fas fa-check"></i> Clay Bar Treatment</li>
+                    <li><i class="fas fa-check"></i> 15% Off Additional Services</li>
+                    <li><i class="fas fa-check"></i> Priority Scheduling</li>
+                </ul>
+                <div class="paypal-button" id="premium-plan"></div>
+            </div>
+
+            <!-- Elite Plan -->
+            <div class="subscription-tier">
+                <h3>Elite Care</h3>
+                <div class="price">$299<span>/month</span></div>
+                <ul class="features">
+                    <li><i class="fas fa-check"></i> Premium Detailing + Ceramic Boost</li>
+                    <li><i class="fas fa-check"></i> Engine Bay Cleaning</li>
+                    <li><i class="fas fa-check"></i> Paint Decontamination</li>
+                    <li><i class="fas fa-check"></i> 20% Off Additional Services</li>
+                    <li><i class="fas fa-check"></i> VIP Same-Day Scheduling</li>
+                    <li><i class="fas fa-check"></i> Free Monthly Wax</li>
+                </ul>
+                <div class="paypal-button" id="elite-plan"></div>
+            </div>
+        </div>
+
+        <div class="subscription-info">
+            <h3><i class="fas fa-info-circle"></i> Subscription Details</h3>
+            <ul>
+                <li>Billed monthly, cancel anytime</li>
+                <li>First service scheduled after payment</li>
+                <li>Unused services don't roll over</li>
+                <li>30-mile radius included ($2/mile beyond)</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- PayPal SDK -->
+    <script src="https://www.paypal.com/sdk/js?client-id=YOUR_CLIENT_ID&vault=true&intent=subscription"></script>
+    
+    <script>
+        // Floating buttons scroll effect
+        const floatingButtons = document.querySelector('.floating-buttons');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 100) {
+                floatingButtons.classList.add('scrolled');
+                setTimeout(() => {
+                    floatingButtons.classList.remove('scrolled');
+                }, 500);
+            }
+        });
+
+        // PayPal Subscription Buttons
+        paypal.Buttons({
+            style: {
+                shape: 'pill',
+                color: 'gold',
+                layout: 'vertical',
+                label: 'subscribe'
+            },
+            createSubscription: function(data, actions) {
+                return actions.subscription.create({
+                    'plan_id': 'P-123456789' // Replace with your Basic plan ID
+                });
+            },
+            onApprove: function(data) {
+                alert('Subscription completed! We\'ll contact you to schedule your first service.');
+            }
+        }).render('#basic-plan');
+
+        paypal.Buttons({
+            style: {
+                shape: 'pill',
+                color: 'gold',
+                layout: 'vertical',
+                label: 'subscribe'
+            },
+            createSubscription: function(data, actions) {
+                return actions.subscription.create({
+                    'plan_id': 'P-987654321' // Replace with your Premium plan ID
+                });
+            },
+            onApprove: function(data) {
+                alert('Subscription completed! We\'ll contact you to schedule your first service.');
+            }
+        }).render('#premium-plan');
+
+        paypal.Buttons({
+            style: {
+                shape: 'pill',
+                color: 'gold',
+                layout: 'vertical',
+                label: 'subscribe'
+            },
+            createSubscription: function(data, actions) {
+                return actions.subscription.create({
+                    'plan_id': 'P-567891234' // Replace with your Elite plan ID
+                });
+            },
+            onApprove: function(data) {
+                alert('Subscription completed! We\'ll contact you to schedule your first service.');
+            }
+        }).render('#elite-plan');
+    </script>
+</body>
+</html>
