@@ -1,16 +1,39 @@
-// distance-calculator.js
+/**
+ * Distance Calculator for Crowned Mobile
+ * Handles both API-based and fallback distance calculations
+ */
 class DistanceCalculator {
   constructor(options = {}) {
-    this.baseZip = options.baseZip || '45177';
-    this.apiKey = options.apiKey || 'sqltXyYWihWzaFAifaVRN8NhYdcg6Ks0lCniNfQLV93gyADKhOWoJdSjyot4rql6';
+    // Configuration with defaults
+    this.baseZip = options.baseZip || '45177'; // Wilmington, OH
+    this.apiKey = options.apiKey || 'saIt3PXAfWQDhW9gxAwshRoNK1DJPeEcRDWFYyoS2OSxwbEK2pSXlTiPLJXpdc3S'; // Use the same client key as in the example
     this.freeMiles = options.freeMiles || 30;
     this.costPerMile = options.costPerMile || 2;
     this.maxMiles = options.maxMiles || 200;
+    this.cache = {};
+    
+    // Ohio zip code regions for better approximation
+    this.ohioRegions = {
+      'central': [[43000, 43299], [45000, 45299]],
+      'northeast': [[44000, 44999]],
+      'southwest': [[45300, 45599]],
+      'southeast': [[45600, 45799]],
+      'northwest': [[45800, 45899], [43300, 43499]]
+    };
+    
+    // Known distances from base zip (45177) for common locations
+    this.knownDistances = {
+      '43085': 55,  // Dublin
+      '43240': 77,  // Columbus
+      '45202': 35,  // Cincinnati
+      '44102': 195, // Cleveland
+      '45801': 110  // Lima
+    };
   }
 
   async calculate(zipcode) {
     if (!/^\d{5}$/.test(zipcode)) {
-      throw new Error('Invalid zip code format');
+      throw new Error('Please enter a valid 5-digit zip code');
     }
 
     try {
@@ -19,32 +42,86 @@ class DistanceCalculator {
       return this.calculateFee(miles);
     } catch (apiError) {
       console.warn('API failed, using fallback:', apiError);
-      // Fallback to approximate calculation
-      const miles = this.calculateApproximate(zipcode);
+      // Fallback to improved Ohio approximation
+      const miles = this.calculateOhioDistance(zipcode);
       return this.calculateFee(miles);
     }
   }
 
   async calculateWithAPI(zipcode) {
-    const response = await fetch(
-      `https://www.zipcodeapi.com/rest/${this.apiKey}/distance.json/${this.baseZip}/${zipcode}/mile`
-    );
+    const cacheKey = `${this.baseZip}-${zipcode}`;
     
-    if (!response.ok) {
-      throw new Error('Network response was not ok');
+    if (this.cache[cacheKey]) {
+      return this.cache[cacheKey].distance;
     }
 
-    const data = await response.json();
-    if (data.error) {
-      throw new Error(data.error);
-    }
+    const url = `https://www.zipcodeapi.com/rest/${this.apiKey}/distance.json/${this.baseZip}/${zipcode}/mile`;
+    
+    try {
+      const response = await fetch(url);
+      
+      if (!response.ok) {
+        throw new Error(`API Error: ${response.status}`);
+      }
 
-    return Math.round(data.distance);
+      const data = await response.json();
+
+      if (data.error_msg) {
+        throw new Error(data.error_msg);
+      }
+
+      if (!data.distance) {
+        throw new Error('Invalid response format from API');
+      }
+
+      // Store in cache
+      this.cache[cacheKey] = data;
+      
+      return Math.round(data.distance);
+    } catch (error) {
+      console.error('API Call Failed:', error);
+      throw error;
+    }
   }
 
-  calculateApproximate(zipcode) {
-    const zipDiff = Math.abs(parseInt(zipcode) - parseInt(this.baseZip));
-    return Math.min(Math.max(this.freeMiles, Math.floor(zipDiff / 75)), this.maxMiles);
+  calculateOhioDistance(zipcode) {
+    // Check known distances first
+    if (this.knownDistances[zipcode]) {
+      return this.knownDistances[zipcode];
+    }
+
+    const baseNum = parseInt(this.baseZip);
+    const targetNum = parseInt(zipcode);
+    const diff = Math.abs(targetNum - baseNum);
+    
+    // Determine region of target zipcode
+    let region = 'central';
+    for (const [reg, ranges] of Object.entries(this.ohioRegions)) {
+      for (const [min, max] of ranges) {
+        if (targetNum >= min && targetNum <= max) {
+          region = reg;
+          break;
+        }
+      }
+    }
+
+    // Region-specific calculations
+    const regionFactors = {
+      'central': 0.12,
+      'northeast': 0.18,
+      'southwest': 0.10,
+      'southeast': 0.15,
+      'northwest': 0.14
+    };
+
+    // Calculate approximate miles
+    let miles = Math.round(diff * regionFactors[region]);
+    
+    // Ensure reasonable bounds
+    miles = Math.max(5, Math.min(miles, this.maxMiles));
+    
+    console.log(`Approximate distance from ${this.baseZip} to ${zipcode}: ${miles} miles (${region} region)`);
+    return miles;
   }
 
   calculateFee(miles) {
@@ -52,15 +129,19 @@ class DistanceCalculator {
     return {
       miles: miles,
       fee: excessMiles * this.costPerMile,
-      excessMiles: excessMiles
+      excessMiles: excessMiles,
+      freeMiles: this.freeMiles,
+      ratePerMile: this.costPerMile
     };
   }
 }
 
-// Initialize with default configuration
+// Initialize calculator with default configuration
 const distanceCalculator = new DistanceCalculator();
 
-// Pricing Page Implementation
+/**
+ * Pricing Page Implementation
+ */
 function setupPricingCalculator() {
   const calculateBtn = document.getElementById('calculateBtn');
   const zipInput = document.getElementById('zipcode');
@@ -81,33 +162,36 @@ function setupPricingCalculator() {
     calculateBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Calculating...';
 
     try {
-      const { miles, fee } = await distanceCalculator.calculate(zip);
+      const result = await distanceCalculator.calculate(zip);
+      console.log('Calculation Result:', result);
       
       // Update UI
-      document.getElementById('miles').textContent = miles;
-      document.getElementById('travelFee').textContent = fee;
+      document.getElementById('miles').textContent = result.miles;
+      document.getElementById('travelFee').textContent = result.fee;
+      document.getElementById('excessMiles').textContent = result.excessMiles;
       document.getElementById('distanceResult').classList.remove('hidden');
       
-      // Update all package prices
+      // Update package prices
       document.querySelectorAll('.pricing-list .total').forEach(totalEl => {
         const basePrice = parseFloat(
           totalEl.closest('li').querySelector('.price')
           .textContent.replace(/[^\d.]/g, '')
         );
-        totalEl.textContent = (basePrice + fee).toFixed(0);
+        totalEl.textContent = (basePrice + result.fee).toFixed(0);
       });
       
       // Store for appointment page
       localStorage.setItem('travelDetails', JSON.stringify({
         zip: zip,
-        distance: miles,
-        fee: fee,
+        distance: result.miles,
+        fee: result.fee,
+        excessMiles: result.excessMiles,
         calculatedAt: new Date().getTime()
       }));
 
     } catch (error) {
       console.error('Distance calculation failed:', error);
-      alert('Could not calculate distance. Please try again or call us.');
+      alert(error.message || 'Could not calculate distance. Please try again or call us.');
     } finally {
       calculateBtn.disabled = false;
       calculateBtn.innerHTML = '<i class="fas fa-calculator"></i> Calculate Fee';
@@ -126,53 +210,7 @@ function setupPricingCalculator() {
   }
 }
 
-// Appointment Page Implementation
-function setupAppointmentPage() {
-  const appointmentZip = document.getElementById('appointmentZip');
-  if (!appointmentZip) return;
-
-  // Check for URL parameter or stored data
-  const urlParams = new URLSearchParams(window.location.search);
-  const storedData = JSON.parse(localStorage.getItem('travelDetails') || '{}');
-  
-  // Only use data if it's less than 1 hour old
-  const oneHour = 3600000;
-  const isDataFresh = storedData.calculatedAt && 
-                     (new Date().getTime() - storedData.calculatedAt) < oneHour;
-  
-  const zip = urlParams.get('zip') || (isDataFresh ? storedData.zip : '');
-  
-  if (zip) {
-    appointmentZip.value = zip;
-    document.getElementById('appointmentTravelFee').value = isDataFresh ? storedData.fee : 0;
-    document.getElementById('appointmentDistance').value = isDataFresh ? storedData.distance : 0;
-    
-    // Add travel fee note to form
-    const feeNote = document.createElement('div');
-    feeNote.className = 'travel-fee-display';
-    feeNote.innerHTML = `
-      <i class="fas fa-road"></i> 
-      Travel Fee: $${isDataFresh ? storedData.fee : 0} 
-      (${isDataFresh ? storedData.distance : 0} miles from ${distanceCalculator.baseZip})
-      ${!isDataFresh ? '<br><small>Note: Please recalculate if over 1 hour old</small>' : ''}
-    `;
-    document.querySelector('form').insertBefore(feeNote, document.querySelector('button[type="submit"]'));
-  }
-  
-  // Allow manual zip entry
-  appointmentZip.addEventListener('change', function() {
-    if (this.value.trim().length === 5 && confirm('For accurate travel fee, would you like to visit the Pricing page to calculate?')) {
-      window.location.href = 'index.html';
-    }
-  });
-}
-
-// Initialize based on page
+// Initialize on page load
 document.addEventListener('DOMContentLoaded', function() {
-  if (document.getElementById('calculateBtn')) {
-    setupPricingCalculator();
-  }
-  if (document.getElementById('appointmentZip')) {
-    setupAppointmentPage();
-  }
+  setupPricingCalculator();
 });
