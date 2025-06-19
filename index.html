@@ -9,8 +9,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-    
-<script src="distance-calculator.js"></script>
     <div class="floating-buttons">
         <a href="appointment.html" class="floating-button">
             <i class="fas fa-calendar-alt"></i>
@@ -20,9 +18,10 @@
             <i class="fas fa-phone-alt"></i>
             <span>Call Us</span>
         </a>
-        <a href="subscription.html" class="floating-button">
+        <a href="#" class="floating-button coming-soon">
             <i class="fas fa-star"></i>
             <span>Subscribe</span>
+            <span class="soon-badge">Coming Soon</span>
         </a>
     </div>
 
@@ -57,110 +56,84 @@
             </ul>
         </div>
 
-      <div class="pricing-section">
-    <h2 class="section-title">Pricing</h2>
-    
-   <div class="mileage-calculator">
-    <h3><i class="fas fa-map-marker-alt"></i> Distance Calculator</h3>
-    <div class="calculator-form">
-        <label for="zipcode">Your Zip Code:</label>
-        <input type="text" id="zipcode" placeholder="Enter your zip code" maxlength="5" pattern="\d{5}">
-        <button id="calculateBtn"><i class="fas fa-calculator"></i> Calculate Fee</button>
-        <div id="distanceResult" class="hidden">
-            <div class="result-row">
-                <span>Distance from 45177:</span>
-                <strong><span id="miles">0</span> miles</strong>
+        <div class="pricing-section">
+            <h2 class="section-title">Pricing</h2>
+            
+            <div class="mileage-calculator">
+                <h3><i class="fas fa-map-marker-alt"></i> Distance Calculator</h3>
+                <div class="calculator-form">
+                    <label for="zipcode">Your Zip Code:</label>
+                    <input type="text" id="zipcode" placeholder="Enter your zip code" maxlength="5" pattern="\d{5}">
+                    <button id="calculateBtn"><i class="fas fa-calculator"></i> Calculate Fee</button>
+                    <div id="distanceResult" class="hidden">
+                        <div class="result-row">
+                            <span>Distance from 45177:</span>
+                            <strong><span id="miles">0</span> miles</strong>
+                        </div>
+                        <div class="result-row">
+                            <span>Free Miles Included:</span>
+                            <strong>15 miles</strong>
+                        </div>
+                        <div class="result-row">
+                            <span>Chargeable Miles:</span>
+                            <strong><span id="excessMiles">0</span> miles × $2/mile</strong>
+                        </div>
+                        <div class="result-row total-fee">
+                            <span>Travel Fee:</span>
+                            <strong>$<span id="travelFee">0.00</span></strong>
+                        </div>
+                        <button id="applyToAppointment" class="apply-btn">
+                            <i class="fas fa-calendar-plus"></i> Apply to Appointment
+                        </button>
+                    </div>
+                </div>
             </div>
-            <div class="result-row">
-                <span>Free Miles Included:</span>
-                <strong>30 miles</strong>
-            </div>
-            <div class="result-row">
-                <span>Chargeable Miles:</span>
-                <strong><span id="excessMiles">0</span> miles × $2/mile</strong>
-            </div>
-            <div class="result-row total-fee">
-                <span>Travel Fee:</span>
-                <strong>$<span id="travelFee">0</span></strong>
-            </div>
-            <button id="applyToAppointment" class="apply-btn">
-                <i class="fas fa-calendar-plus"></i> Apply to Appointment
-            </button>
-        </div>
-    </div>
-</div>
 
-    <ul class="pricing-list">
-        <li>
-            <span class="price">$150</span> - Basic Detailing Package
-            <span class="final-price">Total with Travel Fee: $<span class="total">150</span></span>
-        </li>
-        <li>
-            <span class="price">$300</span> - Premium Detailing Package
-            <span class="final-price">Total with Travel Fee: $<span class="total">300</span></span>
-        </li>
-        <li>
-            <span class="price">$500+</span> - Ceramic Coating
-            <span class="final-price">Total with Travel Fee: $<span class="total">500</span></span>
-        </li>
-    </ul>
-    <p class="travel-fee-note"><i class="fas fa-info-circle"></i> Travel fee is calculated at $2 per mile beyond our 30-mile service radius from zip code 45177.</p>
-</div>
+            <ul class="pricing-list">
+                <li>
+                    <span class="price">$150</span> - Basic Detailing Package
+                    <span class="final-price">Total with Travel Fee: $<span class="total">150</span></span>
+                </li>
+                <li>
+                    <span class="price">$300</span> - Premium Detailing Package
+                    <span class="final-price">Total with Travel Fee: $<span class="total">300</span></span>
+                </li>
+                <li>
+                    <span class="price">$500+</span> - Ceramic Coating
+                    <span class="final-price">Total with Travel Fee: $<span class="total">500</span></span>
+                </li>
+            </ul>
+            <p class="travel-fee-note"><i class="fas fa-info-circle"></i> Travel fee is calculated at $2 per mile beyond our 15-mile service radius from zip code 45177.</p>
+        </div>
+
+        <!-- Subscription Section - Commented Out with Coming Soon Message -->
+        <!--
         <div class="subscription-section">
-            <h2 class="section-title">Subscription Plans</h2>
-            <div class="subscription-tiers">
-                <div class="subscription-tier">
-                    <h3>Monthly</h3>
-                    <div class="subscription-price">$120<span>/month</span></div>
-                    <ul class="subscription-features">
-                        <li>1 Basic Detailing per month</li>
-                        <li>10% off additional services</li>
-                        <li>Priority scheduling</li>
-                    </ul>
-                </div>
-                <div class="subscription-tier popular">
-                    <div class="popular-badge">Most Popular</div>
-                    <h3>3-Month</h3>
-                    <div class="subscription-price">$100<span>/month</span></div>
-                    <ul class="subscription-features">
-                        <li>1 Basic Detailing per month</li>
-                        <li>15% off additional services</li>
-                        <li>Free interior refresh between details</li>
-                        <li>Priority scheduling</li>
-                    </ul>
-                </div>
-                <div class="subscription-tier">
-                    <h3>6-Month</h3>
-                    <div class="subscription-price">$90<span>/month</span></div>
-                    <ul class="subscription-features">
-                        <li>1 Premium Detailing every 2 months</li>
-                        <li>20% off additional services</li>
-                        <li>Free interior refresh between details</li>
-                        <li>VIP scheduling</li>
-                        <li>Free wax application</li>
-                    </ul>
-                </div>
+            <h2 class="section-title">Subscription Plans <span class="coming-soon-badge">Coming Soon</span></h2>
+            <div class="coming-soon-message">
+                <i class="fas fa-clock"></i>
+                <p>Our subscription service will be launching soon! Sign up for our newsletter to be notified when it's available.</p>
             </div>
         </div>
+        -->
         
+        <div class="subscription-section">
+            <h2 class="section-title">Subscription Plans <span class="coming-soon-badge">Coming Soon</span></h2>
+            <div class="coming-soon-message">
+                <i class="fas fa-clock"></i>
+                <p>Our subscription service will be launching soon! Sign up for our newsletter to be notified when it's available.</p>
+            </div>
+        </div>
+
         <ul class="nav-links">
             <li><a href="contact.html">Contact Us</a></li>
-            <li><a href="subscription.html">Subscription Service</a></li>
+            <li><a href="#" class="coming-soon-link">Subscription Service</a></li>
             <li><a href="links.html">Helpful Links</a></li>
         </ul>
     </div>
 
-    <script>
-        const floatingButtons = document.querySelector('.floating-buttons');
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 100) {
-                floatingButtons.classList.add('scrolled');
-                setTimeout(() => {
-                    floatingButtons.classList.remove('scrolled');
-                }, 500);
-            }
-        });
-    </script>
-   
+    <!-- External JavaScript Files -->
+    <script src="floating-buttons.js"></script>
+    <script src="distance-calculator.js"></script>
 </body>
 </html>

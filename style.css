@@ -60,6 +60,7 @@ h1, Header {
     max-width: 1200px;
     margin: 0 auto;
     padding: 2rem;
+    padding-bottom: 70px; /* Added for mobile floating buttons */
 }
 
 .centered-description {
@@ -118,78 +119,35 @@ h1, Header {
     margin-right: 0.8rem;
 }
 
-.subscription-tiers {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 2rem;
-    margin-top: 2rem;
-}
-
-.subscription-tier {
-    background: white;
-    border-radius: 10px;
-    padding: 2rem;
-    width: 300px;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-    position: relative;
-    transition: transform 0.3s ease;
-}
-
-.subscription-tier:hover {
-    transform: translateY(-10px);
-}
-
-.subscription-tier h3 {
-    font-size: 1.5rem;
+.coming-soon-badge {
+    display: inline-block;
+    background: #ffd700;
     color: #2a2a2a;
+    padding: 2px 10px;
+    border-radius: 12px;
+    font-size: 0.9rem;
+    margin-left: 10px;
+    vertical-align: middle;
+}
+
+.coming-soon-message {
+    background: #f9f9f9;
+    border-left: 4px solid #ffd700;
+    padding: 1.5rem;
     text-align: center;
+    border-radius: 4px;
+    margin-top: 1rem;
+}
+
+.coming-soon-message i {
+    font-size: 2rem;
+    color: #ffd700;
     margin-bottom: 1rem;
 }
 
-.subscription-price {
-    font-size: 2.5rem;
-    font-weight: bold;
-    color: #ffd700;
-    text-align: center;
-    margin: 1rem 0;
-}
-
-.subscription-price span {
-    font-size: 1rem;
-    color: #777;
-}
-
-.subscription-features {
-    list-style: none;
-    padding: 0;
-    margin: 1.5rem 0;
-}
-
-.subscription-features li {
-    padding: 0.5rem 0;
-    border-bottom: 1px solid #eee;
+.coming-soon-message p {
+    margin: 0;
     color: #555;
-}
-
-.subscription-features li:last-child {
-    border-bottom: none;
-}
-
-.popular {
-    border: 2px solid #ffd700;
-}
-
-.popular-badge {
-    position: absolute;
-    top: -12px;
-    right: 20px;
-    background: #ffd700;
-    color: #2a2a2a;
-    padding: 0.3rem 1rem;
-    border-radius: 20px;
-    font-weight: bold;
-    font-size: 0.8rem;
 }
 
 .nav-links {
@@ -209,12 +167,32 @@ h1, Header {
     border-radius: 4px;
     transition: background-color 0.3s;
     font-weight: bold;
+    position: relative;
+}
+
+.nav-links a.coming-soon-link {
+    pointer-events: none;
+    opacity: 0.7;
+}
+
+.nav-links a.coming-soon-link::after {
+    content: "Coming Soon";
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    background: #ffd700;
+    color: #2a2a2a;
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-size: 0.7rem;
+    font-weight: bold;
 }
 
 .nav-links a:hover {
     background-color: #3a3a3a;
 }
 
+/* Floating Buttons */
 .floating-buttons {
     position: fixed;
     left: 20px;
@@ -240,6 +218,23 @@ h1, Header {
     height: 60px;
     overflow: hidden;
     flex-direction: row-reverse;
+    position: relative;
+}
+
+.floating-button.coming-soon {
+    opacity: 0.8;
+}
+
+.soon-badge {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    background: #ffd700;
+    color: #2a2a2a;
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-size: 0.7rem;
+    font-weight: bold;
 }
 
 .floating-button i {
@@ -276,114 +271,216 @@ h1, Header {
     50% { transform: translateY(-55%); }
 }
 
+/* Mileage Calculator */
+.mileage-calculator {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 8px;
+    margin-bottom: 2rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.calculator-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.calculator-form label {
+    font-weight: bold;
+    color: #555;
+}
+
+.calculator-form input {
+    padding: 0.8rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 1rem;
+}
+
+#calculateBtn {
+    background-color: #2a2a2a;
+    color: #ffd700;
+    border: none;
+    padding: 0.8rem;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s;
+}
+
+#calculateBtn:hover {
+    background-color: #3a3a3a;
+}
+
+#distanceResult {
+    margin-top: 1rem;
+    padding: 1rem;
+    background: #f9f9f9;
+    border-radius: 4px;
+    border-left: 4px solid #ffd700;
+}
+
+.result-row {
+    margin: 0.5rem 0;
+    display: flex;
+    justify-content: space-between;
+}
+
+.total-fee {
+    font-weight: bold;
+    margin-top: 1rem;
+    padding-top: 0.5rem;
+    border-top: 1px solid #ddd;
+}
+
+.apply-btn {
+    background-color: #ffd700;
+    color: #2a2a2a;
+    border: none;
+    padding: 0.8rem;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+    margin-top: 1rem;
+    width: 100%;
+    transition: background-color 0.3s;
+}
+
+.apply-btn:hover {
+    background-color: #e6c200;
+}
+
+.hidden {
+    display: none;
+}
+
+/* Responsive Styles */
 @media (max-width: 1024px) {
-    .header-container {
-        margin-top: 60px;
-    }
     .floating-buttons {
+        position: fixed;
         left: 0;
         right: 0;
-        top: 0;
+        bottom: 0;
+        top: auto;
         transform: none;
         flex-direction: row;
-        justify-content: center;
+        justify-content: space-around;
         background-color: #2a2a2a;
-        padding: 10px;
-        gap: 10px;
-        box-shadow: 0 2px 10px rgba(0,0,0,0.2);
-        height: 60px;
-        align-items: center;
-    }
-    .floating-button {
-        width: auto;
+        padding: 10px 5px;
         height: auto;
-        padding: 8px 15px;
-        border-radius: 20px;
-        flex-direction: row;
+        box-shadow: 0 -2px 10px rgba(0,0,0,0.2);
+        z-index: 1000;
     }
+
+    .floating-button {
+        width: 30%;
+        height: 50px;
+        flex-direction: column;
+        padding: 8px 5px;
+        border-radius: 8px;
+    }
+
     .floating-button i {
         font-size: 1.2rem;
-        margin-right: 8px;
+        margin-right: 0;
+        margin-bottom: 3px;
     }
+
     .floating-button span {
+        font-size: 0.7rem;
         opacity: 1;
         width: auto;
         padding: 0;
-        font-size: 0.9rem;
     }
+
     .floating-button:hover {
-        transform: none;
-        background-color: #3a3a3a;
+        width: 30%;
+        padding: 8px 5px;
     }
-    .floating-buttons.scrolled {
-        animation: none;
+
+    .soon-badge {
+        top: -5px;
+        right: -5px;
+        font-size: 0.6rem;
+        padding: 1px 5px;
     }
+
+    .header-container {
+        margin-top: 0;
+        margin-bottom: 0;
+        padding-bottom: 15px;
+    }
+
     h1, Header {
         font-size: 2.5rem;
     }
+
     .section-title {
         font-size: 1.8rem;
     }
+
     .service-name {
         font-size: 1.2rem;
     }
+
     .pricing-list li {
         font-size: 1.1rem;
-    }
-    .subscription-tiers {
-        flex-direction: column;
-        align-items: center;
     }
 }
 
 @media (max-width: 480px) {
-    .header-container {
-        margin-top: 50px;
-    }
-    .floating-buttons {
-        padding: 8px 5px;
-        gap: 5px;
-        height: 50px;
-    }
     .floating-button {
-        padding: 6px 10px;
-        font-size: 0.8rem;
+        height: 45px;
     }
+
     .floating-button i {
         font-size: 1rem;
-        margin-right: 5px;
     }
+
+    .floating-button span {
+        font-size: 0.6rem;
+    }
+
+    .header-container {
+        margin-top: 0;
+    }
+
     h1, Header {
         font-size: 2rem;
     }
+
     .header-logo {
         width: 60px;
         height: 60px;
     }
+
     .subtitle {
         font-size: 1.1rem;
     }
+
     .established {
         font-size: 0.9rem;
     }
+
     .centered-description {
         font-size: 1rem;
         padding: 0 1rem;
     }
-    .subscription-tier {
-        width: 100%;
-        padding: 1.5rem;
-    }
+
     .nav-links {
         flex-direction: column;
         align-items: center;
         gap: 0.8rem;
     }
+
     .nav-links a {
         width: 80%;
         text-align: center;
     }
 }
+
+/* Links Grid (if used elsewhere) */
 .links-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -444,206 +541,44 @@ h1, Header {
         grid-template-columns: 1fr;
     }
 }
-.subscription-plans {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 2rem;
-    margin: 3rem 0;
-}
-
-.subscription-tier {
-    background: white;
-    border-radius: 10px;
-    padding: 2rem;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-    position: relative;
-    transition: transform 0.3s ease;
-    border: 1px solid #eee;
-}
-
-.subscription-tier:hover {
-    transform: translateY(-5px);
-}
-
-.subscription-tier.popular {
-    border: 2px solid #ffd700;
-}
-
-.popular-badge {
-    position: absolute;
-    top: -12px;
-    right: 20px;
-    background: #ffd700;
-    color: #2a2a2a;
-    padding: 0.3rem 1rem;
-    border-radius: 20px;
-    font-weight: bold;
-    font-size: 0.8rem;
-}
-
-.subscription-tier h3 {
-    font-size: 1.5rem;
-    color: #2a2a2a;
-    text-align: center;
-    margin-bottom: 1rem;
-}
-
-.price {
-    font-size: 2.5rem;
-    font-weight: bold;
-    color: #ffd700;
-    text-align: center;
-    margin: 1rem 0;
-}
-
-.price span {
-    font-size: 1rem;
-    color: #777;
-}
-
-.features {
-    list-style: none;
-    padding: 0;
-    margin: 1.5rem 0 2rem;
-}
-
-.features li {
-    padding: 0.5rem 0;
-    color: #555;
-    display: flex;
-    align-items: flex-start;
-}
-
-.features i {
-    color: #ffd700;
-    margin-right: 10px;
-    margin-top: 3px;
-}
-
-.paypal-button {
-    margin-top: 1rem;
-    min-height: 40px;
-}
-
-.subscription-info {
+/* Payment Information Section */
+.payment-info {
     background: #f9f9f9;
+    border-left: 4px solid #ffd700;
     padding: 1.5rem;
     border-radius: 8px;
-    margin-top: 2rem;
-    border-left: 4px solid #ffd700;
+    margin: 2rem 0;
 }
 
-.subscription-info h3 {
-    margin-top: 0;
+.payment-info h3 {
     color: #2a2a2a;
+    margin-top: 0;
     display: flex;
     align-items: center;
+    gap: 10px;
 }
 
-.subscription-info h3 i {
-    margin-right: 10px;
+.payment-info h3 i {
     color: #ffd700;
 }
 
-.subscription-info ul {
-    padding-left: 1.5rem;
+.payment-message {
     color: #555;
+    line-height: 1.6;
 }
 
-@media (max-width: 768px) {
-    .subscription-plans {
-        grid-template-columns: 1fr;
-    }
-    
-    .price {
-        font-size: 2rem;
-    }
-}
-/* Ensure buttons stack properly on mobile */
-@media (max-width: 1024px) {
-    .floating-buttons {
-        flex-wrap: wrap;
-        padding: 10px 5px;
-    }
-    .floating-button {
-        flex: 1 0 45%;
-        margin: 5px;
-        padding: 8px 5px;
-    }
-}
-
-/* Smaller screens */
-@media (max-width: 480px) {
-    .floating-button {
-        flex: 1 0 100%;
-    }
-}
-.mileage-calculator {
-    background: white;
-    padding: 1.5rem;
-    border-radius: 8px;
-    margin-bottom: 2rem;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-}
-
-.calculator-form {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-}
-
-.calculator-form label {
-    font-weight: bold;
-    color: #555;
-}
-
-.calculator-form input {
-    padding: 0.8rem;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    font-size: 1rem;
-}
-
-#calculateBtn {
-    background-color: #2a2a2a;
-    color: #ffd700;
-    border: none;
-    padding: 0.8rem;
-    border-radius: 4px;
-    cursor: pointer;
-    font-weight: bold;
-    transition: background-color 0.3s;
-}
-
-#calculateBtn:hover {
-    background-color: #3a3a3a;
-}
-
-#distanceResult {
-    margin-top: 1rem;
-    padding: 1rem;
-    background: #f9f9f9;
-    border-radius: 4px;
-    border-left: 4px solid #ffd700;
-}
-
-#distanceResult p {
+.payment-message p {
     margin: 0.5rem 0;
 }
 
-.note {
-    font-size: 0.8rem;
-    color: #777;
-    font-style: italic;
+.payment-message p:first-child {
+    margin-top: 0;
 }
 
-.final-price {
-    display: block;
-    font-weight: bold;
+.payment-message p:last-child {
+    margin-bottom: 0;
+}
+
+.payment-message strong {
     color: #2a2a2a;
-    margin-top: 0.5rem;
-}
-
-.hidden {
-    display: none;
-}
+};

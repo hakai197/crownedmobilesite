@@ -7,8 +7,6 @@
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- PayPal SDK -->
-    <script src="https://www.paypal.com/sdk/js?client-id=YOUR_CLIENT_ID&vault=true&intent=subscription"></script>
 </head>
 <body>
     <!-- Floating Buttons -->
@@ -25,9 +23,10 @@
             <i class="fas fa-phone-alt"></i>
             <span>Call Us</span>
         </a>
-        <a href="subscription.html" class="floating-button">
+        <a href="#" class="floating-button coming-soon">
             <i class="fas fa-star"></i>
             <span>Subscribe</span>
+            <span class="soon-badge">Coming Soon</span>
         </a>
     </div>
 
@@ -100,22 +99,12 @@
                 <textarea id="message" name="message"></textarea>
             </div>
 
-            <div class="payment-options">
-                <h3><i class="fas fa-credit-card"></i> Payment Options</h3>
-                <div class="options">
-                    <label>
-                        <input type="radio" name="payment_method" value="pay_on_site" checked> 
-                        Pay On Site (Cash/Card)
-                    </label>
-                    <label>
-                        <input type="radio" name="payment_method" value="paypal"> 
-                        PayPal Subscription
-                    </label>
-                </div>
-                
-                <div id="paypalSubscriptionContainer" class="hidden">
-                    <p>Select subscription plan:</p>
-                    <div id="paypal-buttons-container"></div>
+            <div class="payment-info">
+                <h3><i class="fas fa-info-circle"></i> Payment Information</h3>
+                <div class="payment-message">
+                    <p><strong>All payments are made after service is completed.</strong></p>
+                    <p>We accept cash and all major credit cards on-site. Your payment will be collected once you're completely satisfied with the service.</p>
+                    <p>No upfront payment or deposit required to book your appointment.</p>
                 </div>
             </div>
             
@@ -123,60 +112,9 @@
         </form>
     </div>
 
-    <!-- Distance Calculator JS -->
+    <!-- External JavaScript Files -->
+    <script src="floating-buttons.js"></script>
     <script src="distance-calculator.js"></script>
-    
-    <script>
-        // Set minimum date to today
-        document.getElementById('date').min = new Date().toISOString().split('T')[0];
-        
-        // Handle payment method selection
-        document.querySelectorAll('input[name="payment_method"]').forEach(radio => {
-            radio.addEventListener('change', function() {
-                const paypalContainer = document.getElementById('paypalSubscriptionContainer');
-                if (this.value === 'paypal') {
-                    paypalContainer.classList.remove('hidden');
-                } else {
-                    paypalContainer.classList.add('hidden');
-                }
-            });
-        });
-
-        // PayPal Subscription Integration
-        paypal.Buttons({
-            style: {
-                shape: 'pill',
-                color: 'gold',
-                layout: 'vertical',
-                label: 'subscribe'
-            },
-            createSubscription: function(data, actions) {
-                const service = document.getElementById('service').value;
-                let planId = '';
-                
-                // Map service to PayPal plan ID
-                if (service.includes('Basic')) planId = 'P-BASIC-PLAN-ID';
-                else if (service.includes('Premium')) planId = 'P-PREMIUM-PLAN-ID';
-                else if (service.includes('Ceramic')) planId = 'P-CERAMIC-PLAN-ID';
-                else planId = 'P-DEFAULT-PLAN-ID';
-                
-                return actions.subscription.create({
-                    'plan_id': planId
-                });
-            },
-            onApprove: function(data) {
-                document.getElementById('submitBtn').click();
-            }
-        }).render('#paypal-buttons-container');
-
-        // Form submission
-        document.getElementById('appointmentForm').addEventListener('submit', function(e) {
-            const submitBtn = document.getElementById('submitBtn');
-            submitBtn.disabled = true;
-            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Scheduling...';
-            
-            // Let Formspree handle the submission
-        });
-    </script>
+    <script src="appointment-form.js"></script>
 </body>
 </html>
