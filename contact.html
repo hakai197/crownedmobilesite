@@ -10,10 +10,10 @@
 </head>
 <body>
     <div class="floating-buttons">
-           <a href="index.html" class="floating-button">
-        <i class="fas fa-home"></i>
-        <span>Home</span>
-    </a>
+        <a href="index.html" class="floating-button">
+            <i class="fas fa-home"></i>
+            <span>Home</span>
+        </a>
         <a href="appointment.html" class="floating-button">
             <i class="fas fa-calendar-alt"></i>
             <span>Book Now</span>
@@ -49,14 +49,13 @@
                 <p><a href="mailto:crownedmobile2025@gmail.com">crownedmobile2025@gmail.com</a></p>
                 <p>Response within 24 hours</p>
             </div>
-            
-        
         </div>
 
         <h2 class="section-title">Send Us a Message</h2>
-        <form id="contactForm" action="https://formspree.io/f/crownedmobile2025@gmail.com" method="POST">
+        <form id="contactForm" action="https://formspree.io/f/xnnvbapg" method="POST">
             <input type="hidden" name="_subject" value="New Contact Message - Crowned Mobile">
             <input type="hidden" name="_replyto" value="%email%">
+            <input type="hidden" name="_next" value="thank-you.html">
             <input type="text" name="_gotcha" style="display:none">
 
             <div class="form-group">
@@ -79,47 +78,9 @@
                 <textarea id="message" name="message" required></textarea>
             </div>
             
-            <button type="submit">Send Message</button>
+            <button type="submit" id="submitBtn">Send Message</button>
         </form>
     </div>
-
-    <script>
-        const floatingButtons = document.querySelector('.floating-buttons');
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 100) {
-                floatingButtons.classList.add('scrolled');
-                setTimeout(() => {
-                    floatingButtons.classList.remove('scrolled');
-                }, 500);
-            }
-        });
-
-        document.getElementById('contactForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const submitBtn = this.querySelector('button[type="submit"]');
-            submitBtn.disabled = true;
-            submitBtn.textContent = 'Sending...';
-            
-            fetch(this.action, {
-                method: 'POST',
-                body: new FormData(this),
-                headers: {
-                    'Accept': 'application/json'
-                }
-            })
-            .then(response => {
-                if (response.ok) {
-                    window.location.href = 'thank-you.html';
-                } else {
-                    throw new Error('Form submission failed');
-                }
-            })
-            .catch(error => {
-                alert('Error sending message. Please try again or call us directly.');
-                submitBtn.disabled = false;
-                submitBtn.textContent = 'Send Message';
-            });
-        });
-    </script>
+    <script src="floating-buttons.js"></script>
 </body>
 </html>

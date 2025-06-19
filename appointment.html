@@ -39,13 +39,10 @@
         <h1 class="section-title">Book Your Appointment</h1>
         <p class="centered-description">Fill out the form below to schedule your automotive detailing service. We'll confirm your appointment within 24 hours.</p>
 
-        <!-- Travel Fee Display (auto-added by JS) -->
-        <div id="autoTravelFeeDisplay"></div>
-
-        <form id="appointmentForm" action="https://formspree.io/f/crownedmobile2025@gmail.com" method="POST">
-            <input type="hidden" name="_subject" value="New Appointment Request">
-            <input type="hidden" name="_travel_fee" id="travelFeeField" value="0">
-            <input type="hidden" name="_distance_miles" id="distanceField" value="0">
+        <form id="appointmentForm" action="https://formspree.io/f/xnnvbapg" method="POST">
+            <input type="hidden" name="_subject" value="New Appointment Request - Crowned Mobile">
+            <input type="hidden" name="_replyto" value="email">
+            <input type="hidden" name="_next" value="thank-you.html">
             
             <div class="form-group">
                 <label for="name" class="required">Your Name</label>
@@ -63,9 +60,8 @@
             </div>
             
             <div class="form-group">
-                <label for="serviceZip">Service Location Zip Code</label>
-                <input type="text" id="serviceZip" name="service_zip" required 
-                       placeholder="Will auto-fill from calculator">
+                <label for="serviceZip" class="required">Service Location Zip Code</label>
+                <input type="text" id="serviceZip" name="service_zip" required>
             </div>
             
             <div class="form-group">

@@ -1,3 +1,6 @@
+/* =================== */
+/* BASE STYLES */
+/* =================== */
 body {
     font-family: 'Arial', sans-serif;
     line-height: 1.6;
@@ -5,8 +8,60 @@ body {
     padding: 0;
     color: #333;
     background-color: #f5f5f5;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
 }
 
+/* =================== */
+/* LAYOUT CONTAINERS */
+/* =================== */
+.container {
+    display: flex;
+    flex-direction: column;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+.side-by-side-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+    width: 100%;
+    margin-bottom: 2rem;
+}
+
+.centered-description {
+    flex: 0 0 100%;
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto 2rem;
+    font-size: 1.1rem;
+    line-height: 1.6;
+    color: #555;
+}
+
+/* =================== */
+/* SIDE-BY-SIDE SECTIONS */
+/* =================== */
+.pricing-section {
+    flex: 1;
+    min-width: 300px;
+}
+
+.services-section {
+    flex: 1;
+    min-width: 300px;
+}
+
+.mileage-calculator {
+    width: 100%;
+}
+
+/* =================== */
+/* HEADER STYLES */
+/* =================== */
 .header-container {
     display: flex;
     align-items: center;
@@ -56,22 +111,9 @@ h1, Header {
     font-size: 1rem;
 }
 
-.container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 2rem;
-    padding-bottom: 70px; /* Added for mobile floating buttons */
-}
-
-.centered-description {
-    text-align: center;
-    max-width: 800px;
-    margin: 2rem auto;
-    font-size: 1.1rem;
-    line-height: 1.6;
-    color: #555;
-}
-
+/* =================== */
+/* CONTENT SECTIONS */
+/* =================== */
 .section-title {
     font-size: 2.2rem;
     font-weight: bold;
@@ -119,159 +161,35 @@ h1, Header {
     margin-right: 0.8rem;
 }
 
-.coming-soon-badge {
-    display: inline-block;
-    background: #ffd700;
-    color: #2a2a2a;
-    padding: 2px 10px;
-    border-radius: 12px;
+.final-price {
+    display: block;
+    margin-top: 0.5rem;
     font-size: 0.9rem;
-    margin-left: 10px;
-    vertical-align: middle;
+    color: #666;
 }
 
-.coming-soon-message {
-    background: #f9f9f9;
-    border-left: 4px solid #ffd700;
-    padding: 1.5rem;
-    text-align: center;
-    border-radius: 4px;
+.total {
+    font-weight: bold;
+    color: #2a2a2a;
+}
+
+.travel-fee-note {
+    font-size: 0.9rem;
+    color: #666;
     margin-top: 1rem;
-}
-
-.coming-soon-message i {
-    font-size: 2rem;
-    color: #ffd700;
-    margin-bottom: 1rem;
-}
-
-.coming-soon-message p {
-    margin: 0;
-    color: #555;
-}
-
-.nav-links {
-    display: flex;
-    justify-content: center;
-    gap: 1.5rem;
-    margin-top: 3rem;
-    padding: 0;
-    list-style: none;
-}
-
-.nav-links a {
-    color: #ffd700;
-    background-color: #2a2a2a;
-    padding: 0.5rem 1.5rem;
-    text-decoration: none;
+    padding: 0.5rem;
+    background: #f9f9f9;
     border-radius: 4px;
-    transition: background-color 0.3s;
-    font-weight: bold;
-    position: relative;
 }
 
-.nav-links a.coming-soon-link {
-    pointer-events: none;
-    opacity: 0.7;
-}
-
-.nav-links a.coming-soon-link::after {
-    content: "Coming Soon";
-    position: absolute;
-    top: -8px;
-    right: -8px;
-    background: #ffd700;
-    color: #2a2a2a;
-    padding: 2px 8px;
-    border-radius: 10px;
-    font-size: 0.7rem;
-    font-weight: bold;
-}
-
-.nav-links a:hover {
-    background-color: #3a3a3a;
-}
-
-/* Floating Buttons */
-.floating-buttons {
-    position: fixed;
-    left: 20px;
-    top: 50%;
-    transform: translateY(-50%);
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    z-index: 100;
-}
-
-.floating-button {
-    display: flex;
-    align-items: center;
-    background-color: #2a2a2a;
+.travel-fee-note i {
     color: #ffd700;
-    border-radius: 30px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-    transition: all 0.3s ease;
-    text-decoration: none;
-    padding: 15px;
-    width: 60px;
-    height: 60px;
-    overflow: hidden;
-    flex-direction: row-reverse;
-    position: relative;
+    margin-right: 5px;
 }
 
-.floating-button.coming-soon {
-    opacity: 0.8;
-}
-
-.soon-badge {
-    position: absolute;
-    top: -8px;
-    right: -8px;
-    background: #ffd700;
-    color: #2a2a2a;
-    padding: 2px 8px;
-    border-radius: 10px;
-    font-size: 0.7rem;
-    font-weight: bold;
-}
-
-.floating-button i {
-    font-size: 1.5rem;
-    min-width: 30px;
-    text-align: center;
-    transition: all 0.3s ease;
-}
-
-.floating-button span {
-    white-space: nowrap;
-    padding-right: 10px;
-    opacity: 0;
-    width: 0;
-    transition: all 0.3s ease;
-}
-
-.floating-button:hover {
-    width: auto;
-    padding-left: 25px;
-}
-
-.floating-button:hover span {
-    opacity: 1;
-    width: auto;
-}
-
-.floating-buttons.scrolled {
-    animation: bounce 0.5s ease;
-}
-
-@keyframes bounce {
-    0%, 100% { transform: translateY(-50%); }
-    50% { transform: translateY(-55%); }
-}
-
-/* Mileage Calculator */
+/* =================== */
+/* MILEAGE CALCULATOR */
+/* =================== */
 .mileage-calculator {
     background: white;
     padding: 1.5rem;
@@ -355,230 +273,267 @@ h1, Header {
     display: none;
 }
 
-/* Responsive Styles */
+/* =================== */
+/* SUBSCRIPTION SECTION */
+/* =================== */
+.subscription-section {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 8px;
+    margin-bottom: 2rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.coming-soon-badge {
+    display: inline-block;
+    background: #ffd700;
+    color: #2a2a2a;
+    padding: 2px 10px;
+    border-radius: 12px;
+    font-size: 0.9rem;
+    margin-left: 10px;
+    vertical-align: middle;
+}
+
+.coming-soon-message {
+    background: #f9f9f9;
+    border-left: 4px solid #ffd700;
+    padding: 1.5rem;
+    text-align: center;
+    border-radius: 4px;
+}
+
+.coming-soon-message i {
+    font-size: 2rem;
+    color: #ffd700;
+    margin-bottom: 1rem;
+}
+
+.coming-soon-message p {
+    margin: 0;
+    color: #555;
+}
+
+/* =================== */
+/* NAVIGATION LINKS */
+/* =================== */
+.nav-links {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    margin-top: 3rem;
+    padding: 0;
+    list-style: none;
+}
+
+.nav-links a {
+    color: #ffd700;
+    background-color: #2a2a2a;
+    padding: 0.5rem 1.5rem;
+    text-decoration: none;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+    font-weight: bold;
+}
+
+.nav-links a:hover {
+    background-color: #3a3a3a;
+}
+
+.coming-soon-link {
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+/* =================== */
+/* FLOATING BUTTONS */
+/* =================== */
+.floating-buttons {
+    position: fixed;
+    left: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    z-index: 100;
+}
+
+.floating-button {
+    display: flex;
+    align-items: center;
+    background-color: #2a2a2a;
+    color: #ffd700;
+    border-radius: 30px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    transition: all 0.3s ease;
+    text-decoration: none;
+    padding: 15px;
+    width: 60px;
+    height: 60px;
+    overflow: hidden;
+    flex-direction: row-reverse;
+}
+
+.floating-button.coming-soon {
+    position: relative;
+    opacity: 0.8;
+}
+
+.soon-badge {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    background: #ffd700;
+    color: #2a2a2a;
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-size: 0.7rem;
+    font-weight: bold;
+}
+
+.floating-button i {
+    font-size: 1.5rem;
+    min-width: 30px;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.floating-button span {
+    white-space: nowrap;
+    padding-right: 10px;
+    opacity: 0;
+    width: 0;
+    transition: all 0.3s ease;
+}
+
+.floating-button:hover {
+    width: auto;
+    padding-left: 25px;
+}
+
+.floating-button:hover span {
+    opacity: 1;
+    width: auto;
+}
+
+.floating-buttons.scrolled {
+    animation: bounce 0.5s ease;
+}
+
+@keyframes bounce {
+    0%, 100% { transform: translateY(-50%); }
+    50% { transform: translateY(-55%); }
+}
+
+/* =================== */
+/* RESPONSIVE STYLES */
+/* =================== */
 @media (max-width: 1024px) {
+    .side-by-side-container {
+        flex-direction: column;
+    }
+    
+    .pricing-section,
+    .services-section {
+        width: 100%;
+        max-width: 100%;
+    }
+    
     .floating-buttons {
-        position: fixed;
         left: 0;
         right: 0;
-        bottom: 0;
-        top: auto;
+        top: 0;
         transform: none;
         flex-direction: row;
-        justify-content: space-around;
+        justify-content: center;
         background-color: #2a2a2a;
-        padding: 10px 5px;
-        height: auto;
-        box-shadow: 0 -2px 10px rgba(0,0,0,0.2);
-        z-index: 1000;
+        padding: 10px;
+        gap: 10px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        height: 60px;
+        align-items: center;
     }
-
+    
     .floating-button {
-        width: 30%;
-        height: 50px;
-        flex-direction: column;
-        padding: 8px 5px;
-        border-radius: 8px;
+        width: auto;
+        height: auto;
+        padding: 8px 15px;
+        border-radius: 20px;
+        flex-direction: row;
     }
-
+    
     .floating-button i {
         font-size: 1.2rem;
-        margin-right: 0;
-        margin-bottom: 3px;
+        margin-right: 8px;
     }
-
+    
     .floating-button span {
-        font-size: 0.7rem;
         opacity: 1;
         width: auto;
         padding: 0;
+        font-size: 0.9rem;
     }
-
+    
     .floating-button:hover {
-        width: 30%;
-        padding: 8px 5px;
+        transform: none;
+        background-color: #3a3a3a;
     }
-
-    .soon-badge {
-        top: -5px;
-        right: -5px;
-        font-size: 0.6rem;
-        padding: 1px 5px;
-    }
-
-    .header-container {
-        margin-top: 0;
-        margin-bottom: 0;
-        padding-bottom: 15px;
-    }
-
+    
     h1, Header {
         font-size: 2.5rem;
     }
-
+    
     .section-title {
         font-size: 1.8rem;
-    }
-
-    .service-name {
-        font-size: 1.2rem;
-    }
-
-    .pricing-list li {
-        font-size: 1.1rem;
     }
 }
 
 @media (max-width: 480px) {
-    .floating-button {
-        height: 45px;
+    .header-container {
+        margin-top: 60px;
     }
-
+    
+    .floating-buttons {
+        padding: 8px 5px;
+        gap: 5px;
+        height: 50px;
+    }
+    
+    .floating-button {
+        padding: 6px 10px;
+    }
+    
     .floating-button i {
         font-size: 1rem;
+        margin-right: 5px;
     }
-
-    .floating-button span {
-        font-size: 0.6rem;
-    }
-
-    .header-container {
-        margin-top: 0;
-    }
-
+    
     h1, Header {
         font-size: 2rem;
     }
-
+    
     .header-logo {
         width: 60px;
         height: 60px;
     }
-
+    
     .subtitle {
         font-size: 1.1rem;
     }
-
+    
     .established {
         font-size: 0.9rem;
     }
-
-    .centered-description {
-        font-size: 1rem;
-        padding: 0 1rem;
-    }
-
+    
     .nav-links {
         flex-direction: column;
         align-items: center;
         gap: 0.8rem;
     }
-
+    
     .nav-links a {
         width: 80%;
         text-align: center;
     }
-}
-
-/* Links Grid (if used elsewhere) */
-.links-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 2rem;
-    margin-top: 2rem;
-}
-
-.links-section {
-    background: white;
-    padding: 1.5rem;
-    border-radius: 10px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-}
-
-.links-section h2 {
-    color: #2a2a2a;
-    font-size: 1.5rem;
-    margin-top: 0;
-    margin-bottom: 1.5rem;
-    border-bottom: 2px solid #ffd700;
-    padding-bottom: 0.5rem;
-}
-
-.link-card {
-    margin-bottom: 1.5rem;
-}
-
-.link-card a {
-    display: flex;
-    align-items: center;
-    color: #2a2a2a;
-    font-weight: bold;
-    text-decoration: none;
-    font-size: 1.1rem;
-    transition: all 0.3s ease;
-}
-
-.link-card a:hover {
-    color: #ffd700;
-}
-
-.link-card i {
-    margin-right: 10px;
-    color: #ffd700;
-    font-size: 1.3rem;
-    width: 25px;
-    text-align: center;
-}
-
-.link-card p {
-    margin: 0.5rem 0 0 35px;
-    color: #555;
-    font-size: 0.9rem;
-}
-
-@media (max-width: 768px) {
-    .links-grid {
-        grid-template-columns: 1fr;
-    }
-}
-/* Payment Information Section */
-.payment-info {
-    background: #f9f9f9;
-    border-left: 4px solid #ffd700;
-    padding: 1.5rem;
-    border-radius: 8px;
-    margin: 2rem 0;
-}
-
-.payment-info h3 {
-    color: #2a2a2a;
-    margin-top: 0;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-.payment-info h3 i {
-    color: #ffd700;
-}
-
-.payment-message {
-    color: #555;
-    line-height: 1.6;
-}
-
-.payment-message p {
-    margin: 0.5rem 0;
-}
-
-.payment-message p:first-child {
-    margin-top: 0;
-}
-
-.payment-message p:last-child {
-    margin-bottom: 0;
-}
-
-.payment-message strong {
-    color: #2a2a2a;
 };
