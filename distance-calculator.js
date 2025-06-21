@@ -58,7 +58,7 @@ document.addEventListener('DOMContentLoaded', function() {
             
             const data = await response.json();
             const distance = data.distance;
-            const cost = distance > 15 ? (distance - 15) * 2 : 0;
+            const cost = distance > 15 ? (distance - 15) * 0.7 : 0;
             
             return {
                 success: true,
@@ -108,7 +108,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     }
                     
                     const distance = data.distance;
-                    const cost = distance > 15 ? (distance - 15) * 2 : 0;
+                    const cost = distance > 15 ? (distance - 15) * 0.7: 0;
                     
                     return {
                         success: true,
