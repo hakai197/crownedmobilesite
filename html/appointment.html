@@ -4,9 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Schedule Appointment | Crowned Mobile</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="../css/style.css">
     <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
 </head>
 <body>
     <!-- Floating Buttons -->
@@ -23,15 +24,15 @@
             <i class="fas fa-phone-alt"></i>
             <span>Call Us</span>
         </a>
-        <a href="#" class="floating-button coming-soon">
+        <a href="subscription.html" class="floating-button">
             <i class="fas fa-star"></i>
             <span>Subscribe</span>
-            <span class="soon-badge">Coming Soon</span>
+            <span class="soon-badge"></span>
         </a>
     </div>
 
     <div class="header-container">
-        <img src="logos\MagicEraser_250327_111940.png" alt="Crowned Mobile Logo" class="header-logo">
+        <img src="../logos/MagicEraser_250327_111940.png" alt="Crowned Mobile Logo" class="header-logo">
         <Header>Schedule Service</Header>
     </div>
 
@@ -39,29 +40,29 @@
         <h1 class="section-title">Book Your Appointment</h1>
         <p class="centered-description">Fill out the form below to schedule your automotive detailing service. We'll confirm your appointment within 24 hours.</p>
 
-        <form id="appointmentForm" action="https://formspree.io/f/xnnvbapg" method="POST">
-            <input type="hidden" name="_subject" value="New Appointment Request - Crowned Mobile">
-            <input type="hidden" name="_replyto" value="email">
-            <input type="hidden" name="_next" value="thank-you.html">
-            
+        <form id="appointmentForm" action="../scripts/send_email.php" method="POST">
             <div class="form-group">
                 <label for="name" class="required">Your Name</label>
                 <input type="text" id="name" name="name" required>
+                <div class="error-message" id="name-error">Please enter your name</div>
             </div>
             
             <div class="form-group">
                 <label for="email" class="required">Email Address</label>
                 <input type="email" id="email" name="email" required>
+                <div class="error-message" id="email-error">Please enter a valid email address</div>
             </div>
             
             <div class="form-group">
                 <label for="phone">Phone Number</label>
                 <input type="tel" id="phone" name="phone">
+                <div class="error-message" id="phone-error">Please enter a valid phone number</div>
             </div>
             
             <div class="form-group">
                 <label for="serviceZip" class="required">Service Location Zip Code</label>
                 <input type="text" id="serviceZip" name="service_zip" required>
+                <div class="error-message" id="zip-error">Please enter a valid zip code</div>
             </div>
             
             <div class="form-group">
@@ -78,16 +79,32 @@
                     <option value="Ceramic Coating">Ceramic Coating ($500+)</option>
                     <option value="Other">Other Service</option>
                 </select>
+                <div class="error-message" id="service-error">Please select a service</div>
             </div>
             
             <div class="form-group">
                 <label for="date" class="required">Preferred Date</label>
                 <input type="date" id="date" name="date" required>
+                <div class="error-message" id="date-error">Please select a date</div>
             </div>
             
             <div class="form-group">
                 <label for="time" class="required">Preferred Time</label>
-                <input type="time" id="time" name="time" required>
+                <select id="time" name="time" required>
+                    <option value="">-- Select a Time --</option>
+                    <option value="08:00">8:00 AM</option>
+                    <option value="08:30">8:30 AM</option>
+                    <option value="09:00">9:00 AM</option>
+                    <option value="09:30">9:30 AM</option>
+                    <option value="10:00">10:00 AM</option>
+                    <option value="10:30">10:30 AM</option>
+                    <option value="11:00">11:00 AM</option>
+                    <option value="11:30">11:30 AM</option>
+                    <option value="12:00">12:00 PM</option>
+                    <option value="12:30">12:30 PM</option>
+                    <option value="13:00">1:00 PM</option>
+                </select>
+                <div class="error-message" id="time-error">Please select a time</div>
             </div>
             
             <div class="form-group">
@@ -108,9 +125,7 @@
         </form>
     </div>
 
-    <!-- External JavaScript Files -->
-    <script src="floating-buttons.js"></script>
-    <script src="distance-calculator.js"></script>
-    <script src="appointment-form.js"></script>
+    <!-- Include the external JavaScript file -->
+    <script src="../scripts/appointment-form.js"></script>
 </body>
 </html>

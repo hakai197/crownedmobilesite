@@ -536,4 +536,16 @@ h1, Header {
         width: 80%;
         text-align: center;
     }
+
+     .error-message {
+            color: #ff0000;
+            font-size: 0.8em;
+            margin-top: 5px;
+            display: none;
+        }
+        .form-group.error input, 
+        .form-group.error select, 
+        .form-group.error textarea {
+            border-color: #ff0000;
+        }
 };
