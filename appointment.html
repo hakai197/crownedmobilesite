@@ -7,10 +7,8 @@
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
 </head>
 <body>
-    <!-- Floating Buttons -->
     <div class="floating-buttons">
         <a href="index.html" class="floating-button">
             <i class="fas fa-home"></i>
@@ -40,7 +38,7 @@
         <h1 class="section-title">Book Your Appointment</h1>
         <p class="centered-description">Fill out the form below to schedule your automotive detailing service. We'll confirm your appointment within 24 hours.</p>
 
-        <form id="appointmentForm" action="send_email.php" method="POST">
+        <form id="appointmentForm">
             <div class="form-group">
                 <label for="name" class="required">Your Name</label>
                 <input type="text" id="name" name="name" required>
@@ -125,7 +123,133 @@
         </form>
     </div>
 
-    <!-- Include the external JavaScript file -->
-    <script src="appointment-form.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.getElementById('appointmentForm');
+            const submitBtn = document.getElementById('submitBtn');
+            
+            // Validation functions
+            function validateField(field, errorId, validationFn) {
+                const errorElement = document.getElementById(errorId);
+                const isValid = validationFn(field.value);
+                
+                if (!isValid) {
+                    field.closest('.form-group').classList.add('error');
+                    errorElement.style.display = 'block';
+                    return false;
+                } else {
+                    field.closest('.form-group').classList.remove('error');
+                    errorElement.style.display = 'none';
+                    return true;
+                }
+            }
+            
+            // Field validations
+            const validations = {
+                name: value => value.trim().length > 0,
+                email: value => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value),
+                phone: value => !value || /^[\d\s\-()+]{10,}$/.test(value),
+                serviceZip: value => /^\d{5}(-\d{4})?$/.test(value),
+                service: value => value !== "",
+                date: value => value !== "",
+                time: value => value !== ""
+            };
+            
+            // Add event listeners for real-time validation
+            document.getElementById('name').addEventListener('blur', function() {
+                validateField(this, 'name-error', validations.name);
+            });
+            
+            document.getElementById('email').addEventListener('blur', function() {
+                validateField(this, 'email-error', validations.email);
+            });
+            
+            document.getElementById('phone').addEventListener('blur', function() {
+                validateField(this, 'phone-error', validations.phone);
+            });
+            
+            document.getElementById('serviceZip').addEventListener('blur', function() {
+                validateField(this, 'zip-error', validations.serviceZip);
+            });
+            
+            document.getElementById('service').addEventListener('change', function() {
+                validateField(this, 'service-error', validations.service);
+            });
+            
+            document.getElementById('date').addEventListener('change', function() {
+                validateField(this, 'date-error', validations.date);
+            });
+            
+            document.getElementById('time').addEventListener('change', function() {
+                validateField(this, 'time-error', validations.time);
+            });
+            
+            // Form submission
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Validate all fields
+                let isValid = true;
+                isValid &= validateField(document.getElementById('name'), 'name-error', validations.name);
+                isValid &= validateField(document.getElementById('email'), 'email-error', validations.email);
+                isValid &= validateField(document.getElementById('serviceZip'), 'zip-error', validations.serviceZip);
+                isValid &= validateField(document.getElementById('service'), 'service-error', validations.service);
+                isValid &= validateField(document.getElementById('date'), 'date-error', validations.date);
+                isValid &= validateField(document.getElementById('time'), 'time-error', validations.time);
+                
+                if (!isValid) {
+                    return;
+                }
+                
+                // Get form values
+                const formData = {
+                    name: document.getElementById('name').value,
+                    email: document.getElementById('email').value,
+                    phone: document.getElementById('phone').value || 'Not provided',
+                    zip: document.getElementById('serviceZip').value,
+                    vehicle: document.getElementById('vehicle').value || 'Not specified',
+                    service: document.getElementById('service').value,
+                    date: document.getElementById('date').value,
+                    time: document.getElementById('time').value,
+                    message: document.getElementById('message').value || 'No special requests'
+                };
+                
+                // Get travel fee from localStorage if available
+                const travelFee = localStorage.getItem('travelFee') || '0.00';
+                
+                // Create email body
+                const emailBody = `New Appointment Request:
+                
+Name: ${formData.name}
+Email: ${formData.email}
+Phone: ${formData.phone}
+
+Service Location Zip Code: ${formData.zip}
+Vehicle: ${formData.vehicle}
+
+Service Requested: ${formData.service}
+Preferred Date: ${formData.date}
+Preferred Time: ${formData.time}
+
+Estimated Travel Fee: $${travelFee}
+
+Special Requests:
+${formData.message}
+
+Please confirm this appointment at your earliest convenience.`;
+
+                // Create mailto link
+                const mailtoLink = `mailto:hakai197@gmail.com?subject=New Appointment Request - ${formData.name}&body=${encodeURIComponent(emailBody)}`;
+                
+                // Open user's email client
+                window.location.href = mailtoLink;
+                
+                // Clear travel fee from storage
+                localStorage.removeItem('travelFee');
+            });
+        });
+    </script>
+    
+    <script src="floating-buttons.js"></script>
 </body>
 </html>

@@ -39,48 +39,126 @@
         <div class="contact-info">
             <div class="contact-card">
                 <h3><i class="fas fa-phone"></i> Phone</h3>
-                <p><a href="tel:+1234567890">(123) 456-7890</a></p>
+                <p><a href="tel:(937)728-1622">(937)728-1622</a></p>
                 <p>Monday-Friday: 9am-6pm</p>
                 <p>Saturday: 10am-4pm</p>
             </div>
             
             <div class="contact-card">
                 <h3><i class="fas fa-envelope"></i> Email</h3>
-                <p><a href="mailto:crownedmobile2025@gmail.com">crownedmobile2025@gmail.com</a></p>
+                <p><a href="mailto:hakai197@gmail.com>crownedmobile2025@gmail.com</a></p>
                 <p>Response within 24 hours</p>
             </div>
         </div>
 
         <h2 class="section-title">Send Us a Message</h2>
-        <form id="contactForm" action="https://formspree.io/f/xnnvbapg" method="POST">
-            <input type="hidden" name="_subject" value="New Contact Message - Crowned Mobile">
-            <input type="hidden" name="_replyto" value="%email%">
-            <input type="hidden" name="_next" value="thank-you.html">
-            <input type="text" name="_gotcha" style="display:none">
-
+        <form id="contactForm">
             <div class="form-group">
                 <label for="name" class="required">Your Name</label>
                 <input type="text" id="name" name="name" required>
+                <div class="error-message" id="name-error">Please enter your name</div>
             </div>
             
             <div class="form-group">
                 <label for="email" class="required">Email Address</label>
                 <input type="email" id="email" name="email" required>
+                <div class="error-message" id="email-error">Please enter a valid email address</div>
             </div>
             
             <div class="form-group">
                 <label for="subject" class="required">Subject</label>
                 <input type="text" id="subject" name="subject" required>
+                <div class="error-message" id="subject-error">Please enter a subject</div>
             </div>
             
             <div class="form-group">
                 <label for="message" class="required">Message</label>
                 <textarea id="message" name="message" required></textarea>
+                <div class="error-message" id="message-error">Please enter your message</div>
             </div>
             
             <button type="submit" id="submitBtn">Send Message</button>
         </form>
     </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.getElementById('contactForm');
+            const submitBtn = document.getElementById('submitBtn');
+            
+            // Validation functions
+            function validateField(field, errorId, validationFn) {
+                const errorElement = document.getElementById(errorId);
+                const isValid = validationFn(field.value);
+                
+                if (!isValid) {
+                    field.closest('.form-group').classList.add('error');
+                    errorElement.style.display = 'block';
+                    return false;
+                } else {
+                    field.closest('.form-group').classList.remove('error');
+                    errorElement.style.display = 'none';
+                    return true;
+                }
+            }
+            
+            // Field validations
+            const validations = {
+                name: value => value.trim().length > 0,
+                email: value => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value),
+                subject: value => value.trim().length > 0,
+                message: value => value.trim().length > 0
+            };
+            
+            // Add event listeners for real-time validation
+            document.getElementById('name').addEventListener('blur', function() {
+                validateField(this, 'name-error', validations.name);
+            });
+            
+            document.getElementById('email').addEventListener('blur', function() {
+                validateField(this, 'email-error', validations.email);
+            });
+            
+            document.getElementById('subject').addEventListener('blur', function() {
+                validateField(this, 'subject-error', validations.subject);
+            });
+            
+            document.getElementById('message').addEventListener('blur', function() {
+                validateField(this, 'message-error', validations.message);
+            });
+            
+            // Form submission
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Validate all fields
+                let isValid = true;
+                isValid &= validateField(document.getElementById('name'), 'name-error', validations.name);
+                isValid &= validateField(document.getElementById('email'), 'email-error', validations.email);
+                isValid &= validateField(document.getElementById('subject'), 'subject-error', validations.subject);
+                isValid &= validateField(document.getElementById('message'), 'message-error', validations.message);
+                
+                if (!isValid) {
+                    return;
+                }
+                
+                // Get form values
+                const name = document.getElementById('name').value;
+                const email = document.getElementById('email').value;
+                const subject = document.getElementById('subject').value;
+                const message = document.getElementById('message').value;
+                
+                // Create mailto link
+                const mailtoLink = `mailto:hakai197@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(
+                    `Name: ${name}%0AEmail: ${email}%0A%0AMessage:%0A${message}`
+                )}`;
+                
+                // Open user's email client
+                window.location.href = mailtoLink;
+            });
+        });
+    </script>
+    
     <script src="floating-buttons.js"></script>
 </body>
 </html>
