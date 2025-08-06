@@ -15,6 +15,40 @@
         .required:after { content: " *"; color: #ff3860; }
         #submitBtn[disabled] { opacity: 0.7; cursor: not-allowed; }
         .fa-spinner { margin-right: 8px; }
+        
+        /* Contact page specific styles */
+        .contact-info {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            margin: 2rem 0;
+        }
+        .contact-card {
+            background: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            flex: 1;
+            min-width: 250px;
+            text-align: center;
+        }
+        .contact-card h3 {
+            color: #333;
+            margin-bottom: 1rem;
+        }
+        .contact-card i {
+            font-size: 1.5rem;
+            margin-right: 0.5rem;
+            color: #4a6fa5;
+        }
+        .contact-card a {
+            color: #4a6fa5;
+            text-decoration: none;
+        }
+        .contact-card a:hover {
+            text-decoration: underline;
+        }
     </style>
 </head>
 <body>
@@ -59,13 +93,19 @@
                     <p><a href="mailto:hakai197@gmail.com">crownedmobile2025@gmail.com</a></p>
                     <p>Response within 24 hours</p>
                 </div>
+                
+                <div class="contact-card">
+                    <h3><i class="fas fa-map-marker-alt"></i> Service Area</h3>
+                    <p>Dayton, OH and surrounding areas</p>
+                    <p>Mobile service - we come to you!</p>
+                </div>
             </div>
 
             <h2 class="section-title">Send Us a Message</h2>
+            <p class="centered-description">Have questions or special requests? Fill out the form below and we'll get back to you as soon as possible.</p>
+
             <form 
                 id="contactForm" 
-                action="https://formspree.io/f/mqalyvbg" 
-                method="POST"
                 @submit.prevent="submitForm"
             >
                 <div class="form-group" :class="{ 'error': errors.name }">
@@ -80,6 +120,12 @@
                     <div class="error-message" v-if="errors.email">{{ errors.email }}</div>
                 </div>
                 
+                <div class="form-group" :class="{ 'error': errors.phone }">
+                    <label for="phone">Phone Number</label>
+                    <input type="tel" id="phone" name="phone" v-model="form.phone" @blur="validateField('phone')">
+                    <div class="error-message" v-if="errors.phone">{{ errors.phone }}</div>
+                </div>
+                
                 <div class="form-group" :class="{ 'error': errors.subject }">
                     <label for="subject" class="required">Subject</label>
                     <input type="text" id="subject" name="subject" v-model="form.subject" @blur="validateField('subject')">
@@ -88,7 +134,7 @@
                 
                 <div class="form-group" :class="{ 'error': errors.message }">
                     <label for="message" class="required">Message</label>
-                    <textarea id="message" name="message" v-model="form.message" @blur="validateField('message')"></textarea>
+                    <textarea id="message" name="message" v-model="form.message" @blur="validateField('message')" rows="5"></textarea>
                     <div class="error-message" v-if="errors.message">{{ errors.message }}</div>
                 </div>
                 
@@ -96,98 +142,104 @@
                     <span v-if="!isSubmitting">Send Message</span>
                     <span v-else><i class="fas fa-spinner fa-spin"></i> Sending...</span>
                 </button>
-                <div class="success-message" v-if="successMessage">{{ successMessage }}</div>
                 <div class="error-message" v-if="submitError">{{ submitError }}</div>
+                <div class="success-message" v-if="successMessage">{{ successMessage }}</div>
             </form>
         </div>
     </div>
 
     <script>
-        const { createApp } = Vue;
-        
-        createApp({
-            data() {
-                return {
-                    form: {
-                        name: '',
-                        email: '',
-                        subject: '',
-                        message: ''
-                    },
-                    errors: {
-                        name: '',
-                        email: '',
-                        subject: '',
-                        message: ''
-                    },
-                    successMessage: '',
-                    submitError: '',
-                    isSubmitting: false
-                }
-            },
-            methods: {
-                validateField(field) {
-                    const validations = {
-                        name: value => value.trim().length > 0 || 'Please enter your name',
-                        email: value => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value) || 'Please enter a valid email address',
-                        subject: value => value.trim().length > 0 || 'Please enter a subject',
-                        message: value => value.trim().length > 0 || 'Please enter your message'
-                    };
-                    
-                    const validationFn = validations[field];
-                    if (validationFn) {
-                        const error = validationFn(this.form[field]);
-                        this.errors[field] = error === true ? '' : error;
-                        return !error;
+        document.addEventListener('DOMContentLoaded', function() {
+            const { createApp } = Vue;
+            
+            createApp({
+                data() {
+                    return {
+                        form: {
+                            name: '',
+                            email: '',
+                            phone: '',
+                            subject: '',
+                            message: ''
+                        },
+                        errors: {},
+                        isSubmitting: false,
+                        submitError: '',
+                        successMessage: ''
                     }
-                    return true;
                 },
-                validateForm() {
-                    let isValid = true;
-                    Object.keys(this.errors).forEach(field => {
-                        if (!this.validateField(field)) {
-                            isValid = false;
-                        }
-                    });
-                    return isValid;
-                },
-                async submitForm() {
-                    if (!this.validateForm()) {
-                        return;
-                    }
-                    
-                    this.isSubmitting = true;
-                    this.successMessage = '';
-                    this.submitError = '';
-                    
-                    try {
-                        const form = document.getElementById('contactForm');
-                        const formData = new FormData(form);
-                        formData.append('_formname', 'contact');
+                methods: {
+                    validateField(field) {
+                        const validations = {
+                            name: value => !!value.trim() || 'Name is required',
+                            email: value => /^\S+@\S+\.\S+$/.test(value) || 'Valid email required',
+                            phone: value => !value || /^[\d\s\-()+]{10,}$/.test(value) || 'Invalid phone format',
+                            subject: value => !!value.trim() || 'Subject is required',
+                            message: value => !!value.trim() || 'Message is required'
+                        };
                         
-                        const response = await fetch(form.action, {
-                            method: 'POST',
-                            body: formData,
-                            headers: {
-                                'Accept': 'application/json'
+                        if (validations[field]) {
+                            const isValid = validations[field](this.form[field]);
+                            this.errors[field] = isValid === true ? '' : isValid;
+                            return isValid === true;
+                        }
+                        return true;
+                    },
+                    validateForm() {
+                        let isValid = true;
+                        ['name', 'email', 'subject', 'message'].forEach(field => {
+                            if (!this.validateField(field)) {
+                                isValid = false;
                             }
                         });
-                        
-                        if (response.ok) {
-                            window.location.href = 'thank-you.html?form=contact';
-                        } else {
-                            const errorData = await response.json();
-                            throw new Error(errorData.error || 'Failed to submit form');
+                        return isValid;
+                    },
+                    async submitForm() {
+                        if (!this.validateForm()) {
+                            return;
                         }
-                    } catch (error) {
-                        console.error('Submission error:', error);
-                        this.submitError = "There was an error sending your message. Please try again or contact us directly.";
-                    } finally {
-                        this.isSubmitting = false;
+
+                        this.isSubmitting = true;
+                        this.submitError = '';
+                        this.successMessage = '';
+
+                        try {
+                            const formData = new FormData();
+                            Object.entries(this.form).forEach(([key, value]) => {
+                                if (value) formData.append(key, value);
+                            });
+                            formData.append('_formname', 'contact');
+
+                            const response = await fetch('https://formspree.io/f/mqalyvbg', {
+                                method: 'POST',
+                                body: formData,
+                                headers: {
+                                    'Accept': 'application/json'
+                                }
+                            });
+
+                            if (response.ok) {
+                                this.successMessage = 'Thank you! Your message has been sent. We will respond within 24 hours.';
+                                this.form = {
+                                    name: '',
+                                    email: '',
+                                    phone: '',
+                                    subject: '',
+                                    message: ''
+                                };
+                            } else {
+                                throw new Error('Form submission failed');
+                            }
+                        } catch (error) {
+                            console.error('Submission error:', error);
+                            this.submitError = 'There was an error sending your message. Please try again or call us directly at (937)728-1622';
+                        } finally {
+                            this.isSubmitting = false;
+                        }
                     }
                 }
-            }
-        }).mount('#app');
+            }).mount('#app');
+        });
     </script>
 </body>
 </html>

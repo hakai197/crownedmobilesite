@@ -50,8 +50,6 @@
 
             <form 
                 id="appointmentForm" 
-                action="https://formspree.io/f/mqalyvbg" 
-                method="POST"
                 @submit.prevent="submitForm"
             >
                 <div class="form-group" :class="{ 'error': errors.name }">
@@ -128,7 +126,7 @@
                     <h3><i class="fas fa-info-circle"></i> Payment Information</h3>
                     <div class="payment-message">
                         <p><strong>All payments are made after service is completed.</strong></p>
-                        <p>We accept cash and all major credit cards on-site. Your payment will be collected once you're completely satisfied with the service.</p>
+                        <p>We accept cash  on-site. Your payment will be collected once you're completely satisfied with the service.</p>
                         <p>No upfront payment or deposit required to book your appointment.</p>
                     </div>
                 </div>
@@ -137,110 +135,100 @@
                     <span v-if="!isSubmitting">Schedule Appointment</span>
                     <span v-else><i class="fas fa-spinner fa-spin"></i> Processing...</span>
                 </button>
-                <div class="success-message" v-if="successMessage">{{ successMessage }}</div>
                 <div class="error-message" v-if="submitError">{{ submitError }}</div>
             </form>
         </div>
     </div>
 
     <script>
-        const { createApp } = Vue;
-        
-        createApp({
-            data() {
-                return {
-                    form: {
-                        name: '',
-                        email: '',
-                        phone: '',
-                        serviceZip: '',
-                        vehicle: '',
-                        service: '',
-                        date: '',
-                        time: '',
-                        message: ''
-                    },
-                    errors: {
-                        name: '',
-                        email: '',
-                        phone: '',
-                        serviceZip: '',
-                        service: '',
-                        date: '',
-                        time: ''
-                    },
-                    successMessage: '',
-                    submitError: '',
-                    isSubmitting: false
-                }
-            },
-            methods: {
-                validateField(field) {
-                    const validations = {
-                        name: value => value.trim().length > 0 || 'Please enter your name',
-                        email: value => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value) || 'Please enter a valid email address',
-                        phone: value => !value || /^[\d\s\-()+]{10,}$/.test(value) || 'Please enter a valid phone number',
-                        serviceZip: value => /^\d{5}(-\d{4})?$/.test(value) || 'Please enter a valid zip code',
-                        service: value => value !== "" || 'Please select a service',
-                        date: value => value !== "" || 'Please select a date',
-                        time: value => value !== "" || 'Please select a time'
-                    };
-                    
-                    const validationFn = validations[field];
-                    if (validationFn) {
-                        const error = validationFn(this.form[field]);
-                        this.errors[field] = error === true ? '' : error;
-                        return !error;
+        document.addEventListener('DOMContentLoaded', function() {
+            const { createApp } = Vue;
+            
+            createApp({
+                data() {
+                    return {
+                        form: {
+                            name: '',
+                            email: '',
+                            phone: '',
+                            serviceZip: '',
+                            vehicle: '',
+                            service: '',
+                            date: '',
+                            time: '',
+                            message: ''
+                        },
+                        errors: {},
+                        isSubmitting: false,
+                        submitError: ''
                     }
-                    return true;
                 },
-                validateForm() {
-                    let isValid = true;
-                    Object.keys(this.errors).forEach(field => {
-                        if (!this.validateField(field)) {
-                            isValid = false;
-                        }
-                    });
-                    return isValid;
-                },
-                async submitForm() {
-                    if (!this.validateForm()) {
-                        return;
-                    }
-                    
-                    this.isSubmitting = true;
-                    this.successMessage = '';
-                    this.submitError = '';
-                    
-                    try {
-                        const form = document.getElementById('appointmentForm');
-                        const formData = new FormData(form);
-                        formData.append('_formname', 'appointment');
+                methods: {
+                    validateField(field) {
+                        const validations = {
+                            name: value => !!value.trim() || 'Name is required',
+                            email: value => /^\S+@\S+\.\S+$/.test(value) || 'Valid email required',
+                            phone: value => !value || /^[\d\s\-()+]{10,}$/.test(value) || 'Invalid phone format',
+                            serviceZip: value => /^\d{5}(-\d{4})?$/.test(value) || 'Valid ZIP required',
+                            service: value => !!value || 'Service selection required',
+                            date: value => !!value || 'Date required',
+                            time: value => !!value || 'Time required'
+                        };
                         
-                        const response = await fetch(form.action, {
-                            method: 'POST',
-                            body: formData,
-                            headers: {
-                                'Accept': 'application/json'
+                        if (validations[field]) {
+                            const isValid = validations[field](this.form[field]);
+                            this.errors[field] = isValid === true ? '' : isValid;
+                            return isValid === true;
+                        }
+                        return true;
+                    },
+                    validateForm() {
+                        let isValid = true;
+                        ['name', 'email', 'serviceZip', 'service', 'date', 'time'].forEach(field => {
+                            if (!this.validateField(field)) {
+                                isValid = false;
                             }
                         });
-                        
-                        if (response.ok) {
-                            window.location.href = 'thank-you.html?form=appointment';
-                        } else {
-                            const errorData = await response.json();
-                            throw new Error(errorData.error || 'Failed to submit form');
+                        return isValid;
+                    },
+                    async submitForm() {
+                        if (!this.validateForm()) {
+                            return;
                         }
-                    } catch (error) {
-                        console.error('Submission error:', error);
-                        this.submitError = "There was an error submitting your form. Please try again or contact us directly.";
-                    } finally {
-                        this.isSubmitting = false;
+
+                        this.isSubmitting = true;
+                        this.submitError = '';
+
+                        try {
+                            const formData = new FormData();
+                            Object.entries(this.form).forEach(([key, value]) => {
+                                if (value) formData.append(key, value);
+                            });
+                            formData.append('_formname', 'appointment');
+
+                            const response = await fetch('https://formspree.io/f/mqalyvbg', {
+                                method: 'POST',
+                                body: formData,
+                                headers: {
+                                    'Accept': 'application/json'
+                                }
+                            });
+
+                            if (response.ok) {
+                                window.location.href = 'thank-you.html?form=appointment';
+                            } else {
+                                throw new Error('Form submission failed');
+                            }
+                        } catch (error) {
+                            console.error('Submission error:', error);
+                            this.submitError = 'Submission failed. Please try again or call (937)728-1622';
+                        } finally {
+                            this.isSubmitting = false;
+                        }
                     }
                 }
-            }
-        }).mount('#app');
+            }).mount('#app');
+        });
     </script>
 </body>
-</html>
 </html>
