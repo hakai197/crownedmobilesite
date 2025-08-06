@@ -7,158 +7,187 @@
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/vue@3.2.47/dist/vue.global.min.js"></script>
+    <style>
+        .error { border-color: #ff3860; }
+        .error-message { color: #ff3860; font-size: 0.85rem; margin-top: 0.25rem; }
+        .success-message { color: #23d160; margin-top: 1rem; }
+        .required:after { content: " *"; color: #ff3860; }
+        #submitBtn[disabled] { opacity: 0.7; cursor: not-allowed; }
+        .fa-spinner { margin-right: 8px; }
+    </style>
 </head>
 <body>
-    <div class="floating-buttons">
-        <a href="index.html" class="floating-button">
-            <i class="fas fa-home"></i>
-            <span>Home</span>
-        </a>
-        <a href="appointment.html" class="floating-button">
-            <i class="fas fa-calendar-alt"></i>
-            <span>Book Now</span>
-        </a>
-        <a href="contact.html" class="floating-button">
-            <i class="fas fa-phone-alt"></i>
-            <span>Call Us</span>
-        </a>
-        <a href="subscription.html" class="floating-button">
-            <i class="fas fa-star"></i>
-            <span>Subscribe</span>
-        </a>
-    </div>
-
-    <div class="header-container">
-        <img src="MagicEraser_250327_111940.png" alt="Crowned Mobile Logo" class="header-logo">
-        <Header>Contact Us</Header>
-    </div>
-
-    <div class="container">
-        <h1 class="section-title">Get In Touch</h1>
-        
-        <div class="contact-info">
-            <div class="contact-card">
-                <h3><i class="fas fa-phone"></i> Phone</h3>
-                <p><a href="tel:(937)728-1622">(937)728-1622</a></p>
-                <p>Monday-Friday: 9am-6pm</p>
-                <p>Saturday: 10am-4pm</p>
-            </div>
-            
-            <div class="contact-card">
-                <h3><i class="fas fa-envelope"></i> Email</h3>
-                <p><a href="mailto:hakai197@gmail.com>crownedmobile2025@gmail.com</a></p>
-                <p>Response within 24 hours</p>
-            </div>
+    <div id="app">
+        <div class="floating-buttons">
+            <a href="index.html" class="floating-button">
+                <i class="fas fa-home"></i>
+                <span>Home</span>
+            </a>
+            <a href="appointment.html" class="floating-button">
+                <i class="fas fa-calendar-alt"></i>
+                <span>Book Now</span>
+            </a>
+            <a href="contact.html" class="floating-button">
+                <i class="fas fa-phone-alt"></i>
+                <span>Call Us</span>
+            </a>
+            <a href="subscription.html" class="floating-button">
+                <i class="fas fa-star"></i>
+                <span>Subscribe</span>
+            </a>
         </div>
 
-        <h2 class="section-title">Send Us a Message</h2>
-        <form id="contactForm">
-            <div class="form-group">
-                <label for="name" class="required">Your Name</label>
-                <input type="text" id="name" name="name" required>
-                <div class="error-message" id="name-error">Please enter your name</div>
-            </div>
+        <div class="header-container">
+            <img src="MagicEraser_250327_111940.png" alt="Crowned Mobile Logo" class="header-logo">
+            <Header>Contact Us</Header>
+        </div>
+
+        <div class="container">
+            <h1 class="section-title">Get In Touch</h1>
             
-            <div class="form-group">
-                <label for="email" class="required">Email Address</label>
-                <input type="email" id="email" name="email" required>
-                <div class="error-message" id="email-error">Please enter a valid email address</div>
+            <div class="contact-info">
+                <div class="contact-card">
+                    <h3><i class="fas fa-phone"></i> Phone</h3>
+                    <p><a href="tel:(937)728-1622">(937)728-1622</a></p>
+                    <p>Monday-Friday: 9am-6pm</p>
+                    <p>Saturday: 10am-4pm</p>
+                </div>
+                
+                <div class="contact-card">
+                    <h3><i class="fas fa-envelope"></i> Email</h3>
+                    <p><a href="mailto:hakai197@gmail.com">crownedmobile2025@gmail.com</a></p>
+                    <p>Response within 24 hours</p>
+                </div>
             </div>
-            
-            <div class="form-group">
-                <label for="subject" class="required">Subject</label>
-                <input type="text" id="subject" name="subject" required>
-                <div class="error-message" id="subject-error">Please enter a subject</div>
-            </div>
-            
-            <div class="form-group">
-                <label for="message" class="required">Message</label>
-                <textarea id="message" name="message" required></textarea>
-                <div class="error-message" id="message-error">Please enter your message</div>
-            </div>
-            
-            <button type="submit" id="submitBtn">Send Message</button>
-        </form>
+
+            <h2 class="section-title">Send Us a Message</h2>
+            <form 
+                id="contactForm" 
+                action="https://formspree.io/f/mqalyvbg" 
+                method="POST"
+                @submit.prevent="submitForm"
+            >
+                <div class="form-group" :class="{ 'error': errors.name }">
+                    <label for="name" class="required">Your Name</label>
+                    <input type="text" id="name" name="name" v-model="form.name" @blur="validateField('name')">
+                    <div class="error-message" v-if="errors.name">{{ errors.name }}</div>
+                </div>
+                
+                <div class="form-group" :class="{ 'error': errors.email }">
+                    <label for="email" class="required">Email Address</label>
+                    <input type="email" id="email" name="email" v-model="form.email" @blur="validateField('email')">
+                    <div class="error-message" v-if="errors.email">{{ errors.email }}</div>
+                </div>
+                
+                <div class="form-group" :class="{ 'error': errors.subject }">
+                    <label for="subject" class="required">Subject</label>
+                    <input type="text" id="subject" name="subject" v-model="form.subject" @blur="validateField('subject')">
+                    <div class="error-message" v-if="errors.subject">{{ errors.subject }}</div>
+                </div>
+                
+                <div class="form-group" :class="{ 'error': errors.message }">
+                    <label for="message" class="required">Message</label>
+                    <textarea id="message" name="message" v-model="form.message" @blur="validateField('message')"></textarea>
+                    <div class="error-message" v-if="errors.message">{{ errors.message }}</div>
+                </div>
+                
+                <button type="submit" id="submitBtn" :disabled="isSubmitting">
+                    <span v-if="!isSubmitting">Send Message</span>
+                    <span v-else><i class="fas fa-spinner fa-spin"></i> Sending...</span>
+                </button>
+                <div class="success-message" v-if="successMessage">{{ successMessage }}</div>
+                <div class="error-message" v-if="submitError">{{ submitError }}</div>
+            </form>
+        </div>
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const form = document.getElementById('contactForm');
-            const submitBtn = document.getElementById('submitBtn');
-            
-            // Validation functions
-            function validateField(field, errorId, validationFn) {
-                const errorElement = document.getElementById(errorId);
-                const isValid = validationFn(field.value);
-                
-                if (!isValid) {
-                    field.closest('.form-group').classList.add('error');
-                    errorElement.style.display = 'block';
-                    return false;
-                } else {
-                    field.closest('.form-group').classList.remove('error');
-                    errorElement.style.display = 'none';
+        const { createApp } = Vue;
+        
+        createApp({
+            data() {
+                return {
+                    form: {
+                        name: '',
+                        email: '',
+                        subject: '',
+                        message: ''
+                    },
+                    errors: {
+                        name: '',
+                        email: '',
+                        subject: '',
+                        message: ''
+                    },
+                    successMessage: '',
+                    submitError: '',
+                    isSubmitting: false
+                }
+            },
+            methods: {
+                validateField(field) {
+                    const validations = {
+                        name: value => value.trim().length > 0 || 'Please enter your name',
+                        email: value => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value) || 'Please enter a valid email address',
+                        subject: value => value.trim().length > 0 || 'Please enter a subject',
+                        message: value => value.trim().length > 0 || 'Please enter your message'
+                    };
+                    
+                    const validationFn = validations[field];
+                    if (validationFn) {
+                        const error = validationFn(this.form[field]);
+                        this.errors[field] = error === true ? '' : error;
+                        return !error;
+                    }
                     return true;
+                },
+                validateForm() {
+                    let isValid = true;
+                    Object.keys(this.errors).forEach(field => {
+                        if (!this.validateField(field)) {
+                            isValid = false;
+                        }
+                    });
+                    return isValid;
+                },
+                async submitForm() {
+                    if (!this.validateForm()) {
+                        return;
+                    }
+                    
+                    this.isSubmitting = true;
+                    this.successMessage = '';
+                    this.submitError = '';
+                    
+                    try {
+                        const form = document.getElementById('contactForm');
+                        const formData = new FormData(form);
+                        formData.append('_formname', 'contact');
+                        
+                        const response = await fetch(form.action, {
+                            method: 'POST',
+                            body: formData,
+                            headers: {
+                                'Accept': 'application/json'
+                            }
+                        });
+                        
+                        if (response.ok) {
+                            window.location.href = 'thank-you.html?form=contact';
+                        } else {
+                            const errorData = await response.json();
+                            throw new Error(errorData.error || 'Failed to submit form');
+                        }
+                    } catch (error) {
+                        console.error('Submission error:', error);
+                        this.submitError = "There was an error sending your message. Please try again or contact us directly.";
+                    } finally {
+                        this.isSubmitting = false;
+                    }
                 }
             }
-            
-            // Field validations
-            const validations = {
-                name: value => value.trim().length > 0,
-                email: value => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value),
-                subject: value => value.trim().length > 0,
-                message: value => value.trim().length > 0
-            };
-            
-            // Add event listeners for real-time validation
-            document.getElementById('name').addEventListener('blur', function() {
-                validateField(this, 'name-error', validations.name);
-            });
-            
-            document.getElementById('email').addEventListener('blur', function() {
-                validateField(this, 'email-error', validations.email);
-            });
-            
-            document.getElementById('subject').addEventListener('blur', function() {
-                validateField(this, 'subject-error', validations.subject);
-            });
-            
-            document.getElementById('message').addEventListener('blur', function() {
-                validateField(this, 'message-error', validations.message);
-            });
-            
-            // Form submission
-            form.addEventListener('submit', function(e) {
-                e.preventDefault();
-                
-                // Validate all fields
-                let isValid = true;
-                isValid &= validateField(document.getElementById('name'), 'name-error', validations.name);
-                isValid &= validateField(document.getElementById('email'), 'email-error', validations.email);
-                isValid &= validateField(document.getElementById('subject'), 'subject-error', validations.subject);
-                isValid &= validateField(document.getElementById('message'), 'message-error', validations.message);
-                
-                if (!isValid) {
-                    return;
-                }
-                
-                // Get form values
-                const name = document.getElementById('name').value;
-                const email = document.getElementById('email').value;
-                const subject = document.getElementById('subject').value;
-                const message = document.getElementById('message').value;
-                
-                // Create mailto link
-                const mailtoLink = `mailto:hakai197@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(
-                    `Name: ${name}%0AEmail: ${email}%0A%0AMessage:%0A${message}`
-                )}`;
-                
-                // Open user's email client
-                window.location.href = mailtoLink;
-            });
-        });
+        }).mount('#app');
     </script>
-    
-    <script src="floating-buttons.js"></script>
 </body>
 </html>

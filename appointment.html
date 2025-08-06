@@ -7,249 +7,240 @@
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/vue@3.2.47/dist/vue.global.min.js"></script>
+    <style>
+        .error { border-color: #ff3860; }
+        .error-message { color: #ff3860; font-size: 0.85rem; margin-top: 0.25rem; }
+        .success-message { color: #23d160; margin-top: 1rem; }
+        .required:after { content: " *"; color: #ff3860; }
+        #submitBtn[disabled] { opacity: 0.7; cursor: not-allowed; }
+        .fa-spinner { margin-right: 8px; }
+    </style>
 </head>
 <body>
-    <div class="floating-buttons">
-        <a href="index.html" class="floating-button">
-            <i class="fas fa-home"></i>
-            <span>Home</span>
-        </a>
-        <a href="appointment.html" class="floating-button">
-            <i class="fas fa-calendar-alt"></i>
-            <span>Book Now</span>
-        </a>
-        <a href="contact.html" class="floating-button">
-            <i class="fas fa-phone-alt"></i>
-            <span>Call Us</span>
-        </a>
-        <a href="subscription.html" class="floating-button">
-            <i class="fas fa-star"></i>
-            <span>Subscribe</span>
-            <span class="soon-badge"></span>
-        </a>
-    </div>
+    <div id="app">
+        <div class="floating-buttons">
+            <a href="index.html" class="floating-button">
+                <i class="fas fa-home"></i>
+                <span>Home</span>
+            </a>
+            <a href="appointment.html" class="floating-button">
+                <i class="fas fa-calendar-alt"></i>
+                <span>Book Now</span>
+            </a>
+            <a href="contact.html" class="floating-button">
+                <i class="fas fa-phone-alt"></i>
+                <span>Call Us</span>
+            </a>
+            <a href="subscription.html" class="floating-button">
+                <i class="fas fa-star"></i>
+                <span>Subscribe</span>
+                <span class="soon-badge"></span>
+            </a>
+        </div>
 
-    <div class="header-container">
-        <img src="MagicEraser_250327_111940.png" alt="Crowned Mobile Logo" class="header-logo">
-        <Header>Schedule Service</Header>
-    </div>
+        <div class="header-container">
+            <img src="MagicEraser_250327_111940.png" alt="Crowned Mobile Logo" class="header-logo">
+            <Header>Schedule Service</Header>
+        </div>
 
-    <div class="container">
-        <h1 class="section-title">Book Your Appointment</h1>
-        <p class="centered-description">Fill out the form below to schedule your automotive detailing service. We'll confirm your appointment within 24 hours.</p>
+        <div class="container">
+            <h1 class="section-title">Book Your Appointment</h1>
+            <p class="centered-description">Fill out the form below to schedule your automotive detailing service. We'll confirm your appointment within 24 hours.</p>
 
-        <form id="appointmentForm">
-            <div class="form-group">
-                <label for="name" class="required">Your Name</label>
-                <input type="text" id="name" name="name" required>
-                <div class="error-message" id="name-error">Please enter your name</div>
-            </div>
-            
-            <div class="form-group">
-                <label for="email" class="required">Email Address</label>
-                <input type="email" id="email" name="email" required>
-                <div class="error-message" id="email-error">Please enter a valid email address</div>
-            </div>
-            
-            <div class="form-group">
-                <label for="phone">Phone Number</label>
-                <input type="tel" id="phone" name="phone">
-                <div class="error-message" id="phone-error">Please enter a valid phone number</div>
-            </div>
-            
-            <div class="form-group">
-                <label for="serviceZip" class="required">Service Location Zip Code</label>
-                <input type="text" id="serviceZip" name="service_zip" required>
-                <div class="error-message" id="zip-error">Please enter a valid zip code</div>
-            </div>
-            
-            <div class="form-group">
-                <label for="vehicle">Vehicle Make/Model</label>
-                <input type="text" id="vehicle" name="vehicle">
-            </div>
-            
-            <div class="form-group">
-                <label for="service" class="required">Service Needed</label>
-                <select id="service" name="service" required>
-                    <option value="">-- Select a Service --</option>
-                    <option value="Basic Detailing">Basic Detailing ($150)</option>
-                    <option value="Premium Detailing">Premium Detailing ($300)</option>
-                    <option value="Ceramic Coating">Ceramic Coating ($500+)</option>
-                    <option value="Other">Other Service</option>
-                </select>
-                <div class="error-message" id="service-error">Please select a service</div>
-            </div>
-            
-            <div class="form-group">
-                <label for="date" class="required">Preferred Date</label>
-                <input type="date" id="date" name="date" required>
-                <div class="error-message" id="date-error">Please select a date</div>
-            </div>
-            
-            <div class="form-group">
-                <label for="time" class="required">Preferred Time</label>
-                <select id="time" name="time" required>
-                    <option value="">-- Select a Time --</option>
-                    <option value="08:00">8:00 AM</option>
-                    <option value="08:30">8:30 AM</option>
-                    <option value="09:00">9:00 AM</option>
-                    <option value="09:30">9:30 AM</option>
-                    <option value="10:00">10:00 AM</option>
-                    <option value="10:30">10:30 AM</option>
-                    <option value="11:00">11:00 AM</option>
-                    <option value="11:30">11:30 AM</option>
-                    <option value="12:00">12:00 PM</option>
-                    <option value="12:30">12:30 PM</option>
-                    <option value="13:00">1:00 PM</option>
-                </select>
-                <div class="error-message" id="time-error">Please select a time</div>
-            </div>
-            
-            <div class="form-group">
-                <label for="message">Special Requests</label>
-                <textarea id="message" name="message"></textarea>
-            </div>
-
-            <div class="payment-info">
-                <h3><i class="fas fa-info-circle"></i> Payment Information</h3>
-                <div class="payment-message">
-                    <p><strong>All payments are made after service is completed.</strong></p>
-                    <p>We accept cash and all major credit cards on-site. Your payment will be collected once you're completely satisfied with the service.</p>
-                    <p>No upfront payment or deposit required to book your appointment.</p>
+            <form 
+                id="appointmentForm" 
+                action="https://formspree.io/f/mqalyvbg" 
+                method="POST"
+                @submit.prevent="submitForm"
+            >
+                <div class="form-group" :class="{ 'error': errors.name }">
+                    <label for="name" class="required">Your Name</label>
+                    <input type="text" id="name" name="name" v-model="form.name" @blur="validateField('name')">
+                    <div class="error-message" v-if="errors.name">{{ errors.name }}</div>
                 </div>
-            </div>
-            
-            <button type="submit" id="submitBtn">Schedule Appointment</button>
-        </form>
+                
+                <div class="form-group" :class="{ 'error': errors.email }">
+                    <label for="email" class="required">Email Address</label>
+                    <input type="email" id="email" name="email" v-model="form.email" @blur="validateField('email')">
+                    <div class="error-message" v-if="errors.email">{{ errors.email }}</div>
+                </div>
+                
+                <div class="form-group" :class="{ 'error': errors.phone }">
+                    <label for="phone">Phone Number</label>
+                    <input type="tel" id="phone" name="phone" v-model="form.phone" @blur="validateField('phone')">
+                    <div class="error-message" v-if="errors.phone">{{ errors.phone }}</div>
+                </div>
+                
+                <div class="form-group" :class="{ 'error': errors.serviceZip }">
+                    <label for="serviceZip" class="required">Service Location Zip Code</label>
+                    <input type="text" id="serviceZip" name="service_zip" v-model="form.serviceZip" @blur="validateField('serviceZip')">
+                    <div class="error-message" v-if="errors.serviceZip">{{ errors.serviceZip }}</div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="vehicle">Vehicle Make/Model</label>
+                    <input type="text" id="vehicle" name="vehicle" v-model="form.vehicle">
+                </div>
+                
+                <div class="form-group" :class="{ 'error': errors.service }">
+                    <label for="service" class="required">Service Needed</label>
+                    <select id="service" name="service" v-model="form.service" @change="validateField('service')">
+                        <option value="">-- Select a Service --</option>
+                        <option value="Basic Detailing">Standard Package ($145/$185)</option>
+                        <option value="Premium Detailing">Premium Detailing ($175/$220)</option>
+                        <option value="Other">Other Service</option>
+                    </select>
+                    <div class="error-message" v-if="errors.service">{{ errors.service }}</div>
+                </div>
+                
+                <div class="form-group" :class="{ 'error': errors.date }">
+                    <label for="date" class="required">Preferred Date</label>
+                    <input type="date" id="date" name="preferred_date" v-model="form.date" @change="validateField('date')">
+                    <div class="error-message" v-if="errors.date">{{ errors.date }}</div>
+                </div>
+                
+                <div class="form-group" :class="{ 'error': errors.time }">
+                    <label for="time" class="required">Preferred Time</label>
+                    <select id="time" name="preferred_time" v-model="form.time" @change="validateField('time')">
+                        <option value="">-- Select a Time --</option>
+                        <option value="08:00">8:00 AM</option>
+                        <option value="08:30">8:30 AM</option>
+                        <option value="09:00">9:00 AM</option>
+                        <option value="09:30">9:30 AM</option>
+                        <option value="10:00">10:00 AM</option>
+                        <option value="10:30">10:30 AM</option>
+                        <option value="11:00">11:00 AM</option>
+                        <option value="11:30">11:30 AM</option>
+                        <option value="12:00">12:00 PM</option>
+                        <option value="12:30">12:30 PM</option>
+                        <option value="13:00">1:00 PM</option>
+                    </select>
+                    <div class="error-message" v-if="errors.time">{{ errors.time }}</div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="message">Special Requests</label>
+                    <textarea id="message" name="special_requests" v-model="form.message"></textarea>
+                </div>
+
+                <div class="payment-info">
+                    <h3><i class="fas fa-info-circle"></i> Payment Information</h3>
+                    <div class="payment-message">
+                        <p><strong>All payments are made after service is completed.</strong></p>
+                        <p>We accept cash and all major credit cards on-site. Your payment will be collected once you're completely satisfied with the service.</p>
+                        <p>No upfront payment or deposit required to book your appointment.</p>
+                    </div>
+                </div>
+                
+                <button type="submit" id="submitBtn" :disabled="isSubmitting">
+                    <span v-if="!isSubmitting">Schedule Appointment</span>
+                    <span v-else><i class="fas fa-spinner fa-spin"></i> Processing...</span>
+                </button>
+                <div class="success-message" v-if="successMessage">{{ successMessage }}</div>
+                <div class="error-message" v-if="submitError">{{ submitError }}</div>
+            </form>
+        </div>
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const form = document.getElementById('appointmentForm');
-            const submitBtn = document.getElementById('submitBtn');
-            
-            // Validation functions
-            function validateField(field, errorId, validationFn) {
-                const errorElement = document.getElementById(errorId);
-                const isValid = validationFn(field.value);
-                
-                if (!isValid) {
-                    field.closest('.form-group').classList.add('error');
-                    errorElement.style.display = 'block';
-                    return false;
-                } else {
-                    field.closest('.form-group').classList.remove('error');
-                    errorElement.style.display = 'none';
+        const { createApp } = Vue;
+        
+        createApp({
+            data() {
+                return {
+                    form: {
+                        name: '',
+                        email: '',
+                        phone: '',
+                        serviceZip: '',
+                        vehicle: '',
+                        service: '',
+                        date: '',
+                        time: '',
+                        message: ''
+                    },
+                    errors: {
+                        name: '',
+                        email: '',
+                        phone: '',
+                        serviceZip: '',
+                        service: '',
+                        date: '',
+                        time: ''
+                    },
+                    successMessage: '',
+                    submitError: '',
+                    isSubmitting: false
+                }
+            },
+            methods: {
+                validateField(field) {
+                    const validations = {
+                        name: value => value.trim().length > 0 || 'Please enter your name',
+                        email: value => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value) || 'Please enter a valid email address',
+                        phone: value => !value || /^[\d\s\-()+]{10,}$/.test(value) || 'Please enter a valid phone number',
+                        serviceZip: value => /^\d{5}(-\d{4})?$/.test(value) || 'Please enter a valid zip code',
+                        service: value => value !== "" || 'Please select a service',
+                        date: value => value !== "" || 'Please select a date',
+                        time: value => value !== "" || 'Please select a time'
+                    };
+                    
+                    const validationFn = validations[field];
+                    if (validationFn) {
+                        const error = validationFn(this.form[field]);
+                        this.errors[field] = error === true ? '' : error;
+                        return !error;
+                    }
                     return true;
+                },
+                validateForm() {
+                    let isValid = true;
+                    Object.keys(this.errors).forEach(field => {
+                        if (!this.validateField(field)) {
+                            isValid = false;
+                        }
+                    });
+                    return isValid;
+                },
+                async submitForm() {
+                    if (!this.validateForm()) {
+                        return;
+                    }
+                    
+                    this.isSubmitting = true;
+                    this.successMessage = '';
+                    this.submitError = '';
+                    
+                    try {
+                        const form = document.getElementById('appointmentForm');
+                        const formData = new FormData(form);
+                        formData.append('_formname', 'appointment');
+                        
+                        const response = await fetch(form.action, {
+                            method: 'POST',
+                            body: formData,
+                            headers: {
+                                'Accept': 'application/json'
+                            }
+                        });
+                        
+                        if (response.ok) {
+                            window.location.href = 'thank-you.html?form=appointment';
+                        } else {
+                            const errorData = await response.json();
+                            throw new Error(errorData.error || 'Failed to submit form');
+                        }
+                    } catch (error) {
+                        console.error('Submission error:', error);
+                        this.submitError = "There was an error submitting your form. Please try again or contact us directly.";
+                    } finally {
+                        this.isSubmitting = false;
+                    }
                 }
             }
-            
-            // Field validations
-            const validations = {
-                name: value => value.trim().length > 0,
-                email: value => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value),
-                phone: value => !value || /^[\d\s\-()+]{10,}$/.test(value),
-                serviceZip: value => /^\d{5}(-\d{4})?$/.test(value),
-                service: value => value !== "",
-                date: value => value !== "",
-                time: value => value !== ""
-            };
-            
-            // Add event listeners for real-time validation
-            document.getElementById('name').addEventListener('blur', function() {
-                validateField(this, 'name-error', validations.name);
-            });
-            
-            document.getElementById('email').addEventListener('blur', function() {
-                validateField(this, 'email-error', validations.email);
-            });
-            
-            document.getElementById('phone').addEventListener('blur', function() {
-                validateField(this, 'phone-error', validations.phone);
-            });
-            
-            document.getElementById('serviceZip').addEventListener('blur', function() {
-                validateField(this, 'zip-error', validations.serviceZip);
-            });
-            
-            document.getElementById('service').addEventListener('change', function() {
-                validateField(this, 'service-error', validations.service);
-            });
-            
-            document.getElementById('date').addEventListener('change', function() {
-                validateField(this, 'date-error', validations.date);
-            });
-            
-            document.getElementById('time').addEventListener('change', function() {
-                validateField(this, 'time-error', validations.time);
-            });
-            
-            // Form submission
-            form.addEventListener('submit', function(e) {
-                e.preventDefault();
-                
-                // Validate all fields
-                let isValid = true;
-                isValid &= validateField(document.getElementById('name'), 'name-error', validations.name);
-                isValid &= validateField(document.getElementById('email'), 'email-error', validations.email);
-                isValid &= validateField(document.getElementById('serviceZip'), 'zip-error', validations.serviceZip);
-                isValid &= validateField(document.getElementById('service'), 'service-error', validations.service);
-                isValid &= validateField(document.getElementById('date'), 'date-error', validations.date);
-                isValid &= validateField(document.getElementById('time'), 'time-error', validations.time);
-                
-                if (!isValid) {
-                    return;
-                }
-                
-                // Get form values
-                const formData = {
-                    name: document.getElementById('name').value,
-                    email: document.getElementById('email').value,
-                    phone: document.getElementById('phone').value || 'Not provided',
-                    zip: document.getElementById('serviceZip').value,
-                    vehicle: document.getElementById('vehicle').value || 'Not specified',
-                    service: document.getElementById('service').value,
-                    date: document.getElementById('date').value,
-                    time: document.getElementById('time').value,
-                    message: document.getElementById('message').value || 'No special requests'
-                };
-                
-                // Get travel fee from localStorage if available
-                const travelFee = localStorage.getItem('travelFee') || '0.00';
-                
-                // Create email body
-                const emailBody = `New Appointment Request:
-                
-Name: ${formData.name}
-Email: ${formData.email}
-Phone: ${formData.phone}
-
-Service Location Zip Code: ${formData.zip}
-Vehicle: ${formData.vehicle}
-
-Service Requested: ${formData.service}
-Preferred Date: ${formData.date}
-Preferred Time: ${formData.time}
-
-Estimated Travel Fee: $${travelFee}
-
-Special Requests:
-${formData.message}
-
-Please confirm this appointment at your earliest convenience.`;
-
-                // Create mailto link
-                const mailtoLink = `mailto:hakai197@gmail.com?subject=New Appointment Request - ${formData.name}&body=${encodeURIComponent(emailBody)}`;
-                
-                // Open user's email client
-                window.location.href = mailtoLink;
-                
-                // Clear travel fee from storage
-                localStorage.removeItem('travelFee');
-            });
-        });
+        }).mount('#app');
     </script>
-    
-    <script src="floating-buttons.js"></script>
 </body>
+</html>
 </html>

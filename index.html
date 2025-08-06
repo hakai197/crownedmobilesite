@@ -1,134 +1,230 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Crowned Mobile</title>
-    <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Crowned Mobile</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
 </head>
 <body>
 
-    <div class="floating-buttons">
-        <a href="appointment.html" class="floating-button">
-            <i class="fas fa-calendar-alt"></i>
-            <span>Book Now</span>
-        </a>
-        <a href="contact.html" class="floating-button">
-            <i class="fas fa-phone-alt"></i>
-            <span>Call Us</span>
-        </a>
-        <a href="subscription.html" class="floating-button">
-            <i class="fas fa-star"></i>
-            <span>Subscribe</span>
-        </a>
-    </div>
+  <!-- Floating Buttons -->
+  <div class="floating-buttons">
+    <a href="appointment.html" class="floating-button">
+      <i class="fas fa-calendar-alt"></i>
+      <span>Book Now</span>
+    </a>
+    <a href="contact.html" class="floating-button">
+      <i class="fas fa-envelope"></i>
+      <span>Contact Us</span>
+    </a>
+    <a href="tel:9377281622" class="floating-button">
+      <i class="fas fa-phone-alt"></i>
+      <span>Call Us</span>
+    </a>
+    <a href="subscription.html" class="floating-button">
+      <i class="fas fa-star"></i>
+      <span>Subscribe</span>
+    </a>
+  </div>
 
-    <div class="header-container">
-        <img src="MagicEraser_250327_111940.png" alt="Crowned Mobile Logo" class="header-logo">
-        <Header>Crowned Mobile</Header>
-    </div>
+  <!-- Header -->
+  <div class="header-container">
+    <img src="MagicEraser_250327_111940.png" alt="Crowned Mobile Logo" class="header-logo">
+    <Header class="header-title">Crowned Mobile</Header>
+  </div>
 
-    <div class="subtitle-container">
-        <p class="subtitle">Mobile Automotive Detailing Service</p>
-        <p class="established">EST. 2025</p>
-    </div>
+  <!-- Subtitle -->
+  <div class="subtitle-container">
+    <p class="subtitle">Mobile Automotive Detailing Service</p>
+    <p class="established">EST. 2025</p>
+  </div>
 
-    <div class="container">
-        <p class="centered-description">Welcome to Crowned Mobile, your premier mobile automotive detailing service. We bring the shine directly to you, using only the highest quality products and techniques to make your vehicle look its absolute best.</p>
-        
-        <!-- Sedan Pricing Section -->
+  <!-- Description -->
+  <div class="container">
+    <p class="centered-description">
+      Welcome to Crowned Mobile, your premier mobile automotive detailing service. We bring the shine directly to you, using only the highest quality products and techniques to make your vehicle look its absolute best.
+    </p>
+
+    <!-- Main Content Grid -->
+    <div class="main-content-grid">
+      <!-- Pricing and Disclaimer Column -->
+      <div class="pricing-disclaimer-container">
+        <!-- Pricing Section -->
         <div class="pricing-section">
-            <h2 class="section-title"><i class="fas fa-car"></i> Sedan Pricing</h2>
-            <ul class="pricing-list">
-                <li>
-                    <span class="price">$145</span> - Standard Package
-                    <span class="service-desc">Vacuum, wipe down, carpet agitation, seat scrub</span>
-                    <span class="final-price">Total with Travel Fee: $<span class="total">145</span></span>
-                </li>
-                <li>
-                    <span class="price">$175</span> - Golden Package
-                    <span class="service-desc">Vacuum, wipe down, seat scrub, windows and mirrors, shampoo, steam clean</span>
-                    <span class="final-price">Total with Travel Fee: $<span class="total">175</span></span>
-                </li>
-            </ul>
-        </div>
-
-        <!-- Truck/SUV Pricing Section -->
-        <div class="pricing-section">
-            <h2 class="section-title"><i class="fas fa-truck"></i> Truck/SUV Pricing</h2>
-            <ul class="pricing-list">
-                <li>
-                    <span class="price">$185</span> - Standard Package
-                    <span class="service-desc">Vacuum, wipe down, carpet agitation, seat scrub</span>
-                    <span class="final-price">Total with Travel Fee: $<span class="total">185</span></span>
-                </li>
-                <li>
-                    <span class="price">$220</span> - Golden Package
-                    <span class="service-desc">Vacuum, wipe down, seat scrub, windows and mirrors, shampoo, steam clean</span>
-                    <span class="final-price">Total with Travel Fee: $<span class="total">220</span></span>
-                </li>
-            </ul>
-        </div>
-
-        <div class="mileage-calculator">
-            <h3><i class="fas fa-map-marker-alt"></i> Distance Calculator</h3>
-            <div class="calculator-form">
-                <label for="zipcode">Your Zip Code:</label>
-                <input type="text" id="zipcode" placeholder="Enter your zip code" maxlength="5" pattern="\d{5}">
-                <button id="calculateBtn"><i class="fas fa-calculator"></i> Calculate Fee</button>
-                <div id="distanceResult" class="hidden">
-                    <div class="result-row">
-                        <span>Distance from 45177:</span>
-                        <strong><span id="miles">0</span> miles</strong>
-                    </div>
-                    <div class="result-row">
-                        <span>Free Miles Included:</span>
-                        <strong>15 miles</strong>
-                    </div>
-                    <div class="result-row">
-                        <span>Chargeable Miles:</span>
-                        <strong><span id="excessMiles">0</span> miles × $0.70/mile</strong>
-                    </div>
-                    <div class="result-row total-fee">
-                        <span>Travel Fee:</span>
-                        <strong>$<span id="travelFee">0.00</span></strong>
-                    </div>
-                    <button id="applyToAppointment" class="apply-btn">
-                        <i class="fas fa-calendar-plus"></i> Apply to Appointment
-                    </button>
-                </div>
+          <div id="app">
+            <div class="pricing-toggle">
+              <button :class="{ active: selected === 'sedan' }" @click="selected = 'sedan'">Sedan</button>
+              <button :class="{ active: selected === 'truck' }" @click="selected = 'truck'">Truck/SUV</button>
             </div>
+
+            <ul class="pricing-list">
+              <li v-for="item in currentPricing" :key="item.package">
+                <span class="price">${{ item.price }}</span> - {{ item.package }}
+                <span class="service-desc">{{ item.description }}</span>
+                <span class="final-price">Total with Travel Fee: $<span class="total">{{ item.total }}</span></span>
+              </li>
+            </ul>
+          </div>
         </div>
 
+        <!-- Disclaimer Section -->
         <div class="disclaimer-section">
-            <h2 class="section-title"><i class="fas fa-exclamation-triangle"></i> Important Notice</h2>
-            <div class="disclaimer-content">
-                <p>Please be advised that our pricing is based on the standard condition of a vehicle. If your vehicle is deemed excessively dirty, soiled, or requires additional time, labor, or specialized cleaning products, we reserve the right to adjust the price accordingly.</p>
-                
-                <p>Factors that may result in a price adjustment include, but are not limited to:</p>
-                
-                <ul>
-                    <li><i class="fas fa-check-circle"></i> Excessive mud, dirt, or debris</li>
-                    <li><i class="fas fa-check-circle"></i> Heavy stains, spills, or odors (e.g., pet hair, smoke, food residue)</li>
-                    <li><i class="fas fa-check-circle"></i> Mold, mildew, or biological contaminants</li>
-                    <li><i class="fas fa-check-circle"></i> Excessive trash or clutter inside the vehicle</li>
-                </ul>
-                
-                <p>We will always provide a revised estimate before proceeding with any additional services. Our goal is to ensure the highest quality detailing while maintaining fair pricing for the level of work required.</p>
-                
-                <p class="disclaimer-signature">Thank you for your understanding!<br>— Crowned Mobile</p>
-            </div>
+          <h2><i class="fas fa-exclamation-triangle"></i> Important Notice</h2>
+          <p>Please be advised that our pricing is based on the standard condition of a vehicle. Additional charges may apply for:</p>
+          <ul>
+            <li><i class="fas fa-check-circle"></i> Excessive mud or debris</li>
+            <li><i class="fas fa-check-circle"></i> Heavy stains or odors</li>
+            <li><i class="fas fa-check-circle"></i> Mold, mildew, or biological contaminants</li>
+            <li><i class="fas fa-check-circle"></i> Excessive trash or clutter</li>
+          </ul>
+          <p class="disclaimer-signature">Thank you for your understanding!<br>— Crowned Mobile</p>
         </div>
+      </div>
 
-        <ul class="nav-links">
-            <li><a href="contact.html">Contact Us</a></li>
-            <li><a href="subscription.html">Subscription Service</a></li>
-            <li><a href="links.html">Helpful Links</a></li>
-        </ul>
+      <!-- Mileage Calculator Column -->
+      <div class="mileage-calculator">
+        <h3><i class="fas fa-map-marker-alt"></i> Distance Calculator</h3>
+        <div class="calculator-form">
+          <label for="zipcode">Your Zip Code:</label>
+          <input type="text" id="zipcode" placeholder="Enter your zip code" maxlength="5" pattern="\d{5}" />
+          <button id="calculateBtn"><i class="fas fa-calculator"></i> Calculate Fee</button>
+          <div id="distanceResult" class="distance-result hidden">
+            <div class="result-row">
+              <span>Distance from 45177:</span>
+              <strong><span id="miles">0</span> miles</strong>
+            </div>
+            <div class="result-row">
+              <span>Free Miles Included:</span>
+              <strong>15 miles</strong>
+            </div>
+            <div class="result-row">
+              <span>Chargeable Miles:</span>
+              <strong><span id="excessMiles">0</span> miles × $0.70/mile</strong>
+            </div>
+            <div class="result-row total-fee">
+              <span>Travel Fee:</span>
+              <strong>$<span id="travelFee">0.00</span></strong>
+            </div>
+            <button id="applyToAppointment" class="apply-btn">
+              <i class="fas fa-calendar-plus"></i> Apply to Appointment
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
 
-    <script src="../scripts/distance-calculator.js"></script>
+    <!-- Navigation -->
+    <ul class="nav-links">
+      <li><a href="contact.html">Contact Us</a></li>
+      <li><a href="subscription.html">Subscription Service</a></li>
+      <li><a href="links.html">Helpful Links</a></li>
+    </ul>
+  </div>
+
+  <script>
+    new Vue({
+      el: '#app',
+      data: {
+        selected: 'sedan',
+        sedanPricing: [
+          {
+            package: 'Standard Package',
+            price: '145',
+            description: 'Includes vacuum, wipe down, carpet agitation, and seat scrub',
+            total: '145'
+          },
+          {
+            package: 'Golden Package',
+            price: '175',
+            description: 'Includes vacuum, wipe down, carpet agitation, seat scrub, windows and mirrors, shampoo, and steam clean',
+            total: '175'
+          }
+        ],
+        truckPricing: [
+          {
+            package: 'Standard Package',
+            price: '185',
+            description: 'Includes vacuum, wipe down, carpet agitation, and seat scrub',
+            total: '185'
+          },
+          {
+            package: 'Golden Package',
+            price: '220',
+            description: 'Includes vacuum, wipe down, carpet agitation, seat scrub, windows and mirrors, shampoo, and steam clean',
+            total: '220'
+          }
+        ]
+      },
+      computed: {
+        currentPricing() {
+          return this.selected === 'sedan' ? this.sedanPricing : this.truckPricing;
+        }
+      }
+    });
+
+    document.addEventListener('DOMContentLoaded', function () {
+      const API_KEY = 'Q7ITe5MB0a4STWkyy8GUQ3nvv5leH3TjZAqL0dfJaSeT1U9ap7TA35bw1KqUGrFS';
+      const BASE_ZIP = '45177';
+      const calculateBtn = document.getElementById('calculateBtn');
+
+      function calculateCost(distance) {
+        const excessMiles = Math.max(0, distance - 15);
+        return (excessMiles * 0.7).toFixed(2);
+      }
+
+      function updateUI(distance, cost) {
+        document.getElementById('miles').textContent = distance.toFixed(1);
+        document.getElementById('excessMiles').textContent = Math.max(0, distance - 15).toFixed(1);
+        document.getElementById('travelFee').textContent = cost;
+        document.getElementById('distanceResult').classList.remove('hidden');
+      }
+
+      async function fetchDistance(zipcode) {
+        const apiUrl = `https://www.zipcodeapi.com/rest/${API_KEY}/distance.json/${BASE_ZIP}/${zipcode}/mile`;
+        const proxyUrl = `https://corsproxy.io/?${encodeURIComponent(apiUrl)}`;
+
+        const response = await fetch(proxyUrl);
+        if (!response.ok) throw new Error('Failed to fetch');
+        return response.json();
+      }
+
+      calculateBtn.addEventListener('click', async () => {
+        const zip = document.getElementById('zipcode').value.trim();
+        if (!/^\d{5}$/.test(zip)) {
+          alert('Enter a valid 5-digit zip code.');
+          return;
+        }
+
+        calculateBtn.disabled = true;
+        calculateBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Calculating...';
+
+        try {
+          const result = await fetchDistance(zip);
+          const cost = calculateCost(result.distance);
+          updateUI(result.distance, cost);
+        } catch (err) {
+          alert('Failed to calculate distance. Please try again later.');
+          console.error(err);
+        } finally {
+          calculateBtn.disabled = false;
+          calculateBtn.innerHTML = '<i class="fas fa-calculator"></i> Calculate Fee';
+        }
+      });
+
+      const applyBtn = document.getElementById('applyToAppointment');
+      if (applyBtn) {
+        applyBtn.addEventListener('click', () => {
+          const fee = document.getElementById('travelFee').textContent;
+          localStorage.setItem('travelFee', fee);
+          window.location.href = 'appointment.html';
+        });
+      }
+    });
+  </script>
+
 </body>
 </html>
