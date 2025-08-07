@@ -9,13 +9,80 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/vue@3.2.47/dist/vue.global.min.js"></script>
     <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .header-container {
+            text-align: center;
+            padding: 20px 0;
+            background: #4a6fa5;
+            color: white;
+        }
+        .header-logo {
+            height: 80px;
+            margin-bottom: 10px;
+        }
+        .section-title {
+            color: #4a6fa5;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .centered-description {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #666;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input, select, textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        textarea {
+            min-height: 100px;
+        }
+        button {
+            background: #4a6fa5;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            font-size: 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+            transition: background 0.3s;
+        }
+        button:hover {
+            background: #3a5a8f;
+        }
         .error { border-color: #ff3860; }
         .error-message { color: #ff3860; font-size: 0.85rem; margin-top: 0.25rem; }
         .success-message { color: #23d160; margin-top: 1rem; }
         .required:after { content: " *"; color: #ff3860; }
         #submitBtn[disabled] { opacity: 0.7; cursor: not-allowed; }
         .fa-spinner { margin-right: 8px; }
-        
         .contact-info {
             display: flex;
             justify-content: space-around;
@@ -48,50 +115,85 @@
         .contact-card a:hover {
             text-decoration: underline;
         }
+        .floating-buttons {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            display: flex;
+            flex-direction: column;
+            z-index: 100;
+        }
+        .floating-button {
+            background: #4a6fa5;
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 10px;
+            text-decoration: none;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            transition: all 0.3s;
+        }
+        .floating-button span {
+            font-size: 10px;
+            margin-top: 3px;
+        }
+        .floating-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
     </style>
 </head>
 <body>
     <div id="app">
+        <!-- Navigation Header (Desktop) -->
+        <nav class="desktop-nav">
+            <div class="nav-container">
+                <div class="nav-brand">
+                    <img src="MagicEraser_250327_111940.png" alt="Crowned Mobile Logo" class="nav-logo">
+                    <span>Crowned Mobile</span>
+                </div>
+                <div class="nav-links">
+                    <a href="index.html"><i class="fas fa-home"></i> Home</a>
+                    <a href="appointment.html"><i class="fas fa-calendar-alt"></i> Book Now</a>
+                    <a href="contact.html"><i class="fas fa-envelope"></i> Contact</a>
+                    <a href="subscription.html"><i class="fas fa-star"></i> Subscribe</a>
+                    <a href="tel:9377281622"><i class="fas fa-phone-alt"></i> (937) 728-1622</a>
+                </div>
+            </div>
+        </nav>
+
         <!-- Mobile Menu Button -->
         <div class="mobile-menu-btn">
             <i class="fas fa-bars"></i>
             <span>Menu</span>
         </div>
 
-        <!-- Floating Buttons -->
-        <div class="floating-buttons">
-            <a href="index.html" class="floating-button">
-                <i class="fas fa-home"></i>
-                <span>Home</span>
-            </a>
-            <a href="appointment.html" class="floating-button">
-                <i class="fas fa-calendar-alt"></i>
-                <span>Book Now</span>
-            </a>
-            <a href="contact.html" class="floating-button">
-                <i class="fas fa-phone-alt"></i>
-                <span>Call Us</span>
-            </a>
-            <a href="subscription.html" class="floating-button">
-                <i class="fas fa-star"></i>
-                <span>Subscribe</span>
-            </a>
+        <!-- Mobile Menu -->
+        <div class="mobile-menu">
+            <a href="index.html"><i class="fas fa-home"></i> Home</a>
+            <a href="appointment.html"><i class="fas fa-calendar-alt"></i> Book Now</a>
+            <a href="contact.html"><i class="fas fa-envelope"></i> Contact</a>
+            <a href="subscription.html"><i class="fas fa-star"></i> Subscribe</a>
+            <a href="tel:9377281622"><i class="fas fa-phone-alt"></i> Call Us</a>
         </div>
 
         <div class="header-container">
             <img src="MagicEraser_250327_111940.png" alt="Crowned Mobile Logo" class="header-logo">
-            <Header>Contact Us</Header>
+            <h1>Contact Us</h1>
         </div>
 
         <div class="container">
-            <h1 class="section-title">Get In Touch</h1>
+            <h2 class="section-title">Get In Touch</h2>
             
             <div class="contact-info">
                 <div class="contact-card">
                     <h3><i class="fas fa-phone"></i> Phone</h3>
                     <p><a href="tel:(937)728-1622">(937)728-1622</a></p>
-                    <p>Monday-Friday: 9am-6pm</p>
-                    <p>Saturday: 10am-4pm</p>
                 </div>
                 
                 <div class="contact-card">
@@ -102,7 +204,7 @@
                 
                 <div class="contact-card">
                     <h3><i class="fas fa-map-marker-alt"></i> Service Area</h3>
-                    <p>Wilmington,OH and surrounding areas</p>
+                    <p>Dayton, OH and surrounding areas</p>
                     <p>Mobile service - we come to you!</p>
                 </div>
             </div>
@@ -155,7 +257,7 @@
         document.addEventListener('DOMContentLoaded', function() {
             const { createApp } = Vue;
             
-            createApp({
+            const app = createApp({
                 data() {
                     return {
                         form: {
@@ -207,22 +309,31 @@
                         this.successMessage = '';
 
                         try {
-                            const formData = new FormData();
-                            Object.entries(this.form).forEach(([key, value]) => {
-                                if (value) formData.append(key, value);
-                            });
-                            formData.append('_formname', 'contact');
+                            const emailData = {
+                                to: 'crownedmobile2025@gmail.com',
+                                subject: this.form.subject || 'New Contact Message from ' + this.form.name,
+                                text: `NEW MESSAGE FROM WEBSITE:
+                                
+Name: ${this.form.name}
+Email: ${this.form.email}
+Phone: ${this.form.phone || 'Not provided'}
+
+Message:
+${this.form.message}`,
+                                _replyto: this.form.email
+                            };
 
                             const response = await fetch('https://formspree.io/f/mqalyvbg', {
                                 method: 'POST',
-                                body: formData,
                                 headers: {
+                                    'Content-Type': 'application/json',
                                     'Accept': 'application/json'
-                                }
+                                },
+                                body: JSON.stringify(emailData)
                             });
 
                             if (response.ok) {
-                                this.successMessage = 'Thank you! Your message has been sent. We will respond within 24 hours.';
+                                this.successMessage = 'Message sent successfully! We will respond within 24 hours.';
                                 this.form = {
                                     name: '',
                                     email: '',
@@ -231,34 +342,19 @@
                                     message: ''
                                 };
                             } else {
-                                throw new Error('Form submission failed');
+                                throw new Error('Failed to send message');
                             }
                         } catch (error) {
                             console.error('Submission error:', error);
-                            this.submitError = 'There was an error sending your message. Please try again or call us directly at (937)728-1622';
+                            this.submitError = 'Failed to send message. Please call us directly at (937)728-1622';
                         } finally {
                             this.isSubmitting = false;
                         }
                     }
                 }
-            }).mount('#app');
-
-            // Mobile menu toggle
-            const menuBtn = document.querySelector('.mobile-menu-btn');
-            const floatingMenu = document.querySelector('.floating-buttons');
+            });
             
-            if (menuBtn && floatingMenu) {
-                menuBtn.addEventListener('click', function(e) {
-                    e.stopPropagation();
-                    floatingMenu.classList.toggle('mobile-active');
-                });
-                
-                document.addEventListener('click', function(e) {
-                    if (!menuBtn.contains(e.target) && !floatingMenu.contains(e.target)) {
-                        floatingMenu.classList.remove('mobile-active');
-                    }
-                });
-            }
+            app.mount('#app');
         });
     </script>
 </body>

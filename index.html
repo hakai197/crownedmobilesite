@@ -11,30 +11,36 @@
 </head>
 <body>
 
+  <!-- Navigation Header (Desktop) -->
+  <nav class="desktop-nav">
+    <div class="nav-container">
+      <div class="nav-brand">
+        <img src="MagicEraser_250327_111940.png" alt="Crowned Mobile Logo" class="nav-logo">
+        <span>Crowned Mobile</span>
+      </div>
+      <div class="nav-links">
+        <a href="index.html"><i class="fas fa-home"></i> Home</a>
+        <a href="appointment.html"><i class="fas fa-calendar-alt"></i> Book Now</a>
+        <a href="contact.html"><i class="fas fa-envelope"></i> Contact</a>
+        <a href="subscription.html"><i class="fas fa-star"></i> Subscribe</a>
+        <a href="tel:9377281622"><i class="fas fa-phone-alt"></i> (937) 728-1622</a>
+      </div>
+    </div>
+  </nav>
+
   <!-- Mobile Menu Button -->
   <div class="mobile-menu-btn">
     <i class="fas fa-bars"></i>
     <span>Menu</span>
   </div>
 
-  <!-- Floating Buttons -->
-  <div class="floating-buttons">
-    <a href="appointment.html" class="floating-button">
-      <i class="fas fa-calendar-alt"></i>
-      <span>Book Now</span>
-    </a>
-    <a href="contact.html" class="floating-button">
-      <i class="fas fa-envelope"></i>
-      <span>Contact Us</span>
-    </a>
-    <a href="tel:9377281622" class="floating-button">
-      <i class="fas fa-phone-alt"></i>
-      <span>Call Us</span>
-    </a>
-    <a href="subscription.html" class="floating-button">
-      <i class="fas fa-star"></i>
-      <span>Subscribe</span>
-    </a>
+  <!-- Mobile Menu -->
+  <div class="mobile-menu">
+    <a href="index.html"><i class="fas fa-home"></i> Home</a>
+    <a href="appointment.html"><i class="fas fa-calendar-alt"></i> Book Now</a>
+    <a href="contact.html"><i class="fas fa-envelope"></i> Contact</a>
+    <a href="subscription.html"><i class="fas fa-star"></i> Subscribe</a>
+    <a href="tel:9377281622"><i class="fas fa-phone-alt"></i> Call Us</a>
   </div>
 
   <!-- Header -->
@@ -54,6 +60,13 @@
     <p class="centered-description">
       Welcome to Crowned Mobile, your premier mobile automotive detailing service. We bring the shine directly to you, using only the highest quality products and techniques to make your vehicle look its absolute best.
     </p>
+
+    <!-- Contact Info -->
+    <div class="contact-info-box">
+      <a href="tel:9377281622" class="phone-link">
+        <i class="fas fa-phone-alt"></i> Call Now: (937) 728-1622
+      </a>
+    </div>
 
     <!-- YouTube Video Section -->
     <div class="video-container">
@@ -233,17 +246,20 @@
 
       // Mobile menu toggle
       const menuBtn = document.querySelector('.mobile-menu-btn');
-      const floatingMenu = document.querySelector('.floating-buttons');
+      const mobileMenu = document.querySelector('.mobile-menu');
       
-      if (menuBtn && floatingMenu) {
-        menuBtn.addEventListener('click', function() {
-          floatingMenu.classList.toggle('mobile-active');
+      if (menuBtn && mobileMenu) {
+        menuBtn.addEventListener('click', function(e) {
+          e.stopPropagation();
+          mobileMenu.classList.toggle('active');
+          menuBtn.classList.toggle('active');
         });
         
         // Close menu when clicking outside
         document.addEventListener('click', function(e) {
-          if (!menuBtn.contains(e.target) && !floatingMenu.contains(e.target)) {
-            floatingMenu.classList.remove('mobile-active');
+          if (!menuBtn.contains(e.target) && !mobileMenu.contains(e.target)) {
+            mobileMenu.classList.remove('active');
+            menuBtn.classList.remove('active');
           }
         });
       }
