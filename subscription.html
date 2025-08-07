@@ -9,6 +9,13 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
+    <!-- Mobile Menu Button -->
+    <div class="mobile-menu-btn">
+        <i class="fas fa-bars"></i>
+        <span>Menu</span>
+    </div>
+
+    <!-- Floating Buttons -->
     <div class="floating-buttons">
         <a href="index.html" class="floating-button">
             <i class="fas fa-home"></i>
@@ -33,6 +40,10 @@
         <h1 class="section-title">Monthly Detailing Memberships</h1>
         <p class="centered-description">Get regular professional detailing at discounted rates with our Golden Package subscription plans. Cancel anytime.</p>
         
+        <div class="travel-fee-alert">
+            <i class="fas fa-info-circle"></i> Travel fees not included in subscription prices. Use our <a href="index.html#calculator">distance calculator</a> to estimate travel costs.
+        </div>
+        
         <!-- Sedan Subscription Plans -->
         <div class="subscription-section">
             <h2 class="section-title"><i class="fas fa-car"></i> Sedan Subscriptions</h2>
@@ -46,7 +57,7 @@
                         <li><i class="fas fa-check"></i> 10% off additional services</li>
                         <li><i class="fas fa-check"></i> Priority scheduling</li>
                     </ul>
-                    <a href="contact.html" class="subscribe-btn">Contact to Subscribe</a>
+                    <a href="appointment.html" class="subscribe-btn">Book Now</a>
                 </div>
 
                 <!-- Bi-Monthly Plan -->
@@ -60,7 +71,7 @@
                         <li><i class="fas fa-check"></i> Priority scheduling</li>
                         <li><i class="fas fa-check"></i> Free interior refresher between details</li>
                     </ul>
-                    <a href="contact.html" class="subscribe-btn">Contact to Subscribe</a>
+                    <a href="appointment.html" class="subscribe-btn">Book Now</a>
                 </div>
 
                 <!-- 3-Month Plan -->
@@ -73,7 +84,7 @@
                         <li><i class="fas fa-check"></i> Priority scheduling</li>
                         <li><i class="fas fa-check"></i> Free interior refresher between details</li>
                     </ul>
-                    <a href="contact.html" class="subscribe-btn">Contact to Subscribe</a>
+                    <a href="appointment.html" class="subscribe-btn">Book Now</a>
                 </div>
 
                 <!-- 6-Month Plan -->
@@ -87,7 +98,7 @@
                         <li><i class="fas fa-check"></i> Highest priority scheduling</li>
                         <li><i class="fas fa-check"></i> Free interior refresher between details</li>
                     </ul>
-                    <a href="contact.html" class="subscribe-btn">Contact to Subscribe</a>
+                    <a href="appointment.html" class="subscribe-btn">Book Now</a>
                 </div>
             </div>
         </div>
@@ -105,7 +116,7 @@
                         <li><i class="fas fa-check"></i> 10% off additional services</li>
                         <li><i class="fas fa-check"></i> Priority scheduling</li>
                     </ul>
-                    <a href="contact.html" class="subscribe-btn">Contact to Subscribe</a>
+                    <a href="appointment.html" class="subscribe-btn">Book Now</a>
                 </div>
 
                 <!-- Bi-Monthly Plan -->
@@ -119,7 +130,7 @@
                         <li><i class="fas fa-check"></i> Priority scheduling</li>
                         <li><i class="fas fa-check"></i> Free interior refresher between details</li>
                     </ul>
-                    <a href="contact.html" class="subscribe-btn">Contact to Subscribe</a>
+                    <a href="appointment.html" class="subscribe-btn">Book Now</a>
                 </div>
 
                 <!-- 3-Month Plan -->
@@ -132,7 +143,7 @@
                         <li><i class="fas fa-check"></i> Priority scheduling</li>
                         <li><i class="fas fa-check"></i> Free interior refresher between details</li>
                     </ul>
-                    <a href="contact.html" class="subscribe-btn">Contact to Subscribe</a>
+                    <a href="appointment.html" class="subscribe-btn">Book Now</a>
                 </div>
 
                 <!-- 6-Month Plan -->
@@ -146,7 +157,7 @@
                         <li><i class="fas fa-check"></i> Highest priority scheduling</li>
                         <li><i class="fas fa-check"></i> Free interior refresher between details</li>
                     </ul>
-                    <a href="contact.html" class="subscribe-btn">Contact to Subscribe</a>
+                    <a href="appointment.html" class="subscribe-btn">Book Now</a>
                 </div>
             </div>
         </div>
@@ -182,5 +193,26 @@
             </div>
         </div>
     </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Mobile menu toggle
+            const menuBtn = document.querySelector('.mobile-menu-btn');
+            const floatingMenu = document.querySelector('.floating-buttons');
+            
+            if (menuBtn && floatingMenu) {
+                menuBtn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    floatingMenu.classList.toggle('mobile-active');
+                });
+                
+                document.addEventListener('click', function(e) {
+                    if (!menuBtn.contains(e.target) && !floatingMenu.contains(e.target)) {
+                        floatingMenu.classList.remove('mobile-active');
+                    }
+                });
+            }
+        });
+    </script>
 </body>
 </html>

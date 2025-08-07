@@ -11,6 +11,12 @@
 </head>
 <body>
 
+  <!-- Mobile Menu Button -->
+  <div class="mobile-menu-btn">
+    <i class="fas fa-bars"></i>
+    <span>Menu</span>
+  </div>
+
   <!-- Floating Buttons -->
   <div class="floating-buttons">
     <a href="appointment.html" class="floating-button">
@@ -53,47 +59,31 @@
     <div class="video-container">
       <h2 class="video-title">See Our Work in Action</h2>
       <div class="video-wrapper">
-        <iframe width="560" height="315" src="https://www.youtube.com/embed/xnOSd7j5Cn4" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        <iframe width="400" height="225" src="https://www.youtube.com/embed/xnOSd7j5Cn4" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
       </div>
     </div>
 
     <!-- Main Content Grid -->
     <div class="main-content-grid">
-      <!-- Pricing and Disclaimer Column -->
-      <div class="pricing-disclaimer-container">
-        <!-- Pricing Section -->
-        <div class="pricing-section">
-          <div id="app">
-            <div class="pricing-toggle">
-              <button :class="{ active: selected === 'sedan' }" @click="selected = 'sedan'">Sedan</button>
-              <button :class="{ active: selected === 'truck' }" @click="selected = 'truck'">Truck/SUV</button>
-            </div>
-
-            <ul class="pricing-list">
-              <li v-for="item in currentPricing" :key="item.package">
-                <span class="price">${{ item.price }}</span> - {{ item.package }}
-                <span class="service-desc">{{ item.description }}</span>
-                <span class="final-price">Total with Travel Fee: $<span class="total">{{ item.total }}</span></span>
-              </li>
-            </ul>
+      <!-- Pricing Section -->
+      <div class="pricing-section">
+        <div id="app">
+          <div class="pricing-toggle">
+            <button :class="{ active: selected === 'sedan' }" @click="selected = 'sedan'">Sedan</button>
+            <button :class="{ active: selected === 'truck' }" @click="selected = 'truck'">Truck/SUV</button>
           </div>
-        </div>
 
-        <!-- Disclaimer Section -->
-        <div class="disclaimer-section">
-          <h2><i class="fas fa-exclamation-triangle"></i> Important Notice</h2>
-          <p>Please be advised that our pricing is based on the standard condition of a vehicle. Additional charges may apply for:</p>
-          <ul>
-            <li><i class="fas fa-check-circle"></i> Excessive mud or debris</li>
-            <li><i class="fas fa-check-circle"></i> Heavy stains or odors</li>
-            <li><i class="fas fa-check-circle"></i> Mold, mildew, or biological contaminants</li>
-            <li><i class="fas fa-check-circle"></i> Excessive trash or clutter</li>
+          <ul class="pricing-list">
+            <li v-for="item in currentPricing" :key="item.package">
+              <span class="price">${{ item.price }}</span> - {{ item.package }}
+              <span class="service-desc">{{ item.description }}</span>
+              <span class="travel-fee-note">*Travel fee not included - Use calculator below</span>
+            </li>
           </ul>
-          <p class="disclaimer-signature">Thank you for your understanding!<br>— Crowned Mobile</p>
         </div>
       </div>
 
-      <!-- Mileage Calculator Column -->
+      <!-- Mileage Calculator -->
       <div class="mileage-calculator">
         <h3><i class="fas fa-map-marker-alt"></i> Distance Calculator</h3>
         <div class="calculator-form">
@@ -123,6 +113,19 @@
           </div>
         </div>
       </div>
+
+      <!-- Disclaimer Section -->
+      <div class="disclaimer-section">
+        <h2><i class="fas fa-exclamation-triangle"></i> Important Notice</h2>
+        <p>Please be advised that our pricing is based on the standard condition of a vehicle. Additional charges may apply for:</p>
+        <ul>
+          <li><i class="fas fa-check-circle"></i> Excessive mud or debris</li>
+          <li><i class="fas fa-check-circle"></i> Heavy stains or odors</li>
+          <li><i class="fas fa-check-circle"></i> Mold, mildew, or biological contaminants</li>
+          <li><i class="fas fa-check-circle"></i> Excessive trash or clutter</li>
+        </ul>
+        <p class="disclaimer-signature">Thank you for your understanding!<br>— Crowned Mobile</p>
+      </div>
     </div>
 
     <!-- Navigation -->
@@ -142,28 +145,24 @@
           {
             package: 'Standard Package',
             price: '145',
-            description: 'Includes vacuum, wipe down, carpet agitation, and seat scrub',
-            total: '145'
+            description: 'Includes vacuum, wipe down, carpet agitation, and seat scrub'
           },
           {
             package: 'Golden Package',
             price: '175',
-            description: 'Includes vacuum, wipe down, carpet agitation, seat scrub, windows and mirrors, shampoo, and steam clean',
-            total: '175'
+            description: 'Includes vacuum, wipe down, carpet agitation, seat scrub, windows and mirrors, shampoo, and steam clean'
           }
         ],
         truckPricing: [
           {
             package: 'Standard Package',
             price: '185',
-            description: 'Includes vacuum, wipe down, carpet agitation, and seat scrub',
-            total: '185'
+            description: 'Includes vacuum, wipe down, carpet agitation, and seat scrub'
           },
           {
             package: 'Golden Package',
             price: '220',
-            description: 'Includes vacuum, wipe down, carpet agitation, seat scrub, windows and mirrors, shampoo, and steam clean',
-            total: '220'
+            description: 'Includes vacuum, wipe down, carpet agitation, seat scrub, windows and mirrors, shampoo, and steam clean'
           }
         ]
       },
@@ -231,9 +230,24 @@
           window.location.href = 'appointment.html';
         });
       }
+
+      // Mobile menu toggle
+      const menuBtn = document.querySelector('.mobile-menu-btn');
+      const floatingMenu = document.querySelector('.floating-buttons');
+      
+      if (menuBtn && floatingMenu) {
+        menuBtn.addEventListener('click', function() {
+          floatingMenu.classList.toggle('mobile-active');
+        });
+        
+        // Close menu when clicking outside
+        document.addEventListener('click', function(e) {
+          if (!menuBtn.contains(e.target) && !floatingMenu.contains(e.target)) {
+            floatingMenu.classList.remove('mobile-active');
+          }
+        });
+      }
     });
   </script>
-
-  <script src="distance-calculator.js"></script>
 </body>
 </html>

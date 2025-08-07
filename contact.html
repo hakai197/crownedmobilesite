@@ -16,7 +16,6 @@
         #submitBtn[disabled] { opacity: 0.7; cursor: not-allowed; }
         .fa-spinner { margin-right: 8px; }
         
-        /* Contact page specific styles */
         .contact-info {
             display: flex;
             justify-content: space-around;
@@ -53,6 +52,13 @@
 </head>
 <body>
     <div id="app">
+        <!-- Mobile Menu Button -->
+        <div class="mobile-menu-btn">
+            <i class="fas fa-bars"></i>
+            <span>Menu</span>
+        </div>
+
+        <!-- Floating Buttons -->
         <div class="floating-buttons">
             <a href="index.html" class="floating-button">
                 <i class="fas fa-home"></i>
@@ -104,10 +110,7 @@
             <h2 class="section-title">Send Us a Message</h2>
             <p class="centered-description">Have questions or special requests? Fill out the form below and we'll get back to you as soon as possible.</p>
 
-            <form 
-                id="contactForm" 
-                @submit.prevent="submitForm"
-            >
+            <form id="contactForm" @submit.prevent="submitForm">
                 <div class="form-group" :class="{ 'error': errors.name }">
                     <label for="name" class="required">Your Name</label>
                     <input type="text" id="name" name="name" v-model="form.name" @blur="validateField('name')">
@@ -239,6 +242,23 @@
                     }
                 }
             }).mount('#app');
+
+            // Mobile menu toggle
+            const menuBtn = document.querySelector('.mobile-menu-btn');
+            const floatingMenu = document.querySelector('.floating-buttons');
+            
+            if (menuBtn && floatingMenu) {
+                menuBtn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    floatingMenu.classList.toggle('mobile-active');
+                });
+                
+                document.addEventListener('click', function(e) {
+                    if (!menuBtn.contains(e.target) && !floatingMenu.contains(e.target)) {
+                        floatingMenu.classList.remove('mobile-active');
+                    }
+                });
+            }
         });
     </script>
 </body>
