@@ -677,7 +677,7 @@ body {
 /* =================== */
 /* RESPONSIVE STYLES */
 /* =================== */
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
     .header-title {
         font-size: 2rem;
     }
