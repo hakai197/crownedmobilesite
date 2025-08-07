@@ -353,8 +353,29 @@ ${this.form.message || 'None'}`,
                         } finally {
                             this.isSubmitting = false;
                         }
+                        // Mobile menu toggle
+                        const menuBtn = document.querySelector('.mobile-menu-btn');
+                        const mobileMenu = document.querySelector('.mobile-menu');
+
+                        if (menuBtn && mobileMenu) {
+                            menuBtn.addEventListener('click', function(e) {
+                                e.stopPropagation();
+                                mobileMenu.classList.toggle('active');
+                                menuBtn.classList.toggle('active');
+                            });
+                            
+                            // Close menu when clicking outside
+                            document.addEventListener('click', function(e) {
+                                if (!menuBtn.contains(e.target) && !mobileMenu.contains(e.target)) {
+                                    mobileMenu.classList.remove('active');
+                                    menuBtn.classList.remove('active');
+                                }
+                            });
+                        }
                     }
+                    
                 }
+                
             });
             
             app.mount('#app');
