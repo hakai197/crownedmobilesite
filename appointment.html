@@ -253,71 +253,71 @@
         </div>
     </div>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const { createApp } = Vue;
-            
-            const app = createApp({
-                data() {
-                    return {
-                        form: {
-                            name: '',
-                            email: '',
-                            phone: '',
-                            serviceZip: '',
-                            vehicle: '',
-                            service: '',
-                            date: '',
-                            time: '',
-                            message: ''
-                        },
-                        errors: {},
-                        isSubmitting: false,
-                        submitError: ''
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const { createApp } = Vue;
+        
+        const app = createApp({
+            data() {
+                return {
+                    form: {
+                        name: '',
+                        email: '',
+                        phone: '',
+                        serviceZip: '',
+                        vehicle: '',
+                        service: '',
+                        date: '',
+                        time: '',
+                        message: ''
+                    },
+                    errors: {},
+                    isSubmitting: false,
+                    submitError: ''
+                }
+            },
+            methods: {
+                validateField(field) {
+                    const validations = {
+                        name: value => !!value.trim() || 'Name is required',
+                        email: value => /^\S+@\S+\.\S+$/.test(value) || 'Valid email required',
+                        phone: value => !value || /^[\d\s\-()+]{10,}$/.test(value) || 'Invalid phone format',
+                        serviceZip: value => /^\d{5}(-\d{4})?$/.test(value) || 'Valid ZIP required',
+                        service: value => !!value || 'Service selection required',
+                        date: value => !!value || 'Date required',
+                        time: value => !!value || 'Time required'
+                    };
+                    
+                    if (validations[field]) {
+                        const isValid = validations[field](this.form[field]);
+                        this.errors[field] = isValid === true ? '' : isValid;
+                        return isValid === true;
                     }
+                    return true;
                 },
-                methods: {
-                    validateField(field) {
-                        const validations = {
-                            name: value => !!value.trim() || 'Name is required',
-                            email: value => /^\S+@\S+\.\S+$/.test(value) || 'Valid email required',
-                            phone: value => !value || /^[\d\s\-()+]{10,}$/.test(value) || 'Invalid phone format',
-                            serviceZip: value => /^\d{5}(-\d{4})?$/.test(value) || 'Valid ZIP required',
-                            service: value => !!value || 'Service selection required',
-                            date: value => !!value || 'Date required',
-                            time: value => !!value || 'Time required'
-                        };
-                        
-                        if (validations[field]) {
-                            const isValid = validations[field](this.form[field]);
-                            this.errors[field] = isValid === true ? '' : isValid;
-                            return isValid === true;
+                validateForm() {
+                    let isValid = true;
+                    ['name', 'email', 'serviceZip', 'service', 'date', 'time'].forEach(field => {
+                        if (!this.validateField(field)) {
+                            isValid = false;
                         }
-                        return true;
-                    },
-                    validateForm() {
-                        let isValid = true;
-                        ['name', 'email', 'serviceZip', 'service', 'date', 'time'].forEach(field => {
-                            if (!this.validateField(field)) {
-                                isValid = false;
-                            }
-                        });
-                        return isValid;
-                    },
-                    async submitForm() {
-                        if (!this.validateForm()) {
-                            return;
-                        }
+                    });
+                    return isValid;
+                },
+                async submitForm() {
+                    if (!this.validateForm()) {
+                        return;
+                    }
 
-                        this.isSubmitting = true;
-                        this.submitError = '';
+                    this.isSubmitting = true;
+                    this.submitError = '';
 
-                        try {
-                            const emailData = {
-                                to: 'crownedmobile2025@gmail.com',
-                                subject: 'New Appointment Request from ' + this.form.name,
-                                text: `NEW APPOINTMENT REQUEST:
-                                
+                    try {
+                        const emailData = {
+                            to: 'crownedmobile2025@gmail.com',
+                            subject: 'New Appointment Request from ' + this.form.name,
+                            text: `NEW APPOINTMENT REQUEST:
+                            
 Name: ${this.form.name}
 Email: ${this.form.email}
 Phone: ${this.form.phone || 'Not provided'}
@@ -330,56 +330,65 @@ Preferred Time: ${this.form.time}
 
 Special Requests:
 ${this.form.message || 'None'}`,
-                                _replyto: this.form.email
-                            };
+                            _replyto: this.form.email
+                        };
 
-                            const response = await fetch('https://formspree.io/f/mqalyvbg', {
-                                method: 'POST',
-                                headers: {
-                                    'Content-Type': 'application/json',
-                                    'Accept': 'application/json'
-                                },
-                                body: JSON.stringify(emailData)
-                            });
+                        const response = await fetch('https://formspree.io/f/mqalyvbg', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Accept': 'application/json'
+                            },
+                            body: JSON.stringify(emailData)
+                        });
 
-                            if (response.ok) {
-                                window.location.href = 'thank-you.html?form=appointment';
-                            } else {
-                                throw new Error('Failed to submit appointment');
-                            }
-                        } catch (error) {
-                            console.error('Submission error:', error);
-                            this.submitError = 'Failed to submit. Please call (937)728-1622 to book your appointment.';
-                        } finally {
-                            this.isSubmitting = false;
+                        if (response.ok) {
+                            window.location.href = 'thank-you.html?form=appointment';
+                        } else {
+                            throw new Error('Failed to submit appointment');
                         }
-                        // Mobile menu toggle
-                        const menuBtn = document.querySelector('.mobile-menu-btn');
-                        const mobileMenu = document.querySelector('.mobile-menu');
-
-                        if (menuBtn && mobileMenu) {
-                            menuBtn.addEventListener('click', function(e) {
-                                e.stopPropagation();
-                                mobileMenu.classList.toggle('active');
-                                menuBtn.classList.toggle('active');
-                            });
-                            
-                            // Close menu when clicking outside
-                            document.addEventListener('click', function(e) {
-                                if (!menuBtn.contains(e.target) && !mobileMenu.contains(e.target)) {
-                                    mobileMenu.classList.remove('active');
-                                    menuBtn.classList.remove('active');
-                                }
-                            });
-                        }
+                    } catch (error) {
+                        console.error('Submission error:', error);
+                        this.submitError = 'Failed to submit. Please call (937)728-1622 to book your appointment.';
+                    } finally {
+                        this.isSubmitting = false;
                     }
-                    
                 }
-                
+            }
+        });
+        
+        app.mount('#app');
+
+        // Mobile menu functionality
+        const menuBtn = document.querySelector('.mobile-menu-btn');
+        const mobileMenu = document.querySelector('.mobile-menu');
+
+        if (menuBtn && mobileMenu) {
+            // Toggle menu when button is clicked
+            menuBtn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                mobileMenu.classList.toggle('active');
+                menuBtn.classList.toggle('active');
             });
             
-            app.mount('#app');
-        });
-    </script>
+            // Close menu when clicking outside
+            document.addEventListener('click', function(e) {
+                if (!menuBtn.contains(e.target) && !mobileMenu.contains(e.target)) {
+                    mobileMenu.classList.remove('active');
+                    menuBtn.classList.remove('active');
+                }
+            });
+
+            // Close menu when a menu item is clicked
+            const menuItems = mobileMenu.querySelectorAll('a');
+            menuItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    mobileMenu.classList.remove('active');
+                    menuBtn.classList.remove('active');
+                });
+            });
+        }
+    });
+</script>
 </body>
 </html>
