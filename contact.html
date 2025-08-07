@@ -253,109 +253,136 @@
         </div>
     </div>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const { createApp } = Vue;
-            
-            const app = createApp({
-                data() {
-                    return {
-                        form: {
-                            name: '',
-                            email: '',
-                            phone: '',
-                            subject: '',
-                            message: ''
-                        },
-                        errors: {},
-                        isSubmitting: false,
-                        submitError: '',
-                        successMessage: ''
+   <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const { createApp } = Vue;
+        
+        const app = createApp({
+            data() {
+                return {
+                    form: {
+                        name: '',
+                        email: '',
+                        phone: '',
+                        subject: '',
+                        message: ''
+                    },
+                    errors: {},
+                    isSubmitting: false,
+                    submitError: '',
+                    successMessage: ''
+                }
+            },
+            methods: {
+                validateField(field) {
+                    const validations = {
+                        name: value => !!value.trim() || 'Name is required',
+                        email: value => /^\S+@\S+\.\S+$/.test(value) || 'Valid email required',
+                        phone: value => !value || /^[\d\s\-()+]{10,}$/.test(value) || 'Invalid phone format',
+                        subject: value => !!value.trim() || 'Subject is required',
+                        message: value => !!value.trim() || 'Message is required'
+                    };
+                    
+                    if (validations[field]) {
+                        const isValid = validations[field](this.form[field]);
+                        this.errors[field] = isValid === true ? '' : isValid;
+                        return isValid === true;
                     }
+                    return true;
                 },
-                methods: {
-                    validateField(field) {
-                        const validations = {
-                            name: value => !!value.trim() || 'Name is required',
-                            email: value => /^\S+@\S+\.\S+$/.test(value) || 'Valid email required',
-                            phone: value => !value || /^[\d\s\-()+]{10,}$/.test(value) || 'Invalid phone format',
-                            subject: value => !!value.trim() || 'Subject is required',
-                            message: value => !!value.trim() || 'Message is required'
-                        };
-                        
-                        if (validations[field]) {
-                            const isValid = validations[field](this.form[field]);
-                            this.errors[field] = isValid === true ? '' : isValid;
-                            return isValid === true;
+                validateForm() {
+                    let isValid = true;
+                    ['name', 'email', 'subject', 'message'].forEach(field => {
+                        if (!this.validateField(field)) {
+                            isValid = false;
                         }
-                        return true;
-                    },
-                    validateForm() {
-                        let isValid = true;
-                        ['name', 'email', 'subject', 'message'].forEach(field => {
-                            if (!this.validateField(field)) {
-                                isValid = false;
-                            }
-                        });
-                        return isValid;
-                    },
-                    async submitForm() {
-                        if (!this.validateForm()) {
-                            return;
-                        }
+                    });
+                    return isValid;
+                },
+                async submitForm() {
+                    if (!this.validateForm()) {
+                        return;
+                    }
 
-                        this.isSubmitting = true;
-                        this.submitError = '';
-                        this.successMessage = '';
+                    this.isSubmitting = true;
+                    this.submitError = '';
+                    this.successMessage = '';
 
-                        try {
-                            const emailData = {
-                                to: 'crownedmobile2025@gmail.com',
-                                subject: this.form.subject || 'New Contact Message from ' + this.form.name,
-                                text: `NEW MESSAGE FROM WEBSITE:
-                                
+                    try {
+                        const emailData = {
+                            to: 'crownedmobile2025@gmail.com',
+                            subject: this.form.subject || 'New Contact Message from ' + this.form.name,
+                            text: `NEW MESSAGE FROM WEBSITE:
+                            
 Name: ${this.form.name}
 Email: ${this.form.email}
 Phone: ${this.form.phone || 'Not provided'}
 
 Message:
 ${this.form.message}`,
-                                _replyto: this.form.email
+                            _replyto: this.form.email
+                        };
+
+                        const response = await fetch('https://formspree.io/f/mqalyvbg', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Accept': 'application/json'
+                            },
+                            body: JSON.stringify(emailData)
+                        });
+
+                        if (response.ok) {
+                            this.successMessage = 'Message sent successfully! We will respond within 24 hours.';
+                            this.form = {
+                                name: '',
+                                email: '',
+                                phone: '',
+                                subject: '',
+                                message: ''
                             };
-
-                            const response = await fetch('https://formspree.io/f/mqalyvbg', {
-                                method: 'POST',
-                                headers: {
-                                    'Content-Type': 'application/json',
-                                    'Accept': 'application/json'
-                                },
-                                body: JSON.stringify(emailData)
-                            });
-
-                            if (response.ok) {
-                                this.successMessage = 'Message sent successfully! We will respond within 24 hours.';
-                                this.form = {
-                                    name: '',
-                                    email: '',
-                                    phone: '',
-                                    subject: '',
-                                    message: ''
-                                };
-                            } else {
-                                throw new Error('Failed to send message');
-                            }
-                        } catch (error) {
-                            console.error('Submission error:', error);
-                            this.submitError = 'Failed to send message. Please call us directly at (937)728-1622';
-                        } finally {
-                            this.isSubmitting = false;
+                        } else {
+                            throw new Error('Failed to send message');
                         }
+                    } catch (error) {
+                        console.error('Submission error:', error);
+                        this.submitError = 'Failed to send message. Please call us directly at (937)728-1622';
+                    } finally {
+                        this.isSubmitting = false;
                     }
                 }
+            }
+        });
+        
+        app.mount('#app');
+
+        // Mobile menu toggle
+        const menuBtn = document.querySelector('.mobile-menu-btn');
+        const mobileMenu = document.querySelector('.mobile-menu');
+        
+        if (menuBtn && mobileMenu) {
+            menuBtn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                mobileMenu.classList.toggle('active');
+                menuBtn.classList.toggle('active');
             });
             
-            app.mount('#app');
-        });
-    </script>
+            document.addEventListener('click', function(e) {
+                if (!menuBtn.contains(e.target) && !mobileMenu.contains(e.target)) {
+                    mobileMenu.classList.remove('active');
+                    menuBtn.classList.remove('active');
+                }
+            });
+
+            const menuItems = mobileMenu.querySelectorAll('a');
+            menuItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    mobileMenu.classList.remove('active');
+                    menuBtn.classList.remove('active');
+                });
+            });
+        }
+    });
+</script>
 </body>
 </html>
