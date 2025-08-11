@@ -8,10 +8,510 @@
   <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+  <style>
+    /* =================== */
+    /* ORIGINAL HEADER STYLES */
+    /* =================== */
+    .desktop-nav {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background-color: #212529;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+      width: 100%;
+    }
+
+    .nav-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0.8rem 1.5rem;
+    }
+
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      color: #ffc107;
+      font-weight: bold;
+      font-size: 1.2rem;
+      text-decoration: none;
+    }
+
+    .nav-logo {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      margin-right: 10px;
+      object-fit: cover;
+      border: 2px solid #ffc107;
+    }
+
+    .desktop-nav .nav-links {
+      display: flex;
+      gap: 1.5rem;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .desktop-nav .nav-links a {
+      color: #ffc107;
+      text-decoration: none;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: color 0.3s;
+      padding: 0.5rem 0;
+    }
+
+    .desktop-nav .nav-links a:hover {
+      color: #fff;
+    }
+
+    /* =================== */
+    /* COMPACT BODY STYLES */
+    /* =================== */
+    body {
+      overflow-y: hidden;
+      height: 100vh;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      line-height: 1.6;
+      color: #2a2a2a;
+      background-color: #f8f9fa;
+    }
+    
+    .container {
+      padding: 1rem;
+      height: calc(100vh - 200px);
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .header-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(to right, #111, #222);
+      padding: 1rem 0;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+      margin-bottom: 1rem;
+    }
+    
+    .header-logo {
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      margin-right: 20px;
+      object-fit: cover;
+      border: 3px solid #ffc107;
+    }
+    
+    .header-title {
+      font-family: 'Great Vibes', cursive;
+      font-size: 3rem;
+      color: #ffc107;
+      text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+      margin: 0;
+    }
+    
+    .subtitle-container {
+      text-align: center;
+      margin-bottom: 0.5rem;
+    }
+    
+    .subtitle {
+      font-size: 1.4rem;
+      font-weight: 600;
+      color: #555;
+      margin: 0;
+    }
+    
+    .established {
+      font-size: 1rem;
+      font-style: italic;
+      color: #999;
+      margin: 0;
+    }
+    
+    .centered-description {
+      text-align: center;
+      font-size: 1.1rem;
+      color: #666;
+      margin: 0.5rem auto;
+      max-width: 700px;
+    }
+    
+    .contact-info-box {
+      background-color: #212529;
+      color: #ffc107;
+      padding: 0.8rem;
+      border-radius: 8px;
+      text-align: center;
+      margin: 0.5rem auto;
+      max-width: 300px;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+    }
+    
+    .phone-link {
+      color: #ffc107;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 1.1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.8rem;
+    }
+    
+    /* =================== */
+    /* THREE COLUMN LAYOUT */
+    /* =================== */
+    .main-content-grid {
+      display: grid;
+      grid-template-columns: 28% 44% 28%;
+      gap: 1.5rem;
+      margin-top: 1rem;
+      flex-grow: 1;
+    }
+    
+    .content-box {
+      background: #fff;
+      padding: 1.2rem;
+      border-radius: 10px;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
+    
+    /* Pricing Section */
+    .pricing-section {
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .pricing-toggle {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      margin-bottom: 1.2rem;
+    }
+    
+    .pricing-toggle button {
+      background-color: #212529;
+      color: #ffc107;
+      border: none;
+      padding: 0.7rem 1.2rem;
+      border-radius: 25px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: 0.3s;
+      font-size: 0.9rem;
+    }
+    
+    .pricing-toggle button.active,
+    .pricing-toggle button:hover {
+      background-color: #343a40;
+    }
+    
+    .pricing-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      flex-grow: 1;
+    }
+    
+    .pricing-list li {
+      background: #f8f9fa;
+      padding: 1rem;
+      margin-bottom: 1rem;
+      border-radius: 8px;
+    }
+    
+    .price {
+      background-color: #ffc107;
+      color: #212529;
+      padding: 0.3rem 0.7rem;
+      border-radius: 30px;
+      font-weight: bold;
+      margin-right: 0.5rem;
+    }
+    
+    .service-desc {
+      display: block;
+      margin-top: 0.5rem;
+      color: #555;
+      font-size: 0.9rem;
+      line-height: 1.4;
+    }
+    
+    .travel-fee-note {
+      display: block;
+      margin-top: 0.5rem;
+      font-size: 0.8rem;
+      color: #e63946;
+      font-style: italic;
+    }
+    
+    /* Video Section - Larger Size */
+    .video-section {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 0;
+      background: #000;
+    }
+    
+    .video-wrapper {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    
+    .video-wrapper iframe {
+      width: 100%;
+      height: 300px;
+      border: none;
+      border-radius: 8px;
+    }
+    
+    /* Mileage Calculator */
+    .mileage-calculator {
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .mileage-calculator h3 {
+      margin-top: 0;
+      color: #212529;
+      font-size: 1.3rem;
+      text-align: center;
+    }
+    
+    .calculator-form {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      flex-grow: 1;
+    }
+    
+    .calculator-form label {
+      font-weight: 600;
+      color: #333;
+      display: block;
+      margin-bottom: 0.3rem;
+    }
+    
+    .calculator-form input {
+      padding: 0.8rem;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      font-size: 1rem;
+      width: 100%;
+      box-sizing: border-box;
+    }
+    
+    .calculator-form button {
+      background-color: #212529;
+      color: #ffc107;
+      padding: 0.8rem;
+      border-radius: 6px;
+      font-weight: bold;
+      border: none;
+      cursor: pointer;
+      transition: 0.3s;
+      width: 100%;
+    }
+    
+    .calculator-form button:hover {
+      background-color: #343a40;
+    }
+    
+    .distance-result {
+      background-color: #f8f9fa;
+      padding: 1rem;
+      border-left: 4px solid #ffc107;
+      border-radius: 6px;
+      margin-top: 0.5rem;
+    }
+    
+    .distance-result.hidden {
+      display: none;
+    }
+    
+    .result-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 0.3rem 0;
+      align-items: center;
+      font-size: 0.95rem;
+    }
+    
+    .total-fee {
+      border-top: 1px solid #ccc;
+      padding-top: 0.8rem;
+      font-weight: bold;
+    }
+    
+    /* Navigation Links */
+    .bottom-nav-links {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      margin: 1.5rem 0 0;
+      padding: 0;
+      list-style: none;
+      flex-wrap: wrap;
+    }
+    
+    .bottom-nav-links a {
+      background-color: #212529;
+      color: #ffc107;
+      padding: 0.7rem 1.5rem;
+      border-radius: 30px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: 0.3s;
+    }
+    
+    .bottom-nav-links a:hover {
+      background-color: #343a40;
+    }
+    
+    /* =================== */
+    /* MOBILE MENU STYLES */
+    /* =================== */
+    .mobile-menu-btn {
+      display: none;
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background-color: #212529;
+      color: #ffc107;
+      padding: 12px 20px;
+      border-radius: 30px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      z-index: 1001;
+      cursor: pointer;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    .mobile-menu-btn i {
+      font-size: 1.2rem;
+    }
+    
+    .mobile-menu {
+      position: fixed;
+      bottom: 80px;
+      right: 20px;
+      background-color: #212529;
+      border-radius: 10px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+      z-index: 1000;
+      width: 250px;
+      display: none;
+      flex-direction: column;
+      padding: 1rem 0;
+      transform: translateY(20px);
+      opacity: 0;
+      transition: all 0.3s ease;
+    }
+    
+    .mobile-menu.active {
+      display: flex;
+      transform: translateY(0);
+      opacity: 1;
+    }
+    
+    .mobile-menu a {
+      color: #ffc107;
+      text-decoration: none;
+      padding: 0.8rem 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      transition: background-color 0.3s;
+    }
+    
+    .mobile-menu a:hover {
+      background-color: #343a40;
+    }
+    
+    /* =================== */
+    /* RESPONSIVE ADJUSTMENTS */
+    /* =================== */
+    @media (max-width: 1024px) {
+      .main-content-grid {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto auto auto;
+      }
+      
+      .video-wrapper iframe {
+        height: 400px;
+      }
+      
+      body {
+        overflow-y: auto;
+        height: auto;
+      }
+      
+      .container {
+        height: auto;
+      }
+    }
+    
+    @media (max-width: 768px) {
+      .desktop-nav {
+        display: none;
+      }
+      
+      .mobile-menu-btn {
+        display: flex;
+      }
+      
+      .header-title {
+        font-size: 2.5rem;
+      }
+      
+      .video-wrapper iframe {
+        height: 300px;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      .header-title {
+        font-size: 2rem;
+      }
+      
+      .header-logo {
+        width: 50px;
+        height: 50px;
+      }
+      
+      .video-wrapper iframe {
+        height: 200px;
+      }
+      
+      .bottom-nav-links a {
+        padding: 0.6rem 1rem;
+        font-size: 0.9rem;
+      }
+    }
+  </style>
 </head>
 <body>
 
-  <!-- Navigation Header (Desktop) -->
+  <!-- Navigation Header (Desktop) - Original Version -->
   <nav class="desktop-nav">
     <div class="nav-container">
       <div class="nav-brand">
@@ -68,18 +568,10 @@
       </a>
     </div>
 
-    <!-- YouTube Video Section -->
-    <div class="video-container">
-      <h2 class="video-title">See Our Work in Action</h2>
-      <div class="video-wrapper">
-        <iframe width="400" height="225" src="https://www.youtube.com/embed/xnOSd7j5Cn4" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-      </div>
-    </div>
-
     <!-- Main Content Grid -->
     <div class="main-content-grid">
       <!-- Pricing Section -->
-      <div class="pricing-section">
+      <div class="content-box pricing-section">
         <div id="app">
           <div class="pricing-toggle">
             <button :class="{ active: selected === 'sedan' }" @click="selected = 'sedan'">Sedan</button>
@@ -96,8 +588,15 @@
         </div>
       </div>
 
+      <!-- Video Section - Larger Size -->
+      <div class="content-box video-section">
+        <div class="video-wrapper">
+          <iframe width="560" height="315" src="https://www.youtube.com/embed/xnOSd7j5Cn4" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+      </div>
+
       <!-- Mileage Calculator -->
-      <div class="mileage-calculator">
+      <div class="content-box mileage-calculator">
         <h3><i class="fas fa-map-marker-alt"></i> Distance Calculator</h3>
         <div class="calculator-form">
           <label for="zipcode">Your Zip Code:</label>
@@ -126,23 +625,10 @@
           </div>
         </div>
       </div>
-
-      <!-- Disclaimer Section -->
-      <div class="disclaimer-section">
-        <h2><i class="fas fa-exclamation-triangle"></i> Important Notice</h2>
-        <p>Please be advised that our pricing is based on the standard condition of a vehicle. Additional charges may apply for:</p>
-        <ul>
-          <li><i class="fas fa-check-circle"></i> Excessive mud or debris</li>
-          <li><i class="fas fa-check-circle"></i> Heavy stains or odors</li>
-          <li><i class="fas fa-check-circle"></i> Mold, mildew, or biological contaminants</li>
-          <li><i class="fas fa-check-circle"></i> Excessive trash or clutter</li>
-        </ul>
-        <p class="disclaimer-signature">Thank you for your understanding!<br>— Crowned Mobile</p>
-      </div>
     </div>
 
     <!-- Navigation -->
-    <ul class="nav-links">
+    <ul class="bottom-nav-links">
       <li><a href="contact.html">Contact Us</a></li>
       <li><a href="subscription.html">Subscription Service</a></li>
       <li><a href="links.html">Helpful Links</a></li>
