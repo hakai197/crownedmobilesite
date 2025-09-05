@@ -75,23 +75,24 @@
     /* COMPACT BODY STYLES */
     /* =================== */
     body {
-      overflow-y: hidden;
-      height: 100vh;
       margin: 0;
       padding: 0;
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       line-height: 1.6;
       color: #2a2a2a;
       background-color: #f8f9fa;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
     }
     
     .container {
       padding: 1rem;
-      height: calc(100vh - 200px);
       max-width: 1200px;
       margin: 0 auto;
       display: flex;
       flex-direction: column;
+      flex: 1;
     }
     
     .header-container {
@@ -188,7 +189,7 @@
       box-shadow: 0 3px 10px rgba(0,0,0,0.1);
       display: flex;
       flex-direction: column;
-      height: 100%;
+      min-height: 300px;
     }
     
     /* Pricing Section */
@@ -258,6 +259,84 @@
       font-size: 0.8rem;
       color: #e63946;
       font-style: italic;
+    }
+    
+    /* Disclaimer Section */
+    .disclaimer-toggle {
+      background-color: #f8f9fa;
+      color: #212529;
+      border: 1px solid #ddd;
+      padding: 0.8rem 1rem;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 1rem;
+      transition: all 0.3s;
+    }
+    
+    .disclaimer-toggle:hover {
+      background-color: #e9ecef;
+    }
+    
+    .disclaimer-toggle i {
+      transition: transform 0.3s;
+    }
+    
+    .disclaimer-toggle.active i {
+      transform: rotate(180deg);
+    }
+    
+    .disclaimer-section {
+      background-color: #fff8e1;
+      border: 1px solid #ffeaa7;
+      border-radius: 8px;
+      padding: 1rem;
+      margin-top: 0.5rem;
+      display: none;
+    }
+    
+    .disclaimer-section.active {
+      display: block;
+    }
+    
+    .section-title {
+      color: #d63031;
+      margin-top: 0;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 1.1rem;
+    }
+    
+    .disclaimer-content {
+      color: #666;
+    }
+    
+    .disclaimer-content ul {
+      padding-left: 1.5rem;
+      margin: 1rem 0;
+    }
+    
+    .disclaimer-content li {
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: flex-start;
+      gap: 0.5rem;
+    }
+    
+    .disclaimer-content li i {
+      color: #00b894;
+      margin-top: 0.2rem;
+    }
+    
+    .disclaimer-signature {
+      font-style: italic;
+      margin-bottom: 0;
+      padding-top: 0.5rem;
+      border-top: 1px dashed #ffeaa7;
     }
     
     /* Video Section - Larger Size */
@@ -388,6 +467,34 @@
     }
     
     /* =================== */
+    /* FOOTER STYLES */
+    /* =================== */
+    .site-footer {
+      background: linear-gradient(to right, #111, #222);
+      color: #ffc107;
+      text-align: center;
+      padding: 1.5rem;
+      margin-top: 2rem;
+      border-top: 3px solid #ffc107;
+    }
+    
+    .footer-content {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    
+    .footer-content p {
+      margin: 0;
+      font-size: 1rem;
+    }
+    
+    .footer-tagline {
+      margin: 0.5rem 0 0 0;
+      font-size: 0.9rem;
+      color: #ccc;
+    }
+    
+    /* =================== */
     /* MOBILE MENU STYLES */
     /* =================== */
     .mobile-menu-btn {
@@ -460,13 +567,8 @@
         height: 400px;
       }
       
-      body {
-        overflow-y: auto;
-        height: auto;
-      }
-      
-      .container {
-        height: auto;
+      .content-box {
+        min-height: auto;
       }
     }
     
@@ -585,6 +687,33 @@
               <span class="travel-fee-note">*Travel fee not included - Please use the calculator provided</span>
             </li>
           </ul>
+          
+          <!-- Disclaimer Toggle Button -->
+          <button class="disclaimer-toggle" id="disclaimerToggle">
+            <span><i class="fas fa-exclamation-triangle"></i> Disclaimer</span>
+            <i class="fas fa-chevron-down"></i>
+          </button>
+          
+          <!-- Disclaimer Content -->
+          <div class="disclaimer-section" id="disclaimerContent">
+            <h3 class="section-title"><i class="fas fa-exclamation-triangle"></i> Important Notice</h3>
+            <div class="disclaimer-content">
+              <p>Please be advised that our pricing is based on the standard condition of a vehicle. If your vehicle is deemed excessively dirty, soiled, or requires additional time, labor, or specialized cleaning products, we reserve the right to adjust the price accordingly.</p>
+              
+              <p>Factors that may result in a price adjustment include, but are not limited to:</p>
+              
+              <ul>
+                <li><i class="fas fa-check-circle"></i> Excessive mud, dirt, or debris</li>
+                <li><i class="fas fa-check-circle"></i> Heavy stains, spills, or odors (e.g., pet hair, smoke, food residue)</li>
+                <li><i class="fas fa-check-circle"></i> Mold, mildew, or biological contaminants</li>
+                <li><i class="fas fa-check-circle"></i> Excessive trash or clutter inside the vehicle</li>
+              </ul>
+              
+              <p>We will always provide a revised estimate before proceeding with any additional services. Our goal is to ensure the highest quality detailing while maintaining fair pricing for the level of work required.</p>
+              
+              <p class="disclaimer-signature">Thank you for your understanding!<br>— Crowned Mobile</p>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -635,6 +764,14 @@
     </ul>
   </div>
 
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="footer-content">
+      <p>&copy; 2025 U197 Designs. All rights reserved.</p>
+      <p class="footer-tagline">Proudly serving the automotive detailing needs of our community.</p>
+    </div>
+  </footer>
+
   <script>
     new Vue({
       el: '#app',
@@ -676,6 +813,17 @@
       const API_KEY = 'Q7ITe5MB0a4STWkyy8GUQ3nvv5leH3TjZAqL0dfJaSeT1U9ap7TA35bw1KqUGrFS';
       const BASE_ZIP = '45177';
       const calculateBtn = document.getElementById('calculateBtn');
+      
+      // Disclaimer toggle functionality
+      const disclaimerToggle = document.getElementById('disclaimerToggle');
+      const disclaimerContent = document.getElementById('disclaimerContent');
+      
+      if (disclaimerToggle && disclaimerContent) {
+        disclaimerToggle.addEventListener('click', function() {
+          this.classList.toggle('active');
+          disclaimerContent.classList.toggle('active');
+        });
+      }
 
       function calculateCost(distance) {
         const excessMiles = Math.max(0, distance - 15);
